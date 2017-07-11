@@ -1,6 +1,8 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import android.os.Bundle
+import android.widget.TextView
+import butterknife.BindView
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
@@ -11,6 +13,9 @@ class MainActivityView : BaseActivityView() {
 
     @Inject
     lateinit var presenter : MainActivityPresenter
+
+    @BindView(R.id.testTv)
+    lateinit var testTv : TextView
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)

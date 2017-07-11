@@ -6,7 +6,7 @@ data class Main(
         @SerializedName("temp")
         val temperature : Double,
         @SerializedName("pressure")
-        val pressure : Int,
+        val pressure : Double,
         @SerializedName("humidity")
         val humidity : Int,
         @SerializedName("temp_min")

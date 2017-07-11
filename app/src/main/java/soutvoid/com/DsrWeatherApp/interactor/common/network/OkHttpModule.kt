@@ -9,6 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.RequestCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.ResponseCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestHeadersInterceptor
+import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestQueryParamsInterceptor
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -22,6 +23,7 @@ class OkHttpModule {
     @PerApplication
     fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor,
                             requestHeadersInterceptor: RequestHeadersInterceptor,
+                            requestQueryParamsInterceptor: RequestQueryParamsInterceptor,
                             responseCacheInterceptor: ResponseCacheInterceptor,
                             requestCacheInterceptor: RequestCacheInterceptor,
                             cache: Cache) : OkHttpClient {
@@ -33,6 +35,7 @@ class OkHttpModule {
         okHttpClientBuilder.addInterceptor(requestHeadersInterceptor)
         okHttpClientBuilder.addInterceptor(httpLoggingInterceptor)
         okHttpClientBuilder.addInterceptor(requestCacheInterceptor)
+        okHttpClientBuilder.addInterceptor(requestQueryParamsInterceptor)
         okHttpClientBuilder.addNetworkInterceptor(responseCacheInterceptor)
         okHttpClientBuilder.cache(cache)
         return okHttpClientBuilder.build()

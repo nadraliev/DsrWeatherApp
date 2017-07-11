@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.RequestCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.ResponseCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestHeadersInterceptor
+import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestQueryParamsInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.network.NetworkConnectionChecker
 import timber.log.BuildConfig
 import timber.log.Timber
@@ -52,6 +53,10 @@ class NetworkModule {
     @Provides
     @PerApplication
     internal fun provideRequestHeadersInterceptor(): RequestHeadersInterceptor = RequestHeadersInterceptor()
+
+    @Provides
+    @PerApplication
+    internal fun provideRequestQueryParamsInterceptor() : RequestQueryParamsInterceptor = RequestQueryParamsInterceptor()
 
     @Provides
     @PerApplication
