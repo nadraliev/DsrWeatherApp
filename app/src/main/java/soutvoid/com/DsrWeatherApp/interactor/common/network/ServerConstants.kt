@@ -14,7 +14,7 @@ object ServerConstants {
 
     const val LATITUDE_PARAMETER = "lat"
 
-    const val LONTITUDE_PARAMETER = "lon"
+    const val LONGITUDE_PARAMETER = "lon"
 
     const val ZIP_CODE_PARAMETER = "zip"
 
