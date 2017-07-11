@@ -8,6 +8,8 @@ import soutvoid.com.DsrWeatherApp.interactor.common.network.OkHttpModule
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.CacheModule
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherModule
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
+import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastModule
+import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
 import soutvoid.com.DsrWeatherApp.interactor.network.NetworkConnectionChecker
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
 
@@ -18,10 +20,12 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
         NetworkModule::class,
         CacheModule::class,
         ActivityModule::class,
-        CurrentWeatherModule::class
+        CurrentWeatherModule::class,
+        ForecastModule::class
 ))
 interface AppComponent {
     fun context() : Context
     fun networkConnectionChecker() : NetworkConnectionChecker
     fun currentWeatherRepository() : CurrentWeatherRepository
+    fun forecastRepository() : ForecastRepository
 }
