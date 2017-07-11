@@ -13,7 +13,7 @@ class ResponseCacheInterceptor : Interceptor {
         val response : Response = chain!!.proceed(chain.request())
 
         val cacheControl : CacheControl = CacheControl.Builder()
-                .maxAge(2, TimeUnit.MINUTES)
+                .maxAge(10, TimeUnit.MINUTES)
                 .build()
 
         return response.newBuilder()
