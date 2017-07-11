@@ -6,6 +6,7 @@ import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
+import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import javax.inject.Inject
@@ -18,6 +19,9 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
 
     @Inject
     lateinit var forecastRep : ForecastRepository
+
+    @Inject
+    lateinit var uviRep : UviRepository
 
 
     override fun onLoad(viewRecreated: Boolean) {
