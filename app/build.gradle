@@ -1,0 +1,128 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.22.1'
+    }
+
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
+apply plugin: 'realm-android'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
+}
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "soutvoid.com.dsrweatherapp"
+        minSdkVersion 16
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        test.java.srcDirs += "src/test/kotlin"
+        androidTest.java.srcDirs += "src/androidTest/kotlin"
+
+        main {
+            res.srcDirs += "src/main/res-main"
+            file("src/main/res-screen")
+                    .listFiles()
+                    .each { res.srcDirs += it.path }
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+
+    //libraries versions
+    def daggerVersion = "2.11"
+    def ferroMvpVersion = "1.1.2"
+    def appcompatVersion = "26.0.0-alpha1"
+    def rxjavaVersion = "1.3.0"
+    def retrofitVersion = "2.3.0"
+    def okhttpVersion = "3.8.1"
+    def glideVersion = "4.0.0-RC1"
+    def butterknifeVersion = "8.7.0"
+
+    //main
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "com.google.dagger:dagger:${daggerVersion}"
+    compile "com.agna.ferro:ferro-mvp-rx:${ferroMvpVersion}"
+
+
+    compile "io.reactivex:rxjava:${rxjavaVersion}"
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile "com.android.support:appcompat-v7:${appcompatVersion}"
+    compile "com.android.support:support-v4:${appcompatVersion}"
+
+
+    //network
+    compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    compile "com.squareup.retrofit2:adapter-rxjava:${retrofitVersion}"
+    compile "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+    compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
+    compile "com.github.bumptech.glide:glide:${glideVersion}"
+    compile "com.google.code.gson:gson:2.8.1"
+
+
+    //logging
+    compile "com.jakewharton.timber:timber:4.1.2"
+    compile "com.github.anrwatchdog:anrwatchdog:1.2.0"
+    compile("com.crashlytics.sdk.android:crashlytics:2.6.5@aar") {
+        transitive = true;
+    }
+
+    //design
+    compile "com.android.support:recyclerview-v7:${appcompatVersion}"
+    compile "com.android.support:cardview-v7:${appcompatVersion}"
+    compile "com.android.support:palette-v7:${appcompatVersion}"
+    compile "com.android.support:design:${appcompatVersion}"
+    compile "com.jakewharton:butterknife:${butterknifeVersion}"
+
+
+
+    //annotation processors
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    kapt "com.github.bumptech.glide:compiler:${glideVersion}"
+    kapt "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
+
+
+    //provided
+    provided "javax.annotation:jsr250-api:1.0"
+
+    //other
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.uphyca:stetho_realm:2.0.0'
+
+
+
+}
+repositories {
+    mavenCentral()
+}
