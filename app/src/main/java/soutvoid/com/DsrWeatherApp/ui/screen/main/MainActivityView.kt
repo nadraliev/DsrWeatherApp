@@ -17,6 +17,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
+import soutvoid.com.DsrWeatherApp.ui.util.IconsHelper
 import javax.inject.Inject
 
 class MainActivityView : TranslucentStatusActivityView() {
@@ -32,6 +33,9 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     @BindView(R.id.main_icon_iv)
     lateinit var iconIv: ImageView
+
+    @BindView(R.id.main_description_tv)
+    lateinit var descriptionTv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
@@ -57,9 +61,17 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         cityTv.text = currentWeather.cityName
         temperatureTv.text = "${Math.round(currentWeather.main.temperature)} \u2103"
+        iconIv.setImageDrawable(IconicsDrawable(this)
+                .icon(IconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData, currentWeather.sys.sunrise, currentWeather.sys.sunset))
+                .color(getThemeColor(android.R.attr.textColorPrimary))
+                .sizeDp(100))
+        descriptionTv.text = currentWeather.weather.first().description
+    }
+
+    fun getThemeColor(attr: Int) : Int {
         val typedValue : TypedValue = TypedValue()
         val theme: Resources.Theme = theme
-        theme.resolveAttribute(android.R.attr.textColorPrimary, typedValue, true)
-        iconIv.setImageDrawable(IconicsDrawable(this).icon(WeatherIcons.Icon.wic_cloudy).color(typedValue.data).sizeDp(100))
+        theme.resolveAttribute(attr, typedValue, true)
+        return typedValue.data
     }
 }

@@ -33,7 +33,7 @@
         android:id="@+id/main_icon_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="6dp"
         android:minHeight="50dp"
         android:minWidth="50dp"
         android:textSize="67sp"
@@ -41,7 +41,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/main_temp_tv"
         app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView"
-        app:layout_constraintHorizontal_bias="0.4"/>
+        app:layout_constraintHorizontal_bias="0.48"/>
 
     <TextView
         android:id="@+id/main_temp_tv"
@@ -50,66 +50,12 @@
         android:text="T"
         android:textSize="63sp"
         app:layout_constraintLeft_toRightOf="@+id/main_icon_iv"
-        app:layout_constraintRight_toLeftOf="@+id/main_separator"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/main_icon_iv"
-        android:layout_marginBottom="0dp"/>
-
-    <View
-        android:layout_width="3dp"
-        android:layout_height="0dp"
-        android:background="@color/gray_9"
-        app:layout_constraintBottom_toBottomOf="@+id/main_temp_tv"
-        app:layout_constraintLeft_toRightOf="@+id/main_temp_tv"
-        app:layout_constraintTop_toTopOf="@+id/main_temp_tv"
-        app:layout_constraintVertical_bias="0.0"
-        android:id="@+id/main_separator"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/main_max_temp_tv"
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="t"
-        app:layout_constraintLeft_toRightOf="@+id/main_separator"
-        app:layout_constraintTop_toTopOf="@+id/main_separator"
-        android:layout_marginStart="16dp"/>
-
-    <TextView
-        android:id="@+id/main_max_hint_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="17dp"
-        android:text="@string/max"
-        android:textSize="12sp"
-        app:layout_constraintLeft_toLeftOf="@+id/main_max_temp_tv"
-        app:layout_constraintRight_toRightOf="@+id/main_max_temp_tv"
-        app:layout_constraintTop_toBottomOf="@+id/main_max_temp_tv"/>
-
-    <TextView
-        android:id="@+id/main_min_temp_tv"
-        android:layout_width="0dp"
-        android:layout_height="16dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:text="t"
-        app:layout_constraintBottom_toTopOf="@+id/main_min_hint_tv"
-        app:layout_constraintLeft_toLeftOf="@+id/main_min_hint_tv"
-        app:layout_constraintRight_toRightOf="@+id/main_min_hint_tv"/>
-
-    <TextView
-        android:id="@+id/main_min_hint_tv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/min"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/main_separator"
-        app:layout_constraintLeft_toRightOf="@+id/main_separator"/>
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <TextView
         android:id="@+id/main_description_tv"
