@@ -16,6 +16,7 @@ apply plugin: 'io.fabric'
 apply plugin: 'realm-android'
 
 repositories {
+    maven { url 'https://maven.google.com' }
     maven { url 'https://maven.fabric.io/public' }
     maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
 }
@@ -73,8 +74,6 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile "com.google.dagger:dagger:${daggerVersion}"
     compile "com.agna.ferro:ferro-mvp-rx:${ferroMvpVersion}"
-
-
     compile "io.reactivex:rxjava:${rxjavaVersion}"
     compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.android.support:appcompat-v7:${appcompatVersion}"
@@ -104,6 +103,7 @@ dependencies {
     compile "com.android.support:palette-v7:${appcompatVersion}"
     compile "com.android.support:design:${appcompatVersion}"
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
 
 

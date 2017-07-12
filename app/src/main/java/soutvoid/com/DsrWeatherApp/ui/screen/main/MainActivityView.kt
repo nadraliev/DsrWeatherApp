@@ -5,17 +5,23 @@ import android.widget.TextView
 import butterknife.BindView
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
+import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import javax.inject.Inject
 
-class MainActivityView : BaseActivityView() {
+class MainActivityView : TranslucentStatusActivityView() {
 
     @Inject
     lateinit var presenter : MainActivityPresenter
 
-    @BindView(R.id.testTv)
-    lateinit var testTv : TextView
+    @BindView(R.id.main_city_tv)
+    lateinit var cityTv: TextView
+
+    @BindView(R.id.main_temp_tv)
+    lateinit var temperatureTv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
@@ -32,5 +38,14 @@ class MainActivityView : BaseActivityView() {
                 .activityModule(activityModule)
                 .appComponent(appComponent)
                 .build()
+    }
+
+    fun fillAllData(allWeatherData: AllWeatherData) {
+        fillCurrentWeatherData(allWeatherData.currentWeather)
+    }
+
+    fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
+        cityTv.text = currentWeather.cityName
+        temperatureTv.text = currentWeather.main.temperature.toString()
     }
 }

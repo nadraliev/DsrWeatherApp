@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar.StatusBarTranslucent" parent="AppTheme.Gray.White">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+</resources>
