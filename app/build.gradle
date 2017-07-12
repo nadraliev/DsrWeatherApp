@@ -104,6 +104,8 @@ dependencies {
     compile "com.android.support:design:${appcompatVersion}"
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.mikepenz:iconics-core:2.8.9@aar"
+    compile 'com.mikepenz:weather-icons-typeface:2.0.10.3@aar'
 
 
 

@@ -29,17 +29,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
-    <TextView
-        android:id="@+id/main_icon_tv"
+    <ImageView
+        android:id="@+id/main_icon_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="T"
+        android:layout_marginTop="7dp"
+        android:minHeight="50dp"
+        android:minWidth="50dp"
         android:textSize="67sp"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintRight_toLeftOf="@+id/main_temp_tv"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView"/>
+        app:layout_constraintRight_toLeftOf="@+id/main_temp_tv"
+        app:layout_constraintTop_toBottomOf="@+id/multiAutoCompleteTextView"
+        app:layout_constraintHorizontal_bias="0.4"/>
 
     <TextView
         android:id="@+id/main_temp_tv"
@@ -47,11 +49,12 @@
         android:layout_height="wrap_content"
         android:text="T"
         android:textSize="63sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/main_icon_tv"
-        app:layout_constraintLeft_toRightOf="@+id/main_icon_tv"
+        app:layout_constraintLeft_toRightOf="@+id/main_icon_iv"
         app:layout_constraintRight_toLeftOf="@+id/main_separator"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"/>
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/main_icon_iv"
+        android:layout_marginBottom="0dp"/>
 
     <View
         android:layout_width="3dp"
@@ -119,6 +122,6 @@
         android:textSize="25sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_icon_tv"/>
+        app:layout_constraintTop_toBottomOf="@+id/main_icon_iv"/>
 
 </android.support.constraint.ConstraintLayout>

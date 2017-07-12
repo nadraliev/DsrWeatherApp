@@ -1,9 +1,11 @@
 package soutvoid.com.DsrWeatherApp.ui.base.activity
 
+import android.content.Context
 import android.os.Bundle
 import butterknife.ButterKnife
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.view.activity.MvpActivityView
+import com.mikepenz.iconics.context.IconicsContextWrapper
 import soutvoid.com.DsrWeatherApp.app.App
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
 import soutvoid.com.DsrWeatherApp.app.log.LogConstants
@@ -41,5 +43,7 @@ abstract class BaseActivityView : MvpActivityView() {
         return persistentScreenScope.getObject(ScreenComponent::class.java)
     }
 
-
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase))
+    }
 }
