@@ -6,6 +6,8 @@ import io.fabric.sdk.android.Fabric
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import com.facebook.stetho.Stetho
 import com.github.anrwatchdog.ANRWatchDog
+import com.mikepenz.iconics.Iconics
+import com.mikepenz.weather_icons_typeface_library.WeatherIcons
 import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
 import soutvoid.com.DsrWeatherApp.app.dagger.AppModule
@@ -27,6 +29,7 @@ class App : Application() {
         initInjector()
         initStetho()
         initRealm()
+        initIconics()
     }
 
     fun initFabric() {
@@ -58,5 +61,9 @@ class App : Application() {
 
     fun initRealm() {
         Realm.init(this)
+    }
+
+    fun initIconics() {
+        Iconics.registerFont(WeatherIcons())
     }
 }

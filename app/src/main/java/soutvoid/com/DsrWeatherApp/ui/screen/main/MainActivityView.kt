@@ -10,6 +10,7 @@ import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
+import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
@@ -33,6 +34,20 @@ class MainActivityView : TranslucentStatusActivityView() {
     @BindView(R.id.main_description_tv)
     lateinit var descriptionTv: TextView
 
+    @BindView(R.id.main_pressure_tv)
+    lateinit var pressureTv: TextView
+
+    @BindView(R.id.main_humidity_tv)
+    lateinit var humidityTv: TextView
+
+    @BindView(R.id.main_wind_tv)
+    lateinit var windTv: TextView
+    @BindView(R.id.main_wind_icon)
+    lateinit var windIcon: ImageView
+
+    @BindView(R.id.main_uv_tv)
+    lateinit var uvTv: TextView
+
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
     }
@@ -51,17 +66,28 @@ class MainActivityView : TranslucentStatusActivityView() {
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
-        fillCurrentWeatherData(allWeatherData.currentWeather)
+        fillCurrentWeatherData(allWeatherData.currentWeather, allWeatherData.ultraviolet)
     }
 
-    fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
+    fun fillCurrentWeatherData(currentWeather: CurrentWeather, ultraviolet: Ultraviolet) {
+        val primaryTextColor = getThemeColor(android.R.attr.textColorPrimary)
         cityTv.text = currentWeather.cityName
         temperatureTv.text = "${Math.round(currentWeather.main.temperature)} \u2103"
         iconIv.setImageDrawable(IconicsDrawable(this)
                 .icon(WeatherIconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData, currentWeather.sys.sunrise, currentWeather.sys.sunset))
-                .color(getThemeColor(android.R.attr.textColorPrimary))
+                .color(primaryTextColor)
                 .sizeDp(100))
         descriptionTv.text = currentWeather.weather.first().description
+        pressureTv.text = Math.round(currentWeather.main.pressure).toString()
+        humidityTv.text = currentWeather.main.humidity.toString()
+        windTv.text = currentWeather.wind.speed.toString()
+        windIcon.setImageDrawable(
+                IconicsDrawable(this)
+                        .icon(WeatherIconsHelper.getDirectionalIcon(currentWeather.wind.degrees))
+                        .color(primaryTextColor)
+                        .sizeDp(45))
+        uvTv.text = ultraviolet.value.toString()
+
     }
 
     fun getThemeColor(attr: Int) : Int {

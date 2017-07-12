@@ -165,4 +165,17 @@ object WeatherIconsHelper {
         return WeatherIcons.Icon.wic_cloud
     }
 
+    fun getDirectionalIcon(degrees: Double) : WeatherIcons.Icon {
+        when (degrees) {
+            in 27..71 -> return WeatherIcons.Icon.wic_direction_down_right
+            in 72..116 -> return WeatherIcons.Icon.wic_cloud_down
+            in 117..162 -> return WeatherIcons.Icon.wic_direction_down_left
+            in 163..208 -> return WeatherIcons.Icon.wic_direction_left
+            in 209..254 -> return WeatherIcons.Icon.wic_direction_up_left
+            in 255..300 -> return WeatherIcons.Icon.wic_direction_up
+            in 301..345 -> return WeatherIcons.Icon.wic_direction_up_right
+        }
+        return WeatherIcons.Icon.wic_direction_right
+    }
+
 }
