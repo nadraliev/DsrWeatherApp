@@ -48,8 +48,7 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
                 Schedulers.io(),
                 currentWeatherRep.getByCityName("Voronezh"),
                 forecastRep.getByCityName("Voronezh"),
-                uviRep.getByCoordinates(51.65,39.21),
-                Func3 { current, forecast, ultraviolet -> AllWeatherData(current, forecast, ultraviolet) }
-        )
+                uviRep.getByCoordinates(51.65,39.21)
+        ) { current, forecast, ultraviolet -> AllWeatherData(current, forecast, ultraviolet) }
     }
 }
