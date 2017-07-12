@@ -2,7 +2,7 @@ package soutvoid.com.DsrWeatherApp.ui.util
 
 import com.mikepenz.weather_icons_typeface_library.WeatherIcons
 
-object IconsHelper {
+object WeatherIconsHelper {
 
     fun getWeatherIcon(id: Int, dt: Long, sunrise: Long, sunset: Long) : WeatherIcons.Icon {
         var night: Boolean = dt in sunset..sunrise

@@ -2,22 +2,18 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.utils.IconicsUtils
-import com.mikepenz.weather_icons_typeface_library.WeatherIcons
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import soutvoid.com.DsrWeatherApp.ui.util.IconsHelper
+import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import javax.inject.Inject
 
 class MainActivityView : TranslucentStatusActivityView() {
@@ -62,7 +58,7 @@ class MainActivityView : TranslucentStatusActivityView() {
         cityTv.text = currentWeather.cityName
         temperatureTv.text = "${Math.round(currentWeather.main.temperature)} \u2103"
         iconIv.setImageDrawable(IconicsDrawable(this)
-                .icon(IconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData, currentWeather.sys.sunrise, currentWeather.sys.sunset))
+                .icon(WeatherIconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData, currentWeather.sys.sunrise, currentWeather.sys.sunset))
                 .color(getThemeColor(android.R.attr.textColorPrimary))
                 .sizeDp(100))
         descriptionTv.text = currentWeather.weather.first().description
