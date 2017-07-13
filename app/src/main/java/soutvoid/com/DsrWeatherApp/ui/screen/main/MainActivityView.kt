@@ -2,6 +2,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.LayoutDirection
@@ -19,6 +20,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.screen.main.list.ForecastAdapter
+import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
@@ -39,20 +41,6 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     @BindView(R.id.main_description_tv)
     lateinit var descriptionTv: TextView
-
-    @BindView(R.id.main_pressure_tv)
-    lateinit var pressureTv: TextView
-
-    @BindView(R.id.main_humidity_tv)
-    lateinit var humidityTv: TextView
-
-    @BindView(R.id.main_wind_tv)
-    lateinit var windTv: TextView
-    @BindView(R.id.main_wind_icon)
-    lateinit var windIcon: ImageView
-
-    @BindView(R.id.main_uv_tv)
-    lateinit var uvTv: TextView
 
     @BindView(R.id.main_forecast_list)
     lateinit var forecastList: RecyclerView
@@ -80,37 +68,30 @@ class MainActivityView : TranslucentStatusActivityView() {
     private fun initList() {
         forecastList.adapter = forecastAdapter
         forecastList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        forecastList.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
-        fillCurrentWeatherData(allWeatherData.currentWeather, allWeatherData.ultraviolet)
+        fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.dailyForecast)
     }
 
-    fun fillCurrentWeatherData(currentWeather: CurrentWeather, ultraviolet: Ultraviolet) {
+    fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         with(currentWeather) {
             val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
             cityTv.text = cityName
-            temperatureTv.text = "${Math.round(main.temperature)} \u2103"
+            temperatureTv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
             iconIv.setImageDrawable(IconicsDrawable(this@MainActivityView)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData, sys.sunrise, sys.sunset))
                     .color(primaryTextColor)
                     .sizeDp(100))
             descriptionTv.text = weather.first().description
-            pressureTv.text = Math.round(main.pressure).toString()
-            humidityTv.text = main.humidity.toString()
-            windTv.text = wind.speed.toString()
-            windIcon.setImageDrawable(
-                    IconicsDrawable(this@MainActivityView)
-                            .icon(WeatherIconsHelper.getDirectionalIcon(wind.degrees))
-                            .color(primaryTextColor)
-                            .sizeDp(45))
-            uvTv.text = ultraviolet.value.toString()
         }
 
     }
 
     fun fillForecastData(dailyForecast: DailyForecast) {
         forecastAdapter.dailyForecasts = dailyForecast.forecasts
+        forecastAdapter.notifyDataSetChanged()
     }
 }
