@@ -70,23 +70,25 @@ class MainActivityView : TranslucentStatusActivityView() {
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather, ultraviolet: Ultraviolet) {
-        val primaryTextColor = getThemeColor(android.R.attr.textColorPrimary)
-        cityTv.text = currentWeather.cityName
-        temperatureTv.text = "${Math.round(currentWeather.main.temperature)} \u2103"
-        iconIv.setImageDrawable(IconicsDrawable(this)
-                .icon(WeatherIconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData, currentWeather.sys.sunrise, currentWeather.sys.sunset))
-                .color(primaryTextColor)
-                .sizeDp(100))
-        descriptionTv.text = currentWeather.weather.first().description
-        pressureTv.text = Math.round(currentWeather.main.pressure).toString()
-        humidityTv.text = currentWeather.main.humidity.toString()
-        windTv.text = currentWeather.wind.speed.toString()
-        windIcon.setImageDrawable(
-                IconicsDrawable(this)
-                        .icon(WeatherIconsHelper.getDirectionalIcon(currentWeather.wind.degrees))
-                        .color(primaryTextColor)
-                        .sizeDp(45))
-        uvTv.text = ultraviolet.value.toString()
+        with(currentWeather) {
+            val primaryTextColor = getThemeColor(android.R.attr.textColorPrimary)
+            cityTv.text = cityName
+            temperatureTv.text = "${Math.round(main.temperature)} \u2103"
+            iconIv.setImageDrawable(IconicsDrawable(this@MainActivityView)
+                    .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData, sys.sunrise, sys.sunset))
+                    .color(primaryTextColor)
+                    .sizeDp(100))
+            descriptionTv.text = weather.first().description
+            pressureTv.text = Math.round(main.pressure).toString()
+            humidityTv.text = main.humidity.toString()
+            windTv.text = wind.speed.toString()
+            windIcon.setImageDrawable(
+                    IconicsDrawable(this@MainActivityView)
+                            .icon(WeatherIconsHelper.getDirectionalIcon(wind.degrees))
+                            .color(primaryTextColor)
+                            .sizeDp(45))
+            uvTv.text = ultraviolet.value.toString()
+        }
 
     }
 
