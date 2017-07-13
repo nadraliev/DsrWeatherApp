@@ -2,6 +2,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -30,6 +31,9 @@ class MainActivityView : TranslucentStatusActivityView() {
     @Inject
     lateinit var presenter : MainActivityPresenter
 
+    @BindView(R.id.main_refresh_layout)
+    lateinit var refreshL: SwipeRefreshLayout
+
     @BindView(R.id.main_city_tv)
     lateinit var cityTv: TextView
 
@@ -50,6 +54,7 @@ class MainActivityView : TranslucentStatusActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initList()
+        initSwipeRefresh()
     }
 
     override fun getPresenter(): BasePresenter<*> = presenter
@@ -69,6 +74,10 @@ class MainActivityView : TranslucentStatusActivityView() {
         forecastList.adapter = forecastAdapter
         forecastList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         forecastList.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
+    }
+
+    private fun initSwipeRefresh() {
+        refreshL.setOnRefreshListener { presenter.refresh() }
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
@@ -93,5 +102,9 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillForecastData(dailyForecast: DailyForecast) {
         forecastAdapter.dailyForecasts = dailyForecast.forecasts
         forecastAdapter.notifyDataSetChanged()
+    }
+
+    fun setProgressBarEnabled(enabled: Boolean) {
+        refreshL.isRefreshing = enabled
     }
 }

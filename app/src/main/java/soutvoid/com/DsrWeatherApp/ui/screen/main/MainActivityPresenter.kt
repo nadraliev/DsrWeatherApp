@@ -33,13 +33,17 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
+        view.setProgressBarEnabled(true)
         loadData()
     }
 
     private fun loadData() {
         subscribeNetworkQuery(
                 prepareObservable(),
-                Action1 { view.fillAllData(it) }
+                Action1 {
+                    view.fillAllData(it)
+                    view.setProgressBarEnabled(false)
+                }
         )
     }
 
@@ -51,5 +55,9 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
                 uviRep.getByCoordinates(51.65,39.21),
                 forecastRep.getDailyByCityName("Voronezh")
         ) { current, forecast, ultraviolet, dailyForecast -> AllWeatherData(current, forecast, ultraviolet, dailyForecast) }
+    }
+
+    fun refresh() {
+        loadData()
     }
 }
