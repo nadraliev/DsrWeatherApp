@@ -10,4 +10,6 @@ object ServerUrls {
 
     const val UVI_URL = "uvi"
 
+    const val DAILY_FORECAST_URL = "forecast/daily"
+
 }

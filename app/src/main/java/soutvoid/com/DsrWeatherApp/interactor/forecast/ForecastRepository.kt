@@ -2,6 +2,7 @@ package soutvoid.com.DsrWeatherApp.interactor.forecast
 
 import com.agna.ferro.mvp.component.scope.PerApplication
 import rx.Observable
+import soutvoid.com.DsrWeatherApp.domain.DailyForecast
 import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.interactor.forecast.network.ForecastApi
 import soutvoid.com.DsrWeatherApp.interactor.util.Accuracy
@@ -34,6 +35,32 @@ class ForecastRepository @Inject constructor(val api : ForecastApi) {
                          lang: String = "en")
             : Observable<Forecast> {
         return api.getByCoordinates(latitude, longitude, units.name.toLowerCase(), accuracyType.name.toLowerCase(), lang)
+    }
+
+
+    fun getDailyByCityName(query: String,
+                      units: Units = Units.METRIC,
+                      accuracyType: Accuracy = Accuracy.LIKE,
+                      lang: String = "en")
+            : Observable<DailyForecast> {
+        return api.getDailyByCityName(query, units.name.toLowerCase(), accuracyType.name.toLowerCase(), lang)
+    }
+
+    fun getDailyByCityId(cityId: Int,
+                    units: Units = Units.METRIC,
+                    accuracyType: Accuracy = Accuracy.LIKE,
+                    lang: String = "en")
+            : Observable<DailyForecast> {
+        return api.getDailyByCityId(cityId, units.name.toLowerCase(), accuracyType.name.toLowerCase(), lang)
+    }
+
+    fun getDailyByCoordinates(latitude: Double,
+                         longitude: Double,
+                         units: Units = Units.METRIC,
+                         accuracyType: Accuracy = Accuracy.LIKE,
+                         lang: String = "en")
+            : Observable<DailyForecast> {
+        return api.getDailyByCoordinates(latitude, longitude, units.name.toLowerCase(), accuracyType.name.toLowerCase(), lang)
     }
 
 }

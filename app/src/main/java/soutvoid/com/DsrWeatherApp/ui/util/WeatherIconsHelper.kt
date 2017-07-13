@@ -4,12 +4,12 @@ import com.mikepenz.weather_icons_typeface_library.WeatherIcons
 
 object WeatherIconsHelper {
 
-    fun getWeatherIcon(id: Int, dt: Long, sunrise: Long, sunset: Long) : WeatherIcons.Icon {
-        var night: Boolean = dt in sunset..sunrise
+    fun getWeatherIcon(id: Int, dt: Long, sunrise: Long = dt, sunset: Long = dt + 1) : WeatherIcons.Icon {
+        val day: Boolean = dt in sunrise..sunset
 
-        if (night)
-            return getNightWeatherIcon(id)
-        else return getDayWeatherIcon(id)
+        if (day)
+            return getDayWeatherIcon(id)
+        else return getNightWeatherIcon(id)
     }
 
     fun getDayWeatherIcon(id : Int) : WeatherIcons.Icon {
