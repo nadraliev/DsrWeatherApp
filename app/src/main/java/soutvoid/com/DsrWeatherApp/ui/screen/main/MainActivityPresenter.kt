@@ -11,10 +11,13 @@ import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
+import soutvoid.com.DsrWeatherApp.interactor.util.Units
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
+import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
+import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import javax.inject.Inject
 
 @PerScreen
@@ -48,12 +51,14 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
     }
 
     private fun prepareObservable() : Observable<AllWeatherData> {
+        val isMetrical = UnitsUtils.isMetricalPreferred(view.baseContext)
+        val units = if (isMetrical) Units.METRIC else Units.IMPERIAL
         return ObservableUtil.combineLatestDelayError(
                 Schedulers.io(),
-                currentWeatherRep.getByCityName("Voronezh"),
-                forecastRep.getByCityName("Voronezh"),
-                uviRep.getByCoordinates(51.65,39.21),
-                forecastRep.getDailyByCityName("Voronezh")
+                currentWeatherRep.getByCityName("Voronezh", units),
+                forecastRep.getByCityName("Voronezh", units),
+                uviRep.getByCoordinates(51.65,39.21, units),
+                forecastRep.getDailyByCityName("Voronezh", units)
         ) { current, forecast, ultraviolet, dailyForecast -> AllWeatherData(current, forecast, ultraviolet, dailyForecast) }
     }
 

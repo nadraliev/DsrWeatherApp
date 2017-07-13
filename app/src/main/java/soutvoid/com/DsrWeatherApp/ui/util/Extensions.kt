@@ -1,5 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.res.Resources
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -14,4 +16,8 @@ fun Resources.Theme.getThemeColor(attr: Int) : Int {
         val typedValue : TypedValue = TypedValue()
         this.resolveAttribute(attr, typedValue, true)
         return typedValue.data
+}
+
+fun Context.getDefaultPreferences() : SharedPreferences {
+    return this.getSharedPreferences("default", Context.MODE_PRIVATE)
 }
