@@ -50,15 +50,54 @@
         android:id="@+id/main_description_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="20sp"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_icon_iv"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:enabled="false"
+        android:text="@string/wind"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_description_tv"
+        android:id="@+id/textView2"
+        app:layout_constraintRight_toLeftOf="@+id/main_wind_speed_tv"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="0dp"/>
+
+    <TextView
+        android:id="@+id/main_wind_speed_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5dp"
+        android:enabled="false"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
+        app:layout_constraintLeft_toRightOf="@+id/textView2"
+        app:layout_constraintRight_toLeftOf="@+id/textView3"/>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="@string/from"
+        app:layout_constraintBaseline_toBaselineOf="@+id/main_wind_speed_tv"
+        app:layout_constraintLeft_toRightOf="@+id/main_wind_speed_tv"
+        app:layout_constraintRight_toLeftOf="@+id/main_wind_direction_tv"
+        android:layout_marginRight="5dp"/>
+
+    <TextView
+        android:id="@+id/main_wind_direction_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+        app:layout_constraintLeft_toRightOf="@+id/textView3"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>

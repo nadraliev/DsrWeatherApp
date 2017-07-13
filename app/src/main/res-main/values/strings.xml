@@ -10,4 +10,16 @@
     <string name="metrical_velocity">m/s</string>
     <string name="imperial_velocity">miles/hour</string>
     <string name="pressure">hPa</string>
+    <string name="wind">wind</string>
+    <string name="from">from</string>
+    <string-array name="directions">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
 </resources>

@@ -1,13 +1,10 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.LayoutDirection
-import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import butterknife.BindView
@@ -16,13 +13,13 @@ import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
-import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.screen.main.list.ForecastAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
+import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
 
@@ -45,6 +42,12 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     @BindView(R.id.main_description_tv)
     lateinit var descriptionTv: TextView
+
+    @BindView(R.id.main_wind_speed_tv)
+    lateinit var windSpeedTv: TextView
+
+    @BindView(R.id.main_wind_direction_tv)
+    lateinit var windDirectionTv: TextView
 
     @BindView(R.id.main_forecast_list)
     lateinit var forecastList: RecyclerView
@@ -95,6 +98,8 @@ class MainActivityView : TranslucentStatusActivityView() {
                     .color(primaryTextColor)
                     .sizeDp(100))
             descriptionTv.text = weather.first().description
+            windSpeedTv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
+            windDirectionTv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
         }
 
     }
