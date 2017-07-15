@@ -1,6 +1,5 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
-import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import soutvoid.com.DsrWeatherApp.R
@@ -8,7 +7,7 @@ import soutvoid.com.DsrWeatherApp.R
 object UnitsUtils {
 
     fun getPressureUnits(context: Context) : String {
-        return context.getString(R.string.pressure)
+        return context.getString(R.string.pressureUnit)
     }
 
     fun getVelocityUnits(context: Context) : String {

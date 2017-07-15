@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
 import soutvoid.com.DsrWeatherApp.domain.Forecast
+import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
@@ -53,6 +54,15 @@ class MainActivityView : TranslucentStatusActivityView() {
     @BindView(R.id.main_forecast)
     lateinit var forecastView: DayForecastView
 
+    @BindView(R.id.main_pressure_tv)
+    lateinit var pressureTv: TextView
+
+    @BindView(R.id.main_humidity_tv)
+    lateinit var humidityTv: TextView
+
+    @BindView(R.id.main_uv_tv)
+    lateinit var uviTv: TextView
+
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
@@ -78,6 +88,7 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
+        fillUviData(allWeatherData.ultraviolet)
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
@@ -92,12 +103,18 @@ class MainActivityView : TranslucentStatusActivityView() {
             descriptionTv.text = weather.first().description
             windSpeedTv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
             windDirectionTv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
+            pressureTv.text = ": ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
+            humidityTv.text = ": ${main.humidity}%"
         }
 
     }
 
     fun fillForecastData(forecast: Forecast) {
         forecastView.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
+    }
+
+    fun fillUviData(ultraviolet: Ultraviolet) {
+        uviTv.text = ": ${ultraviolet.value}"
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {

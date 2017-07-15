@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="humidity">humidity</string>
-    <string name="morning">morning</string>
-    <string name="day">day</string>
-    <string name="night">night</string>
-    <string name="evening">evening</string>
-</resources>
