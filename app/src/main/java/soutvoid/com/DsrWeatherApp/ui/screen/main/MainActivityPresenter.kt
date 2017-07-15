@@ -17,6 +17,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
+import soutvoid.com.DsrWeatherApp.ui.util.fillDetails
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import javax.inject.Inject
 
@@ -44,6 +45,8 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
         subscribeNetworkQuery(
                 prepareObservable(),
                 Action1 {
+                    it.dailyForecast.forecasts.fillDetails(it.forecast.list)
+                    it.dailyForecast.forecasts = it.dailyForecast.forecasts.filter { it.detailedForecasts.size > 0 }
                     view.fillAllData(it)
                     view.setProgressBarEnabled(false)
                 }

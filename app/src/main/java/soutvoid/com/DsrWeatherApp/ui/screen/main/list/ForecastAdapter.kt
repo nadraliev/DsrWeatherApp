@@ -11,9 +11,11 @@ import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.OneDayForecast
 import soutvoid.com.DsrWeatherApp.domain.OneMomentForecast
+import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.DayForecastView
 import soutvoid.com.DsrWeatherApp.ui.util.*
 
-class ForecastAdapter(var dailyForecasts: List<OneDayForecast> = ArrayList()) : RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
+class ForecastAdapter(var dailyForecasts: List<OneDayForecast> = ArrayList())
+    : RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ForecastViewHolder? {
         val view: View? = parent?.inflate(R.layout.daily_forecast_list_item)
@@ -38,6 +40,8 @@ class ForecastAdapter(var dailyForecasts: List<OneDayForecast> = ArrayList()) : 
         lateinit var minTemp: TextView
         @BindView(R.id.daily_forecast_expand_btn)
         lateinit var expandBtn: View
+        @BindView(R.id.daily_forecast_details)
+        lateinit var detailsView: DayForecastView
 
         init {
             ButterKnife.bind(this, view)
@@ -55,6 +59,7 @@ class ForecastAdapter(var dailyForecasts: List<OneDayForecast> = ArrayList()) : 
                 maxTemp.text = "${Math.round(temperature.max)} ${UnitsUtils.getDegreesUnits(itemView.context)}"
                 minTemp.text = "${Math.round(temperature.min)} ${UnitsUtils.getDegreesUnits(itemView.context)}"
             }
+            detailsView.setWeather(oneDayForecast)
         }
 
     }

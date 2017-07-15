@@ -24,5 +24,6 @@ data class OneDayForecast(
         @SerializedName("snow")
         val snow: Double,
         @SerializedName("rain")
-        val rain: Double
+        val rain: Double,
+        var detailedForecasts: MutableList<OneMomentForecast> = ArrayList()
 )
