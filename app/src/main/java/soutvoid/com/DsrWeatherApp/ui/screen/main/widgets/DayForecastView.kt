@@ -5,10 +5,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import butterknife.ButterKnife
+import kotlinx.android.synthetic.main.view_day_forecast.view.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.ThreeHoursForecast
-
-import kotlinx.android.synthetic.main.view_day_forecast.view.*
 
 class DayForecastView : FrameLayout {
 

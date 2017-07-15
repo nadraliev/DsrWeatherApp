@@ -6,6 +6,9 @@ import java.util.*
 
 object CalendarUtils {
 
+    /**
+     * возвращает дату в виде "Пон, Июл 12"
+     */
     fun getFormattedDate(seconds: Long, locale: Locale = Locale.getDefault()) : String {
         val calendar: Calendar = Calendar.getInstance(locale)
         calendar.timeInMillis = seconds*1000
