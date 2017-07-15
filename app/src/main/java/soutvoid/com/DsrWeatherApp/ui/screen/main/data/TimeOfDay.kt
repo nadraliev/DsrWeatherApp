@@ -1,6 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main.data
 
-enum class TimeOfDay(hours: Int) {
+enum class TimeOfDay(val hours: Int) {
     MORNING(8),
     DAY(14),
     EVENING(19),

@@ -44,7 +44,7 @@ class TimeOfDayWeatherView : FrameLayout {
         with(oneMomentForecast) {
             val calendar: Calendar = Calendar.getInstance(locale)
             calendar.timeInMillis = timeOfData * 1000
-            name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR)).toString().toLowerCase()
+            name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY)).toString().toLowerCase()
             icon.setImageDrawable(IconicsDrawable(context)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather[0].id, timeOfData))
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))

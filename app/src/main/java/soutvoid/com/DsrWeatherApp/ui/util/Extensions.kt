@@ -49,15 +49,12 @@ fun List<OneDayForecast>.fillDetails(oneMomentForecasts: List<OneMomentForecast>
  * предполагается, что все прогнозы в листе относятся к одному дню
  */
 fun List<OneMomentForecast>.getTimeOfDayForecast(timeOfDay: TimeOfDay,
-                                                 timeZone: TimeZone = TimeZone.getDefault())
+                                                 locale: Locale = Locale.getDefault())
         : OneMomentForecast {
-    val currentDay: Long = this[0].timeOfData / 60 / 60 / 24
-    val requestedTimeRelative: Long = timeOfDay.ordinal * 60 * 60L
-    val requestedTimeAbsolute: Long = currentDay + requestedTimeRelative + timeZone.rawOffset / 1000
-    var requestedForecast: OneMomentForecast = this[0]
-    this.forEach {
-        if (Math.abs(requestedTimeAbsolute - it.timeOfData) < Math.abs(requestedTimeAbsolute - requestedForecast.timeOfData))
-            requestedForecast = it
+    val calendar = Calendar.getInstance(locale)
+    val result = this.minBy {
+        calendar.timeInMillis = it.timeOfData * 1000
+        return@minBy Math.abs(timeOfDay.hours - calendar.get(Calendar.HOUR_OF_DAY))
     }
-    return requestedForecast
+    return if (result != null) result else this[0]
 }
