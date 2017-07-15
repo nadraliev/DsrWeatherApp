@@ -13,9 +13,11 @@ import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
+import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
+import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.DayForecastView
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
@@ -48,6 +50,9 @@ class MainActivityView : TranslucentStatusActivityView() {
     @BindView(R.id.main_wind_direction_tv)
     lateinit var windDirectionTv: TextView
 
+    @BindView(R.id.main_forecast)
+    lateinit var forecastView: DayForecastView
+
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
@@ -72,6 +77,7 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
+        fillForecastData(allWeatherData.forecast)
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
@@ -88,6 +94,10 @@ class MainActivityView : TranslucentStatusActivityView() {
             windDirectionTv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
         }
 
+    }
+
+    fun fillForecastData(forecast: Forecast) {
+        forecastView.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {

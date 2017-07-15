@@ -33,13 +33,14 @@
         android:id="@+id/view_tod_weather_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/view_tod_weather_icon"
-        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/view_tod_weather_icon"/>
 
     <ImageView
         android:id="@+id/view_tod_weather_wind_icon"
@@ -57,12 +58,13 @@
         android:id="@+id/view_tod_weather_wind"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="TextView"
-        app:layout_constraintTop_toBottomOf="@+id/view_tod_weather_wind_icon"
-        android:layout_marginRight="8dp"
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/view_tod_weather_wind_icon"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -100,4 +100,15 @@
         app:layout_constraintLeft_toRightOf="@+id/textView3"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.DayForecastView
+        android:id="@+id/main_forecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_wind_speed_tv"/>
+
 </android.support.constraint.ConstraintLayout>

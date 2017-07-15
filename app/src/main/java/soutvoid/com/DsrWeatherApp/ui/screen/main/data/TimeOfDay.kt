@@ -9,12 +9,11 @@ enum class TimeOfDay(val hours: Int) {
     companion object {
         fun getByTime(hours: Int) : TimeOfDay {
             when(hours) {
-                in 0..11 -> return MORNING
-                in 12..16 -> return DAY
-                in 17..21 -> return EVENING
-                in 22..23 -> return NIGHT
+                in 5..11 -> return MORNING
+                in 12..17 -> return DAY
+                in 18..23 -> return EVENING
             }
-            return MORNING
+            return NIGHT
         }
     }
 }

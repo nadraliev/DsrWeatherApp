@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 
 class DayForecastView : FrameLayout {
 
+    @BindView(R.id.view_day_forecast_morning)
     lateinit var morning: TimeOfDayWeatherView
     @BindView(R.id.view_day_forecast_day)
     lateinit var day: TimeOfDayWeatherView
