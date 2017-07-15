@@ -4,9 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
 import butterknife.ButterKnife
 import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
@@ -17,18 +14,9 @@ import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import java.util.*
 
-class TimeOfDayWeatherView : FrameLayout {
+import kotlinx.android.synthetic.main.view_time_of_day_weather.view.*
 
-    @BindView(R.id.view_tod_weather_name)
-    lateinit var name: TextView
-    @BindView(R.id.view_tod_weather_icon)
-    lateinit var icon: ImageView
-    @BindView(R.id.view_tod_weather_temperature)
-    lateinit var temperature: TextView
-    @BindView(R.id.view_tod_weather_wind_icon)
-    lateinit var windIcon: ImageView
-    @BindView(R.id.view_tod_weather_wind)
-    lateinit var windInfo: TextView
+class TimeOfDayWeatherView : FrameLayout {
 
     constructor(context: Context) : super(context)
 
@@ -43,17 +31,17 @@ class TimeOfDayWeatherView : FrameLayout {
         with(threeHoursForecast) {
             val calendar: Calendar = Calendar.getInstance(locale)
             calendar.timeInMillis = timeOfData * 1000
-            name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY)).toString().toLowerCase()
-            icon.setImageDrawable(IconicsDrawable(context)
+            view_tod_weather_name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY)).toString().toLowerCase()
+            view_tod_weather_icon.setImageDrawable(IconicsDrawable(context)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather[0].id, timeOfData))
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(32))
-            temperature.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(context)}"
-            windIcon.setImageDrawable(IconicsDrawable(context)
+            view_tod_weather_temperature.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(context)}"
+            view_tod_weather_wind_icon.setImageDrawable(IconicsDrawable(context)
                     .icon(WeatherIconsHelper.getDirectionalIcon(wind.degrees))
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(16))
-            windInfo.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(context)}"
+            view_tod_weather_wind.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(context)}"
         }
     }
 

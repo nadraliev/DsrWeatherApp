@@ -10,6 +10,7 @@ import android.widget.TextView
 import butterknife.BindView
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
+import kotlinx.android.synthetic.main.activity_main.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
@@ -25,43 +26,13 @@ import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
 
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.layout_current_weather.*
+
 class MainActivityView : TranslucentStatusActivityView() {
 
     @Inject
     lateinit var presenter : MainActivityPresenter
-
-    @BindView(R.id.main_refresh_layout)
-    lateinit var refreshL: SwipeRefreshLayout
-
-    @BindView(R.id.main_city_tv)
-    lateinit var cityTv: TextView
-
-    @BindView(R.id.main_temp_tv)
-    lateinit var temperatureTv: TextView
-
-    @BindView(R.id.main_icon_iv)
-    lateinit var iconIv: ImageView
-
-    @BindView(R.id.main_description_tv)
-    lateinit var descriptionTv: TextView
-
-    @BindView(R.id.main_wind_speed_tv)
-    lateinit var windSpeedTv: TextView
-
-    @BindView(R.id.main_wind_direction_tv)
-    lateinit var windDirectionTv: TextView
-
-    @BindView(R.id.main_forecast)
-    lateinit var forecastView: DayForecastView
-
-    @BindView(R.id.main_pressure_tv)
-    lateinit var pressureTv: TextView
-
-    @BindView(R.id.main_humidity_tv)
-    lateinit var humidityTv: TextView
-
-    @BindView(R.id.main_uv_tv)
-    lateinit var uviTv: TextView
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
@@ -82,7 +53,7 @@ class MainActivityView : TranslucentStatusActivityView() {
     }
 
     private fun initSwipeRefresh() {
-        refreshL.setOnRefreshListener { presenter.refresh() }
+        main_refresh_layout.setOnRefreshListener { presenter.refresh() }
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
@@ -94,30 +65,30 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         with(currentWeather) {
             val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
-            cityTv.text = cityName
-            temperatureTv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
-            iconIv.setImageDrawable(IconicsDrawable(this@MainActivityView)
+            main_city_tv.text = cityName
+            main_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
+            main_icon_iv.setImageDrawable(IconicsDrawable(this@MainActivityView)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData, sys.sunrise, sys.sunset))
                     .color(primaryTextColor)
                     .sizeDp(100))
-            descriptionTv.text = weather.first().description
-            windSpeedTv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
-            windDirectionTv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
-            pressureTv.text = ": ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
-            humidityTv.text = ": ${main.humidity}%"
+            main_description_tv.text = weather.first().description
+            main_wind_speed_tv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
+            main_wind_direction_tv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
+            main_pressure_tv.text = ": ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
+            main_humidity_tv.text = ": ${main.humidity}%"
         }
 
     }
 
     fun fillForecastData(forecast: Forecast) {
-        forecastView.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
+        main_forecast.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
     }
 
     fun fillUviData(ultraviolet: Ultraviolet) {
-        uviTv.text = ": ${ultraviolet.value}"
+        main_uv_tv.text = ": ${ultraviolet.value}"
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {
-        refreshL.isRefreshing = enabled
+        main_refresh_layout.isRefreshing = enabled
     }
 }
