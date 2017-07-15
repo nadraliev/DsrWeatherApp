@@ -7,5 +7,5 @@ data class Forecast(
         @SerializedName("city")
         val city: City,
         @SerializedName("list")
-        val list : List<OneMomentForecast>
+        val list : List<ThreeHoursForecast>
 )

@@ -10,7 +10,7 @@ import soutvoid.com.DsrWeatherApp.domain.sys.Sys
 import soutvoid.com.DsrWeatherApp.domain.weather.Weather
 import soutvoid.com.DsrWeatherApp.domain.wind.Wind
 
-data class OneMomentForecast(
+data class ThreeHoursForecast(
         @SerializedName("weather")
         val weather : List<Weather>,
         @SerializedName("main")

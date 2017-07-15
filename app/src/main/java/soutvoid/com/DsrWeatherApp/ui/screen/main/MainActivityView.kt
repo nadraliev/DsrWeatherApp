@@ -13,11 +13,9 @@ import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
-import soutvoid.com.DsrWeatherApp.domain.OneMomentForecast
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import soutvoid.com.DsrWeatherApp.ui.screen.main.list.ForecastAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
@@ -50,14 +48,8 @@ class MainActivityView : TranslucentStatusActivityView() {
     @BindView(R.id.main_wind_direction_tv)
     lateinit var windDirectionTv: TextView
 
-    @BindView(R.id.main_forecast_list)
-    lateinit var forecastList: RecyclerView
-
-    val forecastAdapter: ForecastAdapter = ForecastAdapter()
-
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
-        initList()
         initSwipeRefresh()
     }
 
@@ -74,19 +66,12 @@ class MainActivityView : TranslucentStatusActivityView() {
                 .build()
     }
 
-    private fun initList() {
-        forecastList.adapter = forecastAdapter
-        forecastList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        forecastList.addItemDecoration(DividerItemDecoration(this, LinearLayoutManager.VERTICAL))
-    }
-
     private fun initSwipeRefresh() {
         refreshL.setOnRefreshListener { presenter.refresh() }
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
-        fillForecastData(allWeatherData.dailyForecast)
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
@@ -103,11 +88,6 @@ class MainActivityView : TranslucentStatusActivityView() {
             windDirectionTv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
         }
 
-    }
-
-    fun fillForecastData(dailyForecast: DailyForecast) {
-        forecastAdapter.dailyForecasts = dailyForecast.forecasts
-        forecastAdapter.notifyDataSetChanged()
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {

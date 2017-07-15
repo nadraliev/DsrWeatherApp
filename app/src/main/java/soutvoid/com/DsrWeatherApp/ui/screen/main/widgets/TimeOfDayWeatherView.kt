@@ -10,11 +10,10 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import com.mikepenz.iconics.IconicsDrawable
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.OneMomentForecast
+import soutvoid.com.DsrWeatherApp.domain.ThreeHoursForecast
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.TimeOfDay
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
-import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import java.util.*
 
@@ -40,8 +39,8 @@ class TimeOfDayWeatherView : FrameLayout {
         ButterKnife.bind(this)
     }
 
-    fun setWeather(oneMomentForecast: OneMomentForecast, locale: Locale = Locale.getDefault()) {
-        with(oneMomentForecast) {
+    fun setWeather(threeHoursForecast: ThreeHoursForecast, locale: Locale = Locale.getDefault()) {
+        with(threeHoursForecast) {
             val calendar: Calendar = Calendar.getInstance(locale)
             calendar.timeInMillis = timeOfData * 1000
             name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY)).toString().toLowerCase()

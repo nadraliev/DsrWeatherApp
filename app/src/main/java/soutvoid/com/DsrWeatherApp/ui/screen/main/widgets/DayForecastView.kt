@@ -8,19 +8,12 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.OneDayForecast
-import soutvoid.com.DsrWeatherApp.domain.OneMomentForecast
+import soutvoid.com.DsrWeatherApp.domain.ThreeHoursForecast
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.TimeOfDay
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
-import soutvoid.com.DsrWeatherApp.ui.util.getTimeOfDayForecast
 
 class DayForecastView : FrameLayout {
 
-    @BindView(R.id.view_day_forecast_humidity_tv)
-    lateinit var humidity: TextView
-    @BindView(R.id.view_day_forecast_pressure_tv)
-    lateinit var pressure: TextView
-    @BindView(R.id.view_day_forecast_morning)
     lateinit var morning: TimeOfDayWeatherView
     @BindView(R.id.view_day_forecast_day)
     lateinit var day: TimeOfDayWeatherView
@@ -39,13 +32,11 @@ class DayForecastView : FrameLayout {
         ButterKnife.bind(this)
     }
 
-    fun setWeather(oneDayForecast: OneDayForecast) {
-        humidity.text = "${oneDayForecast.humidity}%"
-        pressure.text = "${oneDayForecast.pressure} ${UnitsUtils.getPressureUnits(context)}"
-        morning.setWeather(oneDayForecast.detailedForecasts.getTimeOfDayForecast(TimeOfDay.MORNING))
-        day.setWeather(oneDayForecast.detailedForecasts.getTimeOfDayForecast(TimeOfDay.DAY))
-        evening.setWeather(oneDayForecast.detailedForecasts.getTimeOfDayForecast(TimeOfDay.EVENING))
-        night.setWeather(oneDayForecast.detailedForecasts.getTimeOfDayForecast(TimeOfDay.NIGHT))
+    fun setWeather(forecasts: List<ThreeHoursForecast>) {
+        morning.setWeather(forecasts[0])
+        day.setWeather(forecasts[1])
+        evening.setWeather(forecasts[2])
+        night.setWeather(forecasts[3])
     }
 
 }
