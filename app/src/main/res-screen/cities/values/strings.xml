@@ -3,4 +3,5 @@
     <string name="locations">Locations</string>
     <string name="all_locations">All</string>
     <string name="favorite">Favorite</string>
+    <string name="current_temperature">Current temperature</string>
 </resources>

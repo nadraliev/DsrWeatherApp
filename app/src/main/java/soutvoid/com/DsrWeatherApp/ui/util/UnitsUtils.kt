@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.util
 import android.content.Context
 import android.content.SharedPreferences
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.interactor.util.Units
 
 object UnitsUtils {
 
@@ -38,6 +39,10 @@ object UnitsUtils {
     fun isMetricalPreferred(context: Context) : Boolean {
         val sharedPreferences: SharedPreferences = context.getDefaultPreferences()
         return sharedPreferences.getBoolean("units", true)
+    }
+
+    fun getPreferredUnits(context: Context) : Units {
+        return if (isMetricalPreferred(context)) Units.METRIC else Units.IMPERIAL
     }
 
 }

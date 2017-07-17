@@ -1,8 +1,8 @@
-package soutvoid.com.DsrWeatherApp.domain.city
+package soutvoid.com.DsrWeatherApp.domain.location
 
 import io.realm.RealmObject
 
-open class City(
+open class Location(
         var name: String = "",
         var longitude: Double = .0,
         var latitude: Double = .0,

@@ -12,10 +12,10 @@ class LocationsPagerAdapter(fragmentManager: FragmentManager,
 
     override fun getItem(position: Int): Fragment {
         when (position) {
-            0 -> return LocationsFragment.newInstance()
-            1 -> return LocationsFragment.newInstance(true)
+            0 -> return LocationsFragmentView.newInstance()
+            1 -> return LocationsFragmentView.newInstance(true)
         }
-        return LocationsFragment.newInstance()
+        return LocationsFragmentView.newInstance()
     }
 
     override fun getCount(): Int = 2
