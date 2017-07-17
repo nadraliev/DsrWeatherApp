@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities.list
+package soutvoid.com.DsrWeatherApp.ui.screen.locations.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -9,7 +9,7 @@ import butterknife.ButterKnife
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
-import soutvoid.com.DsrWeatherApp.ui.screen.cities.widget.FavoriteButton
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.widget.FavoriteButton
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 

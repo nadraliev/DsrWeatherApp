@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities.pager
+package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -12,7 +12,7 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
-import soutvoid.com.DsrWeatherApp.ui.screen.cities.list.LocationsRecyclerAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.list.LocationsRecyclerAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject

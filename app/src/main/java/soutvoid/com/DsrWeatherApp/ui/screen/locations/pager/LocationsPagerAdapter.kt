@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities.pager
+package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
 import android.content.Context
 import android.support.v4.app.Fragment

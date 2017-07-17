@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities.widget
+package soutvoid.com.DsrWeatherApp.ui.screen.locations.widget
 
 import android.content.Context
 import android.support.v4.content.ContextCompat

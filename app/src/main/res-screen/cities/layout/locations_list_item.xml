@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"/>
 
-    <soutvoid.com.DsrWeatherApp.ui.screen.cities.widget.FavoriteButton
+    <soutvoid.com.DsrWeatherApp.ui.screen.locations.widget.FavoriteButton
         android:id="@+id/locations_item_favorite_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

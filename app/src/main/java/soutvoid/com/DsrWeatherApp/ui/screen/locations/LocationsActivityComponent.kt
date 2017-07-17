@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities
+package soutvoid.com.DsrWeatherApp.ui.screen.locations
 
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.component.scope.PerScreen

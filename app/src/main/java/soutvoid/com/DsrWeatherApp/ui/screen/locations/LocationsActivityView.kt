@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities
+package soutvoid.com.DsrWeatherApp.ui.screen.locations
 
 import android.os.Bundle
 import com.agna.ferro.mvp.component.ScreenComponent
@@ -7,7 +7,7 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
-import soutvoid.com.DsrWeatherApp.ui.screen.cities.pager.LocationsPagerAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.pager.LocationsPagerAdapter
 
 class LocationsActivityView : BaseActivityView() {
 

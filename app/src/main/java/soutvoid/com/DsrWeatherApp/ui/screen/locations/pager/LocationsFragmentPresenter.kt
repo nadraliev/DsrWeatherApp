@@ -1,6 +1,9 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.cities.pager
+package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
+import android.widget.Toast
 import com.agna.ferro.mvp.component.scope.PerScreen
+import io.realm.Realm
+import rx.Observable
 import rx.functions.Action1
 import rx.functions.FuncN
 import rx.schedulers.Schedulers
@@ -21,33 +24,52 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
     @Inject
     lateinit var currentWeatherRep: CurrentWeatherRepository
 
-    override fun onLoad(viewRecreated: Boolean) {
-        super.onLoad(viewRecreated)
+    override fun onResume() {
+        super.onResume()
 
         view.setRefreshEnable(true)
         loadData()
     }
 
     private fun loadData() {
-        val locations = arrayListOf(SavedLocation("Voronezh", 51.40, 39.11)) //Todo load from database
+        val locations = getSavedFromDB()
+        if (locations.isNotEmpty()) {
+            subscribeNetworkQuery(
+                    prepareObservable(locations),
+                    Action1 {
+                        view.showData(locations, it)
+                        view.setRefreshEnable(false)
+                    }
+            )
+        } else {
+            view.setRefreshEnable(false)
+        }
+    }
+
+    private fun getSavedFromDB() : List<SavedLocation> {
+        val realm = Realm.getDefaultInstance()
+        var locations : List<SavedLocation>
+        if (view.isOnlyFavorite())
+            locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).equalTo("isFavorite", true).findAll())
+        else locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAll())
+        realm.close()
+        return locations
+    }
+
+    private fun prepareObservable(locations: List<SavedLocation>) : Observable<List<CurrentWeather>> {
         val weathers = locations
-                .map { currentWeatherRep.getByCoordinates(
-                        it.latitude,
-                        it.longitude,
-                        UnitsUtils.getPreferredUnits(view.context))
+                .map {
+                    currentWeatherRep.getByCoordinates(
+                            it.latitude,
+                            it.longitude,
+                            UnitsUtils.getPreferredUnits(view.context))
                 }.toList()
         val combinedObservable = ObservableUtil.combineLatestDelayError(
                 Schedulers.io(),
                 weathers,
                 FuncN { it.map { it as CurrentWeather }.toList() }
         )
-        subscribeNetworkQuery(
-                combinedObservable,
-                Action1 {
-                    view.showData(locations, it)
-                    view.setRefreshEnable(false)
-                }
-        )
+        return combinedObservable
     }
 
     fun onLocationClick(savedLocation: SavedLocation) {

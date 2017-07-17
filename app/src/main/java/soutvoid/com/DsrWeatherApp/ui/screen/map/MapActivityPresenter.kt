@@ -58,7 +58,7 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
     private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()) : String {
         val geocoder: Geocoder = Geocoder(view.baseContext, locale)
         val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-        if (addresses.isNotEmpty())
+        if (addresses.isNotEmpty() && addresses[0].locality != null)
             return addresses[0].locality
         return ""
     }

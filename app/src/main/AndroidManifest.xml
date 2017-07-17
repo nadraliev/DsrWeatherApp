@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Gray.White">
         <activity android:name=".ui.screen.main.MainActivityView"/>
-        <activity android:name=".ui.screen.cities.LocationsActivityView">
+        <activity android:name=".ui.screen.locations.LocationsActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
