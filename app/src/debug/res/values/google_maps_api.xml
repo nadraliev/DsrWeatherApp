@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=FE:74:C0:7B:00:B6:8E:76:AA:BE:F6:6E:D5:3F:56:C5:DF:6F:BD:79%3Bsoutvoid.com.DsrWeatherApp.ui.screen.map
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    FE:74:C0:7B:00:B6:8E:76:AA:BE:F6:6E:D5:3F:56:C5:DF:6F:BD:79
+
+    SHA-1 certificate fingerprint:
+    FE:74:C0:7B:00:B6:8E:76:AA:BE:F6:6E:D5:3F:56:C5:DF:6F:BD:79
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyB6KKyIEtjgExCp8ScX7oXj31PZLxk6_P8
+    </string>
+</resources>

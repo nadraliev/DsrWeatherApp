@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.Location
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.cities.list.LocationsRecyclerAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject
 
@@ -60,6 +61,7 @@ class LocationsFragmentView : BaseFragmentView() {
 
         initList()
         initSwipeRefresh()
+        initFab()
     }
 
     private fun initSwipeRefresh() {
@@ -68,6 +70,10 @@ class LocationsFragmentView : BaseFragmentView() {
 
     fun setRefreshEnable(enabled: Boolean) {
         locations_swipe_refresh.isRefreshing = enabled
+    }
+
+    fun initFab() {
+        locations_fab.setOnClickListener { MapActivityView.start(context) }
     }
 
     private fun initList() {

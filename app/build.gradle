@@ -58,8 +58,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    testCompile 'junit:junit:4.12'
-
 
     //libraries versions
     def daggerVersion = "2.11"
@@ -76,10 +74,8 @@ dependencies {
     compile "com.google.dagger:dagger:${daggerVersion}"
     compile "com.agna.ferro:ferro-mvp-rx:${ferroMvpVersion}"
     compile "io.reactivex:rxjava:${rxjavaVersion}"
-    compile 'io.reactivex:rxandroid:1.2.1'
     compile "com.android.support:appcompat-v7:${appcompatVersion}"
     compile "com.android.support:support-v4:${appcompatVersion}"
-
 
     //network
     compile "com.squareup.retrofit2:retrofit:${retrofitVersion}"
@@ -88,12 +84,8 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
     compile "com.github.bumptech.glide:glide:${glideVersion}"
-    compile "com.google.code.gson:gson:2.8.1"
-
 
     //logging
-    compile "com.jakewharton.timber:timber:4.1.2"
-    compile "com.github.anrwatchdog:anrwatchdog:1.2.0"
     compile("com.crashlytics.sdk.android:crashlytics:2.6.5@aar") {
         transitive = true;
     }
@@ -105,26 +97,27 @@ dependencies {
     compile "com.android.support:design:${appcompatVersion}"
     compile "com.jakewharton:butterknife:${butterknifeVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile "com.mikepenz:iconics-core:2.8.9@aar"
+    compile 'com.mikepenz:iconics-core:2.8.9@aar'
     compile 'com.mikepenz:weather-icons-typeface:2.0.10.3@aar'
-
-
 
     //annotation processors
     kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
     kapt "com.github.bumptech.glide:compiler:${glideVersion}"
     kapt "com.jakewharton:butterknife-compiler:${butterknifeVersion}"
 
-
     //provided
-    provided "javax.annotation:jsr250-api:1.0"
+    provided 'javax.annotation:jsr250-api:1.0'
+
 
     //other
+    compile 'io.reactivex:rxandroid:1.2.1'
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'com.jakewharton.timber:timber:4.1.2'
+    compile 'com.github.anrwatchdog:anrwatchdog:1.2.0'
     compile 'com.facebook.stetho:stetho:1.5.0'
     compile 'com.uphyca:stetho_realm:2.0.0'
-
-
-
+    compile 'com.google.android.gms:play-services-maps:11.0.2'
+    testCompile 'junit:junit:4.12'
 }
 repositories {
     mavenCentral()
