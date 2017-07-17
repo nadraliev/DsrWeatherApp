@@ -35,4 +35,8 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
     fun setPositionCurrent(location: Location) {
         view.setMapPosition(LatLng(location.latitude, location.longitude))
     }
+
+    fun locationChoosed() {
+
+    }
 }

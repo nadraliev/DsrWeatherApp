@@ -55,6 +55,7 @@ class MapActivityView: BaseActivityView() {
         super.onCreate(savedInstanceState, viewRecreated)
 
         initToolbar()
+        initButtons()
 
         if (SdkUtil.supportsM() && !isLocationPermissionGranted())
             requestLocationPermission()
@@ -82,6 +83,11 @@ class MapActivityView: BaseActivityView() {
         title = getString(R.string.choose_location)
         map_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
         map_toolbar.setNavigationOnClickListener { onBackPressed() }
+    }
+
+    fun initButtons() {
+        map_my_location.setOnClickListener { requestLocation() }
+        map_add_location.setOnClickListener { presenter.locationChoosed() }
     }
 
     fun isLocationPermissionGranted() : Boolean {
