@@ -3,7 +3,7 @@
           package="soutvoid.com.DsrWeatherApp"
     >
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Gray.White">
 
-        <activity android:name="soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView">
+        <activity android:name="soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView"/>
+
+        <activity android:name=".ui.screen.cities.CitiesActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -24,7 +26,7 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="6b5749ebdeeac0c5f3e6670361e6818564d70f78" />
+            android:value="6b5749ebdeeac0c5f3e6670361e6818564d70f78"/>
     </application>
 
 </manifest>
