@@ -10,6 +10,7 @@ import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherReposi
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
     }
 
     private fun loadData() {
-        val locations = arrayListOf(Location("Voronezh", 37.40, 51.00)) //Todo load from database
+        val locations = arrayListOf(Location("Voronezh", 51.40, 39.11)) //Todo load from database
         val weathers = locations
                 .map { currentWeatherRep.getByCoordinates(
                         it.latitude,
@@ -46,6 +47,6 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
     }
 
     fun onLocationClick(location: Location) {
-        //TODO launch weather activity
+        MainActivityView.start(view.context, location)
     }
 }

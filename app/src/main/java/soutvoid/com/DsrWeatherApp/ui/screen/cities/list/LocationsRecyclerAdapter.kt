@@ -41,7 +41,7 @@ class LocationsRecyclerAdapter(var locations: List<Location> = emptyList(),
 
         init {
             ButterKnife.bind(this, itemView)
-            itemView.setOnClickListener { onClick }
+            itemView.setOnClickListener { onClick(adapterPosition) }
         }
 
         fun bind(location: Location, currentWeather: CurrentWeather) {

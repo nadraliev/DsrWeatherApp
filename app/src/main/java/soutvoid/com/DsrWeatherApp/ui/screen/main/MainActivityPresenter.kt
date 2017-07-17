@@ -7,6 +7,7 @@ import rx.functions.Func3
 import rx.schedulers.Schedulers
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.Forecast
+import soutvoid.com.DsrWeatherApp.domain.location.Location
 import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
@@ -32,10 +33,13 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
     @Inject
     lateinit var uviRep : UviRepository
 
+    lateinit var location: Location
+
 
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
+        location = view.getLocationParam()
         view.setProgressBarEnabled(true)
         loadData()
     }
@@ -51,14 +55,13 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
     }
 
     private fun prepareObservable() : Observable<AllWeatherData> {
-        val isMetrical = UnitsUtils.isMetricalPreferred(view.baseContext)
-        val units = if (isMetrical) Units.METRIC else Units.IMPERIAL
+        val units = UnitsUtils.getPreferredUnits(view.baseContext)
         return ObservableUtil.combineLatestDelayError(
                 Schedulers.io(),
-                currentWeatherRep.getByCityName("Voronezh", units),
-                forecastRep.getByCityName("Voronezh", units),
-                uviRep.getByCoordinates(51.65,39.21, units),
-                forecastRep.getDailyByCityName("Voronezh", units)
+                currentWeatherRep.getByCoordinates(location.latitude, location.longitude, units),
+                forecastRep.getByCoordinates(location.latitude, location.longitude, units),
+                uviRep.getByCoordinates(location.latitude, location.longitude, units),
+                forecastRep.getDailyByCoordinates(location.latitude, location.longitude, units)
         ) { current, forecast, ultraviolet, dailyForecast -> AllWeatherData(current, forecast, ultraviolet, dailyForecast) }
     }
 

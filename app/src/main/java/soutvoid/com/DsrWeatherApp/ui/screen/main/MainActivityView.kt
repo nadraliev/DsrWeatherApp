@@ -1,5 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.DividerItemDecoration
@@ -28,8 +30,18 @@ import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_current_weather.*
+import soutvoid.com.DsrWeatherApp.domain.location.Location
 
 class MainActivityView : TranslucentStatusActivityView() {
+
+    companion object {
+        const val LOCATION_KEY = "location"
+        fun start(context: Context, location: Location) {
+            val intent = Intent(context, MainActivityView::class.java)
+            intent.putExtra(LOCATION_KEY, location)
+            context.startActivity(intent)
+        }
+    }
 
     @Inject
     lateinit var presenter : MainActivityPresenter
@@ -37,6 +49,7 @@ class MainActivityView : TranslucentStatusActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
+        fillCityName()
     }
 
     override fun getPresenter(): BasePresenter<*> = presenter
@@ -56,6 +69,10 @@ class MainActivityView : TranslucentStatusActivityView() {
         main_refresh_layout.setOnRefreshListener { presenter.refresh() }
     }
 
+    fun fillCityName() {
+        main_city_tv.text = getLocationParam().name
+    }
+
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
@@ -65,7 +82,6 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         with(currentWeather) {
             val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
-            main_city_tv.text = cityName
             main_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
             main_icon_iv.setImageDrawable(IconicsDrawable(this@MainActivityView)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData, sys.sunrise, sys.sunset))
@@ -90,5 +106,9 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     fun setProgressBarEnabled(enabled: Boolean) {
         main_refresh_layout.isRefreshing = enabled
+    }
+
+    fun getLocationParam(): Location {
+        return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as Location
     }
 }
