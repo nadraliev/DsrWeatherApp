@@ -59,6 +59,15 @@ class LocationsFragmentView : BaseFragmentView() {
         super.onViewCreated(view, savedInstanceState)
 
         initList()
+        initSwipeRefresh()
+    }
+
+    private fun initSwipeRefresh() {
+        locations_swipe_refresh.setOnRefreshListener { presenter.refresh() }
+    }
+
+    fun setRefreshEnable(enabled: Boolean) {
+        locations_swipe_refresh.isRefreshing = enabled
     }
 
     private fun initList() {

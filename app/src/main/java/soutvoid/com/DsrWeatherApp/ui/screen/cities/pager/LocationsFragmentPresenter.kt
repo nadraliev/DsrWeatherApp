@@ -24,6 +24,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
+        view.setRefreshEnable(true)
         loadData()
     }
 
@@ -42,11 +43,18 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         )
         subscribeNetworkQuery(
                 combinedObservable,
-                Action1 { view.showData(locations, it) }
+                Action1 {
+                    view.showData(locations, it)
+                    view.setRefreshEnable(false)
+                }
         )
     }
 
     fun onLocationClick(location: Location) {
         MainActivityView.start(view.context, location)
+    }
+
+    fun refresh() {
+        loadData()
     }
 }
