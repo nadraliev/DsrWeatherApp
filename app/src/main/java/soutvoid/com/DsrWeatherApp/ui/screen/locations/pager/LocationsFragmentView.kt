@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -72,7 +73,10 @@ class LocationsFragmentView : BaseFragmentView() {
     }
 
     fun initFab() {
-        locations_fab.setOnClickListener { MapActivityView.start(context) }
+        if (isOnlyFavorite())
+            locations_fab.visibility = View.GONE
+        else
+            locations_fab.setOnClickListener { MapActivityView.start(context) }
     }
 
     private fun initList() {
