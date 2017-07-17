@@ -80,7 +80,12 @@ class LocationsFragmentView : BaseFragmentView() {
     }
 
     private fun initList() {
-        adapter = LocationsRecyclerAdapter { presenter.onLocationClick(adapter.savedLocations[it]) }
+        adapter = LocationsRecyclerAdapter(
+                onClick = { presenter.onLocationClick(adapter.savedLocations[it]) },
+                favoriteStateChangedListener = {
+                    position, state ->  presenter.onFavoriteStateChanged(adapter.savedLocations[position], state)
+                }
+            )
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }

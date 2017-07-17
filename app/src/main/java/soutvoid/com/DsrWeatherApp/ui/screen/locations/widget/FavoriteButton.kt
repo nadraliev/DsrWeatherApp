@@ -17,11 +17,15 @@ class FavoriteButton : CompoundButton {
     constructor(context: Context, attributeSet: AttributeSet): super(context, attributeSet)
 
     init {
-        buttonDrawable = ContextCompat.getDrawable(context, R.drawable.ic_settings)
-        setOnClickListener { toggle() }
+        isClickable = true
     }
 
     override fun setChecked(checked: Boolean) {
         super.setChecked(checked)
+
+        if (checked)
+            buttonDrawable = ContextCompat.getDrawable(context, R.drawable.ic_favorite_light)
+        else
+            buttonDrawable = ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_light)
     }
 }

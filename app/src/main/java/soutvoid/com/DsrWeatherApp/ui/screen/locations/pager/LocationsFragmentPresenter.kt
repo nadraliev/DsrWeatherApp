@@ -76,6 +76,15 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         MainActivityView.start(view.context, savedLocation)
     }
 
+    fun onFavoriteStateChanged(location: SavedLocation, checked: Boolean) {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            location.isFavorite = checked
+            it.copyToRealmOrUpdate(location)
+        }
+        realm.close()
+    }
+
     fun refresh() {
         loadData()
     }

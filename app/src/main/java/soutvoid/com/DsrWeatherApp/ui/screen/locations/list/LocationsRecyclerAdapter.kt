@@ -15,12 +15,13 @@ import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
 class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyList(),
                                var currentWeathers: List<CurrentWeather> = emptyList(),
-                               var onClick: (Int) -> Unit)
+                               var onClick: (Int) -> Unit,
+                               var favoriteStateChangedListener: (position: Int, state: Boolean) -> Unit)
     : RecyclerView.Adapter<LocationsRecyclerAdapter.LocationsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): LocationsViewHolder? {
         val view = parent?.inflate(R.layout.locations_list_item)
-        return view?.let { LocationsViewHolder(view, onClick) }
+        return view?.let { LocationsViewHolder(view, onClick, favoriteStateChangedListener) }
     }
 
     override fun onBindViewHolder(holder: LocationsViewHolder?, position: Int) {
@@ -29,7 +30,9 @@ class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyLi
 
     override fun getItemCount(): Int = savedLocations.size
 
-    class LocationsViewHolder(view: View, var onClick: (Int) -> Unit)
+    class LocationsViewHolder(view: View,
+                              var onClick: (Int) -> Unit,
+                              var stateChangedListener: (position: Int, state: Boolean) -> Unit)
         : RecyclerView.ViewHolder(view) {
 
         @BindView(R.id.locations_item_name)
@@ -42,6 +45,9 @@ class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyLi
         init {
             ButterKnife.bind(this, itemView)
             itemView.setOnClickListener { onClick(adapterPosition) }
+            favoriteBtn.setOnCheckedChangeListener {
+                compoundButton, _ -> stateChangedListener(adapterPosition, compoundButton.isChecked)
+            }
         }
 
         fun bind(savedLocation: SavedLocation, currentWeather: CurrentWeather) {
