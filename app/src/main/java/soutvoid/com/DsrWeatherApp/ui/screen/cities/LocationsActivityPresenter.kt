@@ -6,8 +6,8 @@ import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import javax.inject.Inject
 
 @PerScreen
-class CitiesActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
-    : BasePresenter<CitiesActivityView>(errorHandler) {
+class LocationsActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
+    : BasePresenter<LocationsActivityView>(errorHandler) {
 
 
 

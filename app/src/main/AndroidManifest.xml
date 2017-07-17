@@ -17,7 +17,7 @@
 
         <activity android:name="soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView"/>
 
-        <activity android:name=".ui.screen.cities.CitiesActivityView">
+        <activity android:name=".ui.screen.cities.LocationsActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

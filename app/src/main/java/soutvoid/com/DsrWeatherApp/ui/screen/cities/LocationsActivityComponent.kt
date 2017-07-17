@@ -8,4 +8,4 @@ import soutvoid.com.DsrWeatherApp.ui.common.dagger.ActivityViewModule
 
 @PerScreen
 @Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(ActivityViewModule::class))
-interface CitiesActivityComponent: ScreenComponent<CitiesActivityView>
+interface LocationsActivityComponent : ScreenComponent<LocationsActivityView>
