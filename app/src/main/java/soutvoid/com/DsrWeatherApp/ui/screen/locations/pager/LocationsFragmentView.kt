@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
+import android.content.Context
 import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager

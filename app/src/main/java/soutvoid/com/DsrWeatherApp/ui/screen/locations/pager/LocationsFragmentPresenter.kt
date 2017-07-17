@@ -43,6 +43,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
             )
         } else {
             view.setRefreshEnable(false)
+            view.showData(locations, emptyList())
         }
     }
 
