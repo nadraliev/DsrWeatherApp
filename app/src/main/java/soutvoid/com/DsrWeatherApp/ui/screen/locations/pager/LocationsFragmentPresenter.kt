@@ -87,6 +87,15 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         view.tryNotifyPagerDataSetChanged()
     }
 
+    fun onLocationSwiped(location: SavedLocation) {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
+        }
+        view.tryNotifyPagerDataSetChanged()
+        realm.close()
+    }
+
     fun refresh() {
         loadData()
     }

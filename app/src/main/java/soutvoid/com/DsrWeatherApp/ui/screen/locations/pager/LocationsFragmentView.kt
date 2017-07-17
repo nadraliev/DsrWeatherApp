@@ -3,6 +3,8 @@ package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +17,7 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.list.LocationsRecyclerAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.SimpleItemSwipeCallback
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject
 
@@ -88,6 +91,9 @@ class LocationsFragmentView: BaseFragmentView() {
             )
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val simpleItemTouchCallback = SimpleItemSwipeCallback(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
+                {viewHolder, direction -> presenter.onLocationSwiped(adapter.savedLocations[viewHolder.adapterPosition]) })
+        ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(locations_list)
     }
 
     fun showData(savedLocations: List<SavedLocation>, currentWeathers: List<CurrentWeather>) {
