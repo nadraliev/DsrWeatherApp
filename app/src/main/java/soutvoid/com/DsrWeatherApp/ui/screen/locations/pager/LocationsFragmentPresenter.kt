@@ -84,6 +84,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
             it.copyToRealmOrUpdate(location)
         }
         realm.close()
+        view.tryNotifyPagerDataSetChanged()
     }
 
     fun refresh() {

@@ -1,8 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
-import android.content.Context
-import android.opengl.Visibility
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +18,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject
 
-class LocationsFragmentView : BaseFragmentView() {
+class LocationsFragmentView: BaseFragmentView() {
 
     companion object {
         private const val ONLY_FAVORITE_KEY = "only_favorite"
@@ -99,5 +98,19 @@ class LocationsFragmentView : BaseFragmentView() {
 
     fun isOnlyFavorite() : Boolean {
         return arguments.getBoolean(LocationsFragmentView.ONLY_FAVORITE_KEY)
+    }
+
+    fun tryNotifyPagerDataSetChanged() {
+        val pager = activity.findViewById<ViewPager>(R.id.locations_view_pager)
+        val adapter = pager?.adapter as? LocationsPagerAdapter
+        adapter?.notifyOtherFragmentDataSetChanged(pager.currentItem)
+    }
+
+    fun onDataSetChanged() {
+        try {
+            presenter.refresh()
+        } catch (e: UninitializedPropertyAccessException) {
+            //ignored
+        }
     }
 }
