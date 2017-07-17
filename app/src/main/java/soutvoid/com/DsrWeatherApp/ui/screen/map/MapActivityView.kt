@@ -14,6 +14,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.android.synthetic.main.activity_map.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
@@ -53,6 +54,8 @@ class MapActivityView: BaseActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
 
+        initToolbar()
+
         if (SdkUtil.supportsM() && !isLocationPermissionGranted())
             requestLocationPermission()
         else locationPermissionGranted(true)
@@ -65,16 +68,20 @@ class MapActivityView: BaseActivityView() {
 
     override fun onPause() {
         super.onPause()
-        if (locationManager != null && locationListener != null)
-            locationManager?.removeUpdates(locationListener)
+        removeLocationUpdates()
     }
 
     override fun onResume() {
         super.onResume()
-        if (locationManager != null && locationListener != null) {
-            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
-        }
+        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
+    }
+
+    fun initToolbar() {
+        setSupportActionBar(map_toolbar)
+        title = getString(R.string.choose_location)
+        map_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
+        map_toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 
     fun isLocationPermissionGranted() : Boolean {
@@ -99,9 +106,16 @@ class MapActivityView: BaseActivityView() {
     }
 
     fun requestLocation() {
-        val locationListener = LocationListener { presenter.locationChanged(it) }
+        locationListener = LocationListener {
+            presenter.locationChanged(it)
+            removeLocationUpdates()
+        }
         locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
         locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
+    }
+
+    private fun removeLocationUpdates() {
+        locationManager?.removeUpdates(locationListener)
     }
 
     fun setMapPosition(latLng: LatLng, zoom: Float = 10f) {
