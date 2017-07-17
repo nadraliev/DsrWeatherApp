@@ -3,42 +3,32 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.widget.ImageView
-import android.widget.TextView
-import butterknife.BindView
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
 import kotlinx.android.synthetic.main.activity_main.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.domain.DailyForecast
 import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.DayForecastView
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
 import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
 
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.layout_current_weather.*
-import soutvoid.com.DsrWeatherApp.domain.location.Location
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 
 class MainActivityView : TranslucentStatusActivityView() {
 
     companion object {
         const val LOCATION_KEY = "location"
-        fun start(context: Context, location: Location) {
+        fun start(context: Context, savedLocation: SavedLocation) {
             val intent = Intent(context, MainActivityView::class.java)
-            intent.putExtra(LOCATION_KEY, location)
+            intent.putExtra(LOCATION_KEY, savedLocation)
             context.startActivity(intent)
         }
     }
@@ -108,7 +98,7 @@ class MainActivityView : TranslucentStatusActivityView() {
         main_refresh_layout.isRefreshing = enabled
     }
 
-    fun getLocationParam(): Location {
-        return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as Location
+    fun getLocationParam(): SavedLocation {
+        return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as SavedLocation
     }
 }

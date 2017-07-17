@@ -5,7 +5,7 @@ import rx.functions.Action1
 import rx.functions.FuncN
 import rx.schedulers.Schedulers
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.domain.location.Location
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
@@ -29,7 +29,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
     }
 
     private fun loadData() {
-        val locations = arrayListOf(Location("Voronezh", 51.40, 39.11)) //Todo load from database
+        val locations = arrayListOf(SavedLocation("Voronezh", 51.40, 39.11)) //Todo load from database
         val weathers = locations
                 .map { currentWeatherRep.getByCoordinates(
                         it.latitude,
@@ -50,8 +50,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         )
     }
 
-    fun onLocationClick(location: Location) {
-        MainActivityView.start(view.context, location)
+    fun onLocationClick(savedLocation: SavedLocation) {
+        MainActivityView.start(view.context, savedLocation)
     }
 
     fun refresh() {

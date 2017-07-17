@@ -1,7 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.cities.pager
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,7 @@ import com.agna.ferro.mvp.presenter.MvpPresenter
 import kotlinx.android.synthetic.main.fragment_locations.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.domain.location.Location
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.cities.list.LocationsRecyclerAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
@@ -77,13 +76,13 @@ class LocationsFragmentView : BaseFragmentView() {
     }
 
     private fun initList() {
-        adapter = LocationsRecyclerAdapter { presenter.onLocationClick(adapter.locations[it]) }
+        adapter = LocationsRecyclerAdapter { presenter.onLocationClick(adapter.savedLocations[it]) }
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
-    fun showData(locations: List<Location>, currentWeathers: List<CurrentWeather>) {
-        adapter.locations = locations
+    fun showData(savedLocations: List<SavedLocation>, currentWeathers: List<CurrentWeather>) {
+        adapter.savedLocations = savedLocations
         adapter.currentWeathers = currentWeathers
         adapter.notifyDataSetChanged()
     }

@@ -4,17 +4,16 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import butterknife.BindView
 import butterknife.ButterKnife
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.domain.location.Location
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.screen.cities.widget.FavoriteButton
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
-class LocationsRecyclerAdapter(var locations: List<Location> = emptyList(),
+class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyList(),
                                var currentWeathers: List<CurrentWeather> = emptyList(),
                                var onClick: (Int) -> Unit)
     : RecyclerView.Adapter<LocationsRecyclerAdapter.LocationsViewHolder>() {
@@ -25,10 +24,10 @@ class LocationsRecyclerAdapter(var locations: List<Location> = emptyList(),
     }
 
     override fun onBindViewHolder(holder: LocationsViewHolder?, position: Int) {
-        holder?.bind(locations[position], currentWeathers[position])
+        holder?.bind(savedLocations[position], currentWeathers[position])
     }
 
-    override fun getItemCount(): Int = locations.size
+    override fun getItemCount(): Int = savedLocations.size
 
     class LocationsViewHolder(view: View, var onClick: (Int) -> Unit)
         : RecyclerView.ViewHolder(view) {
@@ -45,10 +44,10 @@ class LocationsRecyclerAdapter(var locations: List<Location> = emptyList(),
             itemView.setOnClickListener { onClick(adapterPosition) }
         }
 
-        fun bind(location: Location, currentWeather: CurrentWeather) {
-            name.text = location.name
+        fun bind(savedLocation: SavedLocation, currentWeather: CurrentWeather) {
+            name.text = savedLocation.name
             currentTemp.text = "${Math.round(currentWeather.main.temperature)}${UnitsUtils.getDegreesUnits(itemView.context)}"
-            favoriteBtn.isChecked = location.isFavorite
+            favoriteBtn.isChecked = savedLocation.isFavorite
         }
 
     }

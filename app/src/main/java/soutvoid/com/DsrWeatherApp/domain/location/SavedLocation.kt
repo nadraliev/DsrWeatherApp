@@ -3,7 +3,7 @@ package soutvoid.com.DsrWeatherApp.domain.location
 import io.realm.RealmObject
 import java.io.Serializable
 
-open class Location(
+open class SavedLocation(
         var name: String = "",
         var longitude: Double = .0,
         var latitude: Double = .0,

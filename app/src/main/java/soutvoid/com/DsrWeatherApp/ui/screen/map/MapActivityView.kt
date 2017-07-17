@@ -14,6 +14,8 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_map.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
@@ -37,6 +39,7 @@ class MapActivityView: BaseActivityView() {
 
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
+    var marker: Marker? = null
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -61,10 +64,7 @@ class MapActivityView: BaseActivityView() {
             requestLocationPermission()
         else locationPermissionGranted(true)
 
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
-        mapFragment.getMapAsync {
-            map = it
-        }
+        initMap()
     }
 
     override fun onPause() {
@@ -87,7 +87,15 @@ class MapActivityView: BaseActivityView() {
 
     fun initButtons() {
         map_my_location.setOnClickListener { requestLocation() }
-        map_add_location.setOnClickListener { presenter.locationChoosed() }
+        map_add_location.setOnClickListener { marker?.let { presenter.locationChosen(it.position) } }
+    }
+
+    fun initMap() {
+        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
+        mapFragment.getMapAsync {
+            map = it
+            map.setOnMapClickListener { setMarkerPosition(it) }
+        }
     }
 
     fun isLocationPermissionGranted() : Boolean {
@@ -126,6 +134,11 @@ class MapActivityView: BaseActivityView() {
 
     fun setMapPosition(latLng: LatLng, zoom: Float = 10f) {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+    }
+
+    fun setMarkerPosition(latLng: LatLng) {
+        marker?.remove()
+        marker = map.addMarker(MarkerOptions().position(latLng))
     }
 
 }
