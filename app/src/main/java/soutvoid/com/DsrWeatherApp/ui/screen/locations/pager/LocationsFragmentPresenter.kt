@@ -101,6 +101,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         }
         realm.close()
         view.tryNotifyPagerDataSetChanged()
+        if (view.isOnlyFavorite() && !checked)
+            loadData()
     }
 
     /**
