@@ -22,6 +22,9 @@ import javax.inject.Inject
 import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 
+/**
+ * экран для отображения погоды в определенной точке
+ */
 class MainActivityView : TranslucentStatusActivityView() {
 
     companion object {
@@ -44,6 +47,7 @@ class MainActivityView : TranslucentStatusActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
+        initBackButton()
         fillCityName()
     }
 
@@ -62,6 +66,10 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     private fun initSwipeRefresh() {
         main_refresh_layout.setOnRefreshListener { presenter.refresh() }
+    }
+
+    private fun initBackButton() {
+        main_back_btn.setOnClickListener { onBackPressed() }
     }
 
     fun fillAllData(allWeatherData: AllWeatherData) {
