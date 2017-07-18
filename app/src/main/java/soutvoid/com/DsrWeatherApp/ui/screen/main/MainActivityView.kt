@@ -26,6 +26,11 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     companion object {
         const val LOCATION_KEY = "location"
+
+        /**
+         * метод для старта активити
+         * @param [savedLocation] для какой точки загружать погоду
+         */
         fun start(context: Context, savedLocation: SavedLocation) {
             val intent = Intent(context, MainActivityView::class.java)
             intent.putExtra(LOCATION_KEY, savedLocation)
@@ -59,14 +64,14 @@ class MainActivityView : TranslucentStatusActivityView() {
         main_refresh_layout.setOnRefreshListener { presenter.refresh() }
     }
 
-    fun fillCityName() {
-        main_city_tv.text = getLocationParam().name
-    }
-
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
         fillUviData(allWeatherData.ultraviolet)
+    }
+
+    fun fillCityName() {
+        main_city_tv.text = getLocationParam().name
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {

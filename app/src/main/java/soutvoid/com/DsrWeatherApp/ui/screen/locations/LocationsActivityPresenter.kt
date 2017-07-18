@@ -7,8 +7,4 @@ import javax.inject.Inject
 
 @PerScreen
 class LocationsActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
-    : BasePresenter<LocationsActivityView>(errorHandler) {
-
-
-
-}
+    : BasePresenter<LocationsActivityView>(errorHandler)

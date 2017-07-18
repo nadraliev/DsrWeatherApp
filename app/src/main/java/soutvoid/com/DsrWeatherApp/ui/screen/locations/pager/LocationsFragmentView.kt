@@ -26,6 +26,10 @@ class LocationsFragmentView: BaseFragmentView() {
     companion object {
         private const val ONLY_FAVORITE_KEY = "only_favorite"
 
+        /**
+         * исползовать этот метод для получения объекта фрагмента
+         * @param [showOnlyFavorite] показывать ли в списке только любимые точки или все
+         */
         fun newInstance(showOnlyFavorite: Boolean = false) : LocationsFragmentView {
             val citiesFragment = LocationsFragmentView()
             citiesFragment.arguments = Bundle()
@@ -67,17 +71,14 @@ class LocationsFragmentView: BaseFragmentView() {
         initFab()
     }
 
+
     private fun initSwipeRefresh() {
         locations_swipe_refresh.setOnRefreshListener { presenter.refresh() }
     }
 
-    fun setRefreshEnable(enabled: Boolean) {
-        locations_swipe_refresh.isRefreshing = enabled
-    }
-
-    fun initFab() {
+    private fun initFab() {
         if (isOnlyFavorite())
-            locations_fab.visibility = View.GONE
+            locations_fab.visibility = View.GONE    //убрать кнопку добавления точки в списке с только любимыми
         else
             locations_fab.setOnClickListener { MapActivityView.start(context) }
     }
@@ -96,6 +97,11 @@ class LocationsFragmentView: BaseFragmentView() {
         ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(locations_list)
     }
 
+
+    fun setRefreshEnable(enabled: Boolean) {
+        locations_swipe_refresh.isRefreshing = enabled
+    }
+
     fun showData(savedLocations: List<SavedLocation>, currentWeathers: List<CurrentWeather>) {
         adapter.savedLocations = savedLocations
         adapter.currentWeathers = currentWeathers
@@ -106,17 +112,24 @@ class LocationsFragmentView: BaseFragmentView() {
         return arguments.getBoolean(LocationsFragmentView.ONLY_FAVORITE_KEY)
     }
 
+    /**
+     * оповестить родительский viewpager, что данные в списке изменились, чтобы другой список обновился
+     * @see LocationsPagerAdapter.notifyOtherFragmentDataSetChanged
+     */
     fun tryNotifyPagerDataSetChanged() {
         val pager = activity.findViewById<ViewPager>(R.id.locations_view_pager)
         val adapter = pager?.adapter as? LocationsPagerAdapter
         adapter?.notifyOtherFragmentDataSetChanged(pager.currentItem)
     }
 
+    /**
+     * метод для сообщения фрагменту, что данные изменились (от родительского viewpager)
+     */
     fun onDataSetChanged() {
         try {
             presenter.refresh()
         } catch (e: UninitializedPropertyAccessException) {
-            //ignored
+            //на случай, если lateinit presenter еще не был инициализирован
         }
     }
 }

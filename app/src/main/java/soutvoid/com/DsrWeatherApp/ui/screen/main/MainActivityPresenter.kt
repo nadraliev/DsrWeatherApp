@@ -38,6 +38,9 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
         loadData()
     }
 
+    /**
+     * загрузить данные и вывести на экран
+     */
     private fun loadData() {
         subscribeNetworkQuery(
                 prepareObservable(),
@@ -48,6 +51,10 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
         )
     }
 
+    /**
+     * подготовить observable для всех загружаемых данных и объединить в один
+     * @return observable для загрузки всех данных
+     */
     private fun prepareObservable() : Observable<AllWeatherData> {
         val units = UnitsUtils.getPreferredUnits(view.baseContext)
         return ObservableUtil.combineLatestDelayError(
@@ -59,6 +66,9 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
         ) { current, forecast, ultraviolet, dailyForecast -> AllWeatherData(current, forecast, ultraviolet, dailyForecast) }
     }
 
+    /**
+     * событие pull down to refresh
+     */
     fun refresh() {
         loadData()
     }

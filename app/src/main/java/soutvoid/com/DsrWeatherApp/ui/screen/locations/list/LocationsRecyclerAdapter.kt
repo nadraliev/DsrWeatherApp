@@ -13,6 +13,13 @@ import soutvoid.com.DsrWeatherApp.ui.screen.locations.widget.FavoriteButton
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
+/**
+ * адаптер для списка сохраненных точек
+ * @param [savedLocations] список сохраненных точек
+ * @param [currentWeathers] погода для сохраненных точек
+ * @param [onClick] слушатель нажатия на элемент списка
+ * @param [favoriteStateChangedListener] слушатель нажатия на кнопку "сердце"
+ */
 class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyList(),
                                var currentWeathers: List<CurrentWeather> = emptyList(),
                                var onClick: (Int) -> Unit,
@@ -29,6 +36,7 @@ class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyLi
     }
 
     override fun getItemCount(): Int = savedLocations.size
+
 
     class LocationsViewHolder(view: View,
                               var onClick: (Int) -> Unit,

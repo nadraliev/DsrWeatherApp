@@ -1,6 +1,5 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 
-import android.widget.Toast
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
 import rx.Observable
@@ -31,6 +30,9 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         loadData()
     }
 
+    /**
+     * загрузить данные и вывести на экран
+     */
     private fun loadData() {
         val locations = getSavedFromDB()
         if (locations.isNotEmpty()) {
@@ -47,6 +49,9 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         }
     }
 
+    /**
+     * получить список сохраненных точек их базы данных
+     */
     private fun getSavedFromDB() : List<SavedLocation> {
         val realm = Realm.getDefaultInstance()
         var locations : List<SavedLocation>
@@ -57,6 +62,11 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         return locations
     }
 
+    /**
+     * подготовить observable для погод для всех точек, после этого объединить в один observable
+     * @param [locations] список точек
+     * @return observable для загрузки погоды для всех точек
+     */
     private fun prepareObservable(locations: List<SavedLocation>) : Observable<List<CurrentWeather>> {
         val weathers = locations
                 .map {
@@ -73,10 +83,16 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         return combinedObservable
     }
 
+    /**
+     * событие нажатия на элемент списка
+     */
     fun onLocationClick(savedLocation: SavedLocation) {
         MainActivityView.start(view.context, savedLocation)
     }
 
+    /**
+     * событие нажатия на кнопку "сердце"
+     */
     fun onFavoriteStateChanged(location: SavedLocation, checked: Boolean) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
@@ -87,6 +103,9 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         view.tryNotifyPagerDataSetChanged()
     }
 
+    /**
+     * событие свайпа элемента списка
+     */
     fun onLocationSwiped(location: SavedLocation) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
@@ -96,6 +115,9 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
         realm.close()
     }
 
+    /**
+     * событие pull down to refresh
+     */
     fun refresh() {
         loadData()
     }

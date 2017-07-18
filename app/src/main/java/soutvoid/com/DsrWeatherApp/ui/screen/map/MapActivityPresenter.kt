@@ -15,30 +15,31 @@ import javax.inject.Inject
 class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
     BasePresenter<MapActivityView>(errorHandler) {
 
-    var locationChanged = false //если пользователь не поменял сам точку, то поставим на нее маркер
+    var locationChanged = false //если пользователь еще не поменял сам точку, то поставим на нее маркер
 
-    fun locationPermissionGranted(granted: Boolean) {
-        if (granted)
-            view.requestLocation()
-        else setPositionMoscow()
-    }
-
-    fun locationChanged(location: Location) {
-        setPositionCurrent(location)
-    }
-
+    /**
+     * установить камеру карты на Москву
+     */
     private fun setPositionMoscow() {
         val latlng = LatLng(55.7512, 37.6184)
         view.setMapPosition(latlng)
         maybeSetMarker(latlng)
     }
 
+    /**
+     * утсановить камеру карты на текущее положение
+     * @param [location] текущее положение
+     */
     private fun setPositionCurrent(location: Location) {
         val latlng = LatLng(location.latitude, location.longitude)
         view.setMapPosition(latlng)
         maybeSetMarker(latlng)
     }
 
+    /**
+     * утсановить маркер на начальное положение, если пользователь сам не поменял положение маркера
+     * @param [latLng] координаты точек
+     */
     private fun maybeSetMarker(latLng: LatLng) {
         if (!locationChanged) {
             view.setMarkerPosition(latLng)
@@ -46,6 +47,36 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
         }
     }
 
+    /**
+     * получить название города по координатам
+     */
+    private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()) : String {
+        val geocoder: Geocoder = Geocoder(view.baseContext, locale)
+        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
+        if (addresses.isNotEmpty() && addresses[0].locality != null)
+            return addresses[0].locality
+        return ""
+    }
+
+    /**
+     * событие получения разрешения на отслеживание геолокации
+     */
+    fun locationPermissionGranted(granted: Boolean) {
+        if (granted)
+            view.requestLocation()
+        else setPositionMoscow()
+    }
+
+    /**
+     * событие получения новой точки из сервиса геолокации
+     */
+    fun locationChanged(location: Location) {
+        setPositionCurrent(location)
+    }
+
+    /**
+     * пользователь выбрал точку и нажал "подтвердить"
+     */
     fun locationChosen(latLng: LatLng) {
         val locationName = getLocationName(latLng)
         val realm = Realm.getDefaultInstance()
@@ -53,13 +84,5 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
         realm.executeTransaction { it.copyToRealm(location) }
         realm.close()
         view.finish()
-    }
-
-    private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()) : String {
-        val geocoder: Geocoder = Geocoder(view.baseContext, locale)
-        val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
-        if (addresses.isNotEmpty() && addresses[0].locality != null)
-            return addresses[0].locality
-        return ""
     }
 }

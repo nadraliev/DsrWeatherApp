@@ -9,6 +9,9 @@ import kotlinx.android.synthetic.main.view_day_forecast.view.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.ThreeHoursForecast
 
+/**
+ * view для отображения четырех состояний погоды на протяжении дня
+ */
 class DayForecastView : FrameLayout {
 
     constructor(context: Context) : super(context)

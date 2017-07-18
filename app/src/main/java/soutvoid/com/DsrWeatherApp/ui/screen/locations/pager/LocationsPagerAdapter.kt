@@ -10,10 +10,17 @@ import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.R
 import java.lang.ref.WeakReference
 
+/**
+ * адаптер для табов списка точек
+ */
 class LocationsPagerAdapter(fragmentManager: FragmentManager,
                             val context: Context)
     : FragmentStatePagerAdapter(fragmentManager) {
 
+    /**
+     * храним ссылки на все зарегестрированные фрагменты для оповещения их об изменении данных
+     * обернуто в WeakReference для предотвращения memory leak
+     */
     val registeredFragments: SparseArray<WeakReference<LocationsFragmentView>> = SparseArray()
 
     override fun getItem(position: Int): Fragment {
@@ -34,17 +41,29 @@ class LocationsPagerAdapter(fragmentManager: FragmentManager,
         return context.getString(R.string.all_locations)
     }
 
+    /**
+     * сохраняем состояние фрагментов
+     */
     override fun instantiateItem(container: ViewGroup?, position: Int): Any {
         val fragment = super.instantiateItem(container, position) as LocationsFragmentView
         registeredFragments.put(position, WeakReference(fragment))
         return fragment
     }
 
+    /**
+     * удаляем запись о фрагменте после его удаления
+     */
     override fun destroyItem(container: ViewGroup?, position: Int, `object`: Any?) {
         registeredFragments.remove(position)
         super.destroyItem(container, position, `object`)
     }
 
+    /**
+     * этот метод будет вызван, когда в одном фрагменте данные списка поменялись,
+     * и нужно обновить данные списка в другом фрагменте
+     * @see LocationsFragmentView.tryNotifyPagerDataSetChanged
+     * @see LocationsFragmentView.onDataSetChanged
+     */
     fun notifyOtherFragmentDataSetChanged(currentPosition: Int) {
         var otherFragmentPos : Int = 0
         if (currentPosition == 0)

@@ -16,6 +16,9 @@ import java.util.*
 
 import kotlinx.android.synthetic.main.view_time_of_day_weather.view.*
 
+/**
+ * view для отображения погоды в определенное время дня (утро, день и тд)
+ */
 class TimeOfDayWeatherView : FrameLayout {
 
     constructor(context: Context) : super(context)
