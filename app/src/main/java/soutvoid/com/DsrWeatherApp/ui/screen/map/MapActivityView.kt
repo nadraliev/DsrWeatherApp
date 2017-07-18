@@ -44,6 +44,7 @@ class MapActivityView: BaseActivityView() {
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
     var marker: Marker? = null
+    var locatonRequested = false
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -74,7 +75,7 @@ class MapActivityView: BaseActivityView() {
 
     override fun onPause() {
         super.onPause()
-        removeSubscritionToLocationUpdates()
+        removeSubscriptionToLocationUpdates()
     }
 
     override fun onResume() {
@@ -131,16 +132,20 @@ class MapActivityView: BaseActivityView() {
         locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
     }
 
-    private fun removeSubscritionToLocationUpdates() {
+    private fun removeSubscriptionToLocationUpdates() {
         locationManager?.removeUpdates(locationListener)
     }
 
     fun requestLocation() {
-        locationListener = LocationListener {
-            presenter.locationChanged(it)
-            removeSubscritionToLocationUpdates()
+        if (!locatonRequested) {
+            locatonRequested = true
+            locationListener = LocationListener {
+                presenter.locationChanged(it)
+                removeSubscriptionToLocationUpdates()
+                locatonRequested = false
+            }
+            subscribeToLocationUpdates()
         }
-        subscribeToLocationUpdates()
     }
 
     fun setMapPosition(latLng: LatLng, zoom: Float = 10f) {
