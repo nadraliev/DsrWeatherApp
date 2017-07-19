@@ -8,7 +8,7 @@
     <string name="max">max</string>
     <string name="min">min</string>
     <string name="metrical_velocity">m/s</string>
-    <string name="imperial_velocity">miles/hour</string>
+    <string name="imperial_velocity">mil/h</string>
     <string name="pressureUnit">hPa</string>
     <string name="wind">wind</string>
     <string name="from">from</string>

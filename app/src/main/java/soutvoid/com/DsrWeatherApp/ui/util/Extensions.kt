@@ -7,10 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import soutvoid.com.DsrWeatherApp.domain.OneDayForecast
-import soutvoid.com.DsrWeatherApp.domain.ThreeHoursForecast
-import soutvoid.com.DsrWeatherApp.ui.screen.main.data.TimeOfDay
-import java.util.*
+import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 
 fun ViewGroup.inflate(resId: Int): View {
     return LayoutInflater.from(context).inflate(resId, this, false)
@@ -31,5 +28,5 @@ fun Resources.Theme.getThemeColor(attr: Int): Int {
  * @return общий SharedPreferences для любого контекста
  */
 fun Context.getDefaultPreferences(): SharedPreferences {
-    return this.getSharedPreferences("default", Context.MODE_PRIVATE)
+    return this.getSharedPreferences(SettingsFragment.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
 }

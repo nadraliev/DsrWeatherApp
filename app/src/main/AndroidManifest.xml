@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Gray.White">
         <activity android:name=".ui.screen.main.MainActivityView"/>
+
         <activity android:name=".ui.screen.locations.LocationsActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -27,6 +28,8 @@
         </activity>
 
         <activity android:name=".ui.screen.map.MapActivityView"/>
+
+        <activity android:name=".ui.screen.settings.SettingsActivityView"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

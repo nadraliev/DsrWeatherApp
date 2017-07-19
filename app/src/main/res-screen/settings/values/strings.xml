@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Settings</string>
+    <string name="units">Units</string>
+    <string-array name="units">
+        <item>Metric</item>
+        <item>Imperial</item>
+    </string-array>
+    <string-array name="unitsValues">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>

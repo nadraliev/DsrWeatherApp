@@ -37,12 +37,13 @@ object UnitsUtils {
      * @return является ли метрическая система предпочтительной
      */
     fun isMetricalPreferred(context: Context) : Boolean {
-        val sharedPreferences: SharedPreferences = context.getDefaultPreferences()
-        return sharedPreferences.getBoolean("units", true)
+        return getPreferredUnits(context).toString().toLowerCase() == "metric"
     }
 
     fun getPreferredUnits(context: Context) : Units {
-        return if (isMetricalPreferred(context)) Units.METRIC else Units.IMPERIAL
+        val sharedPreferences: SharedPreferences = context.getDefaultPreferences()
+        val str = sharedPreferences.getString("units", "0")
+        return Units.values()[str.toInt()]
     }
 
 }

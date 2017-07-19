@@ -24,7 +24,7 @@
         app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_morning"
         app:layout_constraintTop_toTopOf="@+id/view_day_forecast_morning"
         app:layout_constraintRight_toLeftOf="@+id/view_day_forecast_evening"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="8dp"/>
 
     <soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.TimeOfDayWeatherView
         android:id="@+id/view_day_forecast_evening"
@@ -33,7 +33,7 @@
         app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_day"
         app:layout_constraintTop_toTopOf="@+id/view_day_forecast_day"
         app:layout_constraintRight_toLeftOf="@+id/view_day_forecast_night"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="8dp"/>
 
     <soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.TimeOfDayWeatherView
         android:id="@+id/view_day_forecast_night"
@@ -42,6 +42,6 @@
         app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_evening"
         app:layout_constraintTop_toTopOf="@+id/view_day_forecast_evening"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="8dp"/>
 
 </android.support.constraint.ConstraintLayout>
