@@ -10,6 +10,7 @@ open class SavedLocation(
         var longitude: Double = .0,
         var latitude: Double = .0,
         var isFavorite: Boolean = false,
+        var showForecast: Boolean = true,
         @PrimaryKey
         var id: Int = SavedLocation.getNextKey()
 ) : RealmObject(), Serializable {

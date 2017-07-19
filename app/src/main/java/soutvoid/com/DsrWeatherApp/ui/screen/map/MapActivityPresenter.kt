@@ -9,6 +9,7 @@ import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.screen.locationSettings.LocationSettingsActivityView
 import java.util.*
 import javax.inject.Inject
 
@@ -73,7 +74,6 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
      */
     fun locationChanged(location: Location) {
         if (!locationChanged || view.myLocationButtonClicked) {
-            locationChanged = true
             setPositionCurrent(location)
         }
     }
@@ -83,11 +83,7 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
      */
     fun locationChosen(latLng: LatLng) {
         val locationName = getLocationName(latLng)
-        val realm = Realm.getDefaultInstance()
-        val location = SavedLocation(locationName, latLng.longitude, latLng.latitude)
-        realm.executeTransaction { it.copyToRealm(location) }
-        realm.close()
-        view.finish()
+        LocationSettingsActivityView.start(view, locationName, latLng.latitude, latLng.longitude)
     }
 
     /**
