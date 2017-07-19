@@ -6,6 +6,7 @@ import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.interactor.util.Accuracy
 import soutvoid.com.DsrWeatherApp.interactor.util.Units
 import soutvoid.com.DsrWeatherApp.interactor.uvi.network.UviApi
+import java.util.*
 import javax.inject.Inject
 
 @PerApplication
@@ -15,7 +16,7 @@ class UviRepository @Inject constructor(val api : UviApi) {
                          longitude: Double,
                          units: Units = Units.METRIC,
                          accuracyType: Accuracy = Accuracy.LIKE,
-                         lang: String = "en")
+                         lang: String = Locale.getDefault().language)
             : Observable<Ultraviolet> {
         return api.getByCoordinates(latitude, longitude, units.name.toLowerCase(), accuracyType.name.toLowerCase(), lang)
     }

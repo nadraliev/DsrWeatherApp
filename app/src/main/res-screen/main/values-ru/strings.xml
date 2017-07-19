@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city">Город</string>
+    <string name="day">день</string>
+    <string name="evening">вечер</string>
+    <string name="from">с</string>
+    <string name="humidity">влажность</string>
+    <string name="imperial_velocity">мил/ч</string>
+    <string name="max">макс</string>
+    <string name="metrical_velocity">м/с</string>
+    <string name="min">мин</string>
+    <string name="morning">утро</string>
+    <string name="night">ночь</string>
+    <string name="pressure">давление</string>
+    <string name="pressureUnit">гПа</string>
+    <string name="uv_index">индекс уф</string>
+    <string name="wind">ветер</string>
+    <string-array name="directions">
+        <item>С</item>
+        <item>СВ</item>
+        <item>В</item>
+        <item>ЮВ</item>
+        <item>Ю</item>
+        <item>ЮЗ</item>
+        <item>З</item>
+        <item>СЗ</item>
+    </string-array>
+</resources>

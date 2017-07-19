@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="city">City</string>
+    <string name="max">max</string>
+    <string name="min">min</string>
+    <string name="metrical_velocity">m/s</string>
+    <string name="imperial_velocity">mil/h</string>
+    <string name="pressureUnit">hPa</string>
+    <string name="wind">wind</string>
+    <string name="from">from</string>
+    <string name="humidity">humidity</string>
+    <string name="pressure">pressure</string>
+    <string name="uv_index">uv index</string>
+    <string name="morning">morning</string>
+    <string name="day">day</string>
+    <string name="night">night</string>
+    <string name="evening">evening</string>
+    <string-array name="directions">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+</resources>

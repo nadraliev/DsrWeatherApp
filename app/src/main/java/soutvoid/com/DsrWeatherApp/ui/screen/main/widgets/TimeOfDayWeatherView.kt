@@ -34,7 +34,7 @@ class TimeOfDayWeatherView : FrameLayout {
         with(threeHoursForecast) {
             val calendar: Calendar = Calendar.getInstance(locale)
             calendar.timeInMillis = timeOfData * 1000
-            view_tod_weather_name.text = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY)).toString().toLowerCase()
+            view_tod_weather_name.text = getTimeOfDayNameByHour(calendar.get(Calendar.HOUR_OF_DAY))
             view_tod_weather_icon.setImageDrawable(IconicsDrawable(context)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather[0].id, timeOfData))
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))
@@ -45,6 +45,16 @@ class TimeOfDayWeatherView : FrameLayout {
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(16))
             view_tod_weather_wind.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(context)}"
+        }
+    }
+
+    private fun getTimeOfDayNameByHour(hour: Int): String {
+        val timeOfDay = TimeOfDay.getByTime(hour)
+        when(timeOfDay) {
+            TimeOfDay.MORNING -> return context.getString(R.string.morning)
+            TimeOfDay.DAY -> return context.getString(R.string.day)
+            TimeOfDay.EVENING -> return context.getString(R.string.evening)
+            else -> return context.getString(R.string.night)
         }
     }
 

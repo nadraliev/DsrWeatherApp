@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DsrWeather</string>
+    <string name="bad_response_error_message">Ошибка ответа</string>
+    <string name="no_internet_connection_error_message">Ошибка соединения</string>
+    <string name="server_error_message">Ошибка сервера</string>
+    <string name="unexpected_error_error_message">Неожиданная ошибка</string>
+</resources>

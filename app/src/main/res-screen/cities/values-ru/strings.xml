@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="favorite">Любимые</string>
+    <string name="locations">Места</string>
+    <string name="all_locations">Все</string>
+    <string name="current_temperature">Текущая температура</string>
+</resources>
