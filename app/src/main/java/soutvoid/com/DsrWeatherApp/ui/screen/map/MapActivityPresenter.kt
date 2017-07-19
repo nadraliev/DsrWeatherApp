@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.map
 import android.location.Geocoder
 import android.location.Location
 import com.agna.ferro.mvp.component.scope.PerScreen
+import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.model.LatLng
 import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
@@ -71,7 +72,10 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
      * событие получения новой точки из сервиса геолокации
      */
     fun locationChanged(location: Location) {
-        setPositionCurrent(location)
+        if (!locationChanged || view.myLocationButtonClicked) {
+            locationChanged = true
+            setPositionCurrent(location)
+        }
     }
 
     /**
@@ -84,5 +88,14 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
         realm.executeTransaction { it.copyToRealm(location) }
         realm.close()
         view.finish()
+    }
+
+    /**
+     * пользователь ввел место в поле ввода и выбрал его
+     */
+    fun locationSelectedInSearchField(place: Place) {
+        locationChanged = true
+        view.setMarkerPosition(place.latLng)
+        view.setMapPosition(place.latLng)
     }
 }

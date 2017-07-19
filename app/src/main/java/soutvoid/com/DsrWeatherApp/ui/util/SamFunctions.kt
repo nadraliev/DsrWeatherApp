@@ -5,6 +5,10 @@ import android.location.LocationListener
 import android.os.Bundle
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import com.google.android.gms.common.api.Status
+import com.google.android.gms.location.places.Place
+import com.google.android.gms.location.places.ui.PlaceSelectionListener
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 
 /**
  * функции, позволяющие реализовать одну необходимую функцию, не имплементируя весь интерфейс
@@ -41,3 +45,17 @@ fun SimpleItemSwipeCallback(swipeDirections: Int, callback: (viewHolder: Recycle
         viewHolder?.let { callback(it, direction) }
     }
 }
+
+/**
+ * листенер, вызываемый PlaceAutocompleteFragment при выборе места пользователем
+ */
+fun PlaceSelectionListener(listener: (place: Place) -> Unit) : PlaceSelectionListener =
+        object : PlaceSelectionListener {
+            override fun onPlaceSelected(p0: Place?) {
+                p0?.let { listener(it) }
+            }
+
+            override fun onError(p0: Status?) {
+                p0?.statusMessage?.let { Logger.d(it) }
+            }
+        }

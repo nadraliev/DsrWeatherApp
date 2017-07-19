@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import com.agna.ferro.mvp.component.ScreenComponent
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -21,6 +22,7 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.util.LocationListener
+import soutvoid.com.DsrWeatherApp.ui.util.PlaceSelectionListener
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 import javax.inject.Inject
 
@@ -44,7 +46,8 @@ class MapActivityView: BaseActivityView() {
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
     var marker: Marker? = null
-    var locatonRequested = false
+    var locationRequested = false
+    var myLocationButtonClicked = false
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -71,6 +74,7 @@ class MapActivityView: BaseActivityView() {
         else locationPermissionGranted(true)
 
         initMap()
+        initAutocompleteFragment()
     }
 
     override fun onPause() {
@@ -94,7 +98,10 @@ class MapActivityView: BaseActivityView() {
      * инициализация fab кнопок
      */
     private fun initButtons() {
-        map_my_location.setOnClickListener { requestLocation() }
+        map_my_location.setOnClickListener {
+            requestLocation()
+            myLocationButtonClicked = true
+        }
         map_add_location.setOnClickListener { marker?.let { presenter.locationChosen(it.position) } }
     }
 
@@ -104,6 +111,11 @@ class MapActivityView: BaseActivityView() {
             map = it
             map.setOnMapClickListener { setMarkerPosition(it) }
         }
+    }
+
+    private fun initAutocompleteFragment() {
+        val autoCompleteFragment = fragmentManager.findFragmentById(R.id.map_autocomplete_fragment) as PlaceAutocompleteFragment
+        autoCompleteFragment.setOnPlaceSelectedListener(PlaceSelectionListener { presenter.locationSelectedInSearchField(it) })
     }
 
     private fun isLocationPermissionGranted() : Boolean {
@@ -137,12 +149,12 @@ class MapActivityView: BaseActivityView() {
     }
 
     fun requestLocation() {
-        if (!locatonRequested) {
-            locatonRequested = true
+        if (!locationRequested) {
+            locationRequested = true
             locationListener = LocationListener {
                 presenter.locationChanged(it)
                 removeSubscriptionToLocationUpdates()
-                locatonRequested = false
+                locationRequested = false
             }
             subscribeToLocationUpdates()
         }
