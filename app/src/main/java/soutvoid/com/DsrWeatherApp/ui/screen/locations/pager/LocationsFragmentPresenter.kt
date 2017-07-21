@@ -6,18 +6,22 @@ import rx.Observable
 import rx.functions.Action1
 import rx.functions.FuncN
 import rx.schedulers.Schedulers
+import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import javax.inject.Inject
 
 @PerScreen
-class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
+class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
+                                                     var messagePresenter: MessagePresenter)
     : BasePresenter<LocationsFragmentView>(errorHandler) {
 
     @Inject
@@ -41,7 +45,11 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler)
                     Action1 {
                         view.showData(locations, it)
                         view.setRefreshEnable(false)
-                    }
+                    },
+                    StandardWithActionErrorHandler(
+                            messagePresenter,
+                            view.getString(R.string.try_again))
+                            { loadData() }
             )
         } else {
             view.setRefreshEnable(false)

@@ -4,6 +4,7 @@ import com.agna.ferro.mvp.component.scope.PerScreen
 import rx.Observable
 import rx.functions.Action1
 import rx.schedulers.Schedulers
+import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
@@ -11,12 +12,16 @@ import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import javax.inject.Inject
 
 @PerScreen
-class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : BasePresenter<MainActivityView>(errorHandler) {
+class MainActivityPresenter
+@Inject constructor(val messagePresenter: MessagePresenter, errorHandler: ErrorHandler)
+    : BasePresenter<MainActivityView>(errorHandler) {
 
     @Inject
     lateinit var currentWeatherRep : CurrentWeatherRepository
@@ -47,7 +52,10 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler) : Ba
                 Action1 {
                     view.fillAllData(it)
                     view.setProgressBarEnabled(false)
-                }
+                },
+                StandardWithActionErrorHandler(messagePresenter,
+                        view.getString(R.string.try_again))
+                        { loadData() }
         )
     }
 

@@ -6,15 +6,21 @@ import com.agna.ferro.mvp.component.scope.PerScreen
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.model.LatLng
 import io.realm.Realm
+import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.error.StandardErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.locationSettings.LocationSettingsActivityView
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
 @PerScreen
-class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
+class MapActivityPresenter @Inject constructor(val messagePresenter: MessagePresenter,
+                                               errorHandler: ErrorHandler):
     BasePresenter<MapActivityView>(errorHandler) {
 
     var locationChanged = false //если пользователь еще не поменял сам точку, то поставим на нее маркер
@@ -82,8 +88,14 @@ class MapActivityPresenter @Inject constructor(errorHandler: ErrorHandler):
      * пользователь выбрал точку и нажал "подтвердить"
      */
     fun locationChosen(latLng: LatLng) {
-        val locationName = getLocationName(latLng)
-        LocationSettingsActivityView.start(view, locationName, latLng.latitude, latLng.longitude)
+        try {
+            val locationName = getLocationName(latLng)
+            LocationSettingsActivityView.start(view, locationName, latLng.latitude, latLng.longitude)
+        } catch (e: IOException) {
+            val errorHandler = StandardWithActionErrorHandler(messagePresenter, view.getString(R.string.try_again))
+                { locationChosen(latLng) }
+            errorHandler.handleError(e)
+        }
     }
 
     /**
