@@ -44,6 +44,20 @@ constructor(private val activityProvider: ActivityProvider) {
         textView.maxLines = 4
     }
 
+    private fun showWithAction(@StringRes stringId: Int, @StringRes actionStringId: Int, listener: (v: View) -> Unit) {
+        val v = view
+        val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
+        setMultilineSnackbar(snackbar)
+        snackbar.setAction(actionStringId, listener)
+    }
+
+    private fun showWithAction(message: String, actionName: String, listener: (v: View) -> Unit) {
+        val v = view
+        val snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG)
+        setMultilineSnackbar(snackbar)
+        snackbar.setAction(actionName, listener)
+    }
+
     /**
      * Для того, чтобы срабатывал Behavior на появление Snackbar,
      * нужно чтобы корневым контейнером экрана был CoordinatorLayout
