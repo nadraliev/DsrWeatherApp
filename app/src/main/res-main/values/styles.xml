@@ -14,10 +14,18 @@
         <item name="android:textColorSecondaryInverse">@color/black</item>
         <item name="android:editTextStyle">@style/InputField.Gray.White</item>
         <item name="ico_color">@color/white</item>
+        <item name="ms_stepperStyle">@style/DotStepperStyle</item>
     </style>
 
     <style name="InputField.Gray.White" parent="Widget.AppCompat.EditText">
         <item name="android:background">@color/gray_5</item>
+    </style>
+
+    <style name="DotStepperStyle">
+        <item name="ms_stepperType">dots</item>
+        <item name="ms_activeStepColor">@color/white</item>
+        <item name="ms_inactiveStepColor">@color/white_c</item>
+        <item name="ms_bottomNavigationBackground">@color/gray_6</item>
     </style>
 
 </resources>
