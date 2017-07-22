@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -29,4 +30,15 @@ fun Resources.Theme.getThemeColor(attr: Int): Int {
  */
 fun Context.getDefaultPreferences(): SharedPreferences {
     return this.getSharedPreferences(SettingsFragment.SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE)
+}
+
+/**
+ * @return id текущей темы
+ */
+fun SharedPreferences.getPreferredThemeId(): Int {
+    val themeNumber = getInt(SettingsFragment.SHARED_PREFERENCES_THEME, 0)
+    when(themeNumber) {
+        1 -> return R.style.AppTheme_GrayWhite
+        else -> return R.style.AppTheme_WhiteBlack
+    }
 }

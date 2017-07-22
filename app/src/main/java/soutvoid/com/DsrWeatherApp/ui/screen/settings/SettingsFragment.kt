@@ -8,6 +8,7 @@ class SettingsFragment: PreferenceFragment() {
 
     companion object {
         const val SHARED_PREFERENCES_NAME = "default"
+        const val SHARED_PREFERENCES_THEME = "theme"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

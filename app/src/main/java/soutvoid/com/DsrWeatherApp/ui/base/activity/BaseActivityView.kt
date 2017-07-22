@@ -2,6 +2,7 @@ package soutvoid.com.DsrWeatherApp.ui.base.activity
 
 import android.content.Context
 import android.os.Bundle
+import android.view.WindowManager
 import butterknife.ButterKnife
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.view.activity.MvpActivityView
@@ -10,6 +11,8 @@ import soutvoid.com.DsrWeatherApp.app.App
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
 import soutvoid.com.DsrWeatherApp.app.log.LogConstants
 import soutvoid.com.DsrWeatherApp.app.log.RemoteLogger
+import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
+import soutvoid.com.DsrWeatherApp.ui.util.getPreferredThemeId
 
 
 abstract class BaseActivityView : MvpActivityView() {
@@ -19,6 +22,11 @@ abstract class BaseActivityView : MvpActivityView() {
 
     val appComponent: AppComponent
         get() = (application as App).appComponent
+
+    override fun onPreCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
+        setTheme(getDefaultPreferences().getPreferredThemeId())
+        super.onPreCreate(savedInstanceState, viewRecreated)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
