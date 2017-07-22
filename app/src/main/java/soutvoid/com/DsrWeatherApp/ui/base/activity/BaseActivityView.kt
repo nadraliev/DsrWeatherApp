@@ -1,18 +1,25 @@
 package soutvoid.com.DsrWeatherApp.ui.base.activity
 
+import android.annotation.TargetApi
+import android.app.ActivityManager
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.util.TypedValue
 import android.view.WindowManager
 import butterknife.ButterKnife
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.view.activity.MvpActivityView
 import com.mikepenz.iconics.context.IconicsContextWrapper
+import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.app.App
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
 import soutvoid.com.DsrWeatherApp.app.log.LogConstants
 import soutvoid.com.DsrWeatherApp.app.log.RemoteLogger
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import soutvoid.com.DsrWeatherApp.ui.util.getPreferredThemeId
+import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 
 abstract class BaseActivityView : MvpActivityView() {
@@ -25,6 +32,8 @@ abstract class BaseActivityView : MvpActivityView() {
 
     override fun onPreCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         setTheme(getDefaultPreferences().getPreferredThemeId())
+        if (SdkUtil.supportsLollipop())
+            initTaskDescription()
         super.onPreCreate(savedInstanceState, viewRecreated)
     }
 
@@ -53,5 +62,16 @@ abstract class BaseActivityView : MvpActivityView() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(IconicsContextWrapper.wrap(newBase))
+    }
+
+    @TargetApi(21)
+    private fun initTaskDescription() {
+        val bm = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.colorPrimary, typedValue, true)
+        setTaskDescription(ActivityManager.TaskDescription(
+                getString(R.string.app_name),
+                bm,
+                ContextCompat.getColor(this, typedValue.resourceId)))
     }
 }
