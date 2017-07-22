@@ -27,11 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.screen.map.MapActivityView"/>
-
         <activity android:name=".ui.screen.settings.SettingsActivityView"/>
 
-        <activity android:name=".ui.screen.locationSettings.LocationSettingsActivityView"/>
+        <activity android:name=".ui.screen.newLocation.NewLocationActivityView"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

@@ -1,26 +1,31 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.map
+package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map
 
 import android.Manifest
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.agna.ferro.mvp.component.ScreenComponent
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment
+import com.facebook.stetho.common.android.FragmentCompat
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_map.*
+import com.stepstone.stepper.Step
+import com.stepstone.stepper.VerificationError
+import kotlinx.android.synthetic.main.fragment_map.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
+import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.LocationListener
 import soutvoid.com.DsrWeatherApp.ui.util.PlaceSelectionListener
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
@@ -30,16 +35,16 @@ import javax.inject.Inject
 /**
  * активити для отображения карты и выбора точки
  */
-class MapActivityView: BaseActivityView() {
+class MapFragmentView : BaseFragmentView(), Step {
 
     companion object {
-        fun start(context: Context) {
-            context.startActivity(Intent(context, MapActivityView::class.java))
+        fun newInstance(): MapFragmentView {
+            return MapFragmentView()
         }
     }
 
     @Inject
-    lateinit var presenter: MapActivityPresenter
+    lateinit var presenter: MapFragmentPresenter
 
     private lateinit var map: GoogleMap
 
@@ -54,18 +59,20 @@ class MapActivityView: BaseActivityView() {
     override fun getName(): String = "Map"
 
     override fun createScreenComponent(): ScreenComponent<*> {
-        return DaggerMapActivityComponent.builder()
-                .activityModule(activityModule)
-                .appComponent(appComponent)
+        return DaggerMapFragmentComponent.builder()
+                .appComponent(getAppComponent())
+                .fragmentModule(getFragmentModule())
                 .build()
     }
 
-    override fun getContentView(): Int = R.layout.activity_map
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater?.inflate(R.layout.fragment_map, container, false)
+        return rootView
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
-        super.onCreate(savedInstanceState, viewRecreated)
+    override fun onStart() {
+        super.onStart()
 
-        initToolbar()
         initButtons()
 
         //начиная с android M запросить у пользователя разрешение на геолокацию
@@ -87,13 +94,6 @@ class MapActivityView: BaseActivityView() {
         subscribeToLocationUpdates()
     }
 
-    private fun initToolbar() {
-        setSupportActionBar(map_toolbar)
-        title = getString(R.string.choose_location)
-        map_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
-        map_toolbar.setNavigationOnClickListener { onBackPressed() }
-    }
-
     /**
      * инициализация fab кнопок
      */
@@ -102,11 +102,10 @@ class MapActivityView: BaseActivityView() {
             requestLocation()
             myLocationButtonClicked = true
         }
-        map_add_location.setOnClickListener { marker?.let { presenter.locationChosen(it.position) } }
     }
 
     private fun initMap() {
-        val mapFragment = supportFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync {
             map = it
             map.setOnMapClickListener { setMarkerPosition(it) }
@@ -114,17 +113,17 @@ class MapActivityView: BaseActivityView() {
     }
 
     private fun initAutocompleteFragment() {
-        val autoCompleteFragment = fragmentManager.findFragmentById(R.id.map_autocomplete_fragment) as PlaceAutocompleteFragment
+        val autoCompleteFragment = childFragmentManager.findFragmentById(R.id.map_autocomplete_fragment) as SupportPlaceAutocompleteFragment
         autoCompleteFragment.setOnPlaceSelectedListener(PlaceSelectionListener { presenter.locationSelectedInSearchField(it) })
     }
 
     private fun isLocationPermissionGranted() : Boolean {
-        val checkPermission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+        val checkPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
         return checkPermission == PackageManager.PERMISSION_GRANTED
     }
 
     private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -135,7 +134,7 @@ class MapActivityView: BaseActivityView() {
 
     private fun locationPermissionGranted(granted: Boolean) {
         if (granted)
-            locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            locationManager = activity.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         presenter.locationPermissionGranted(granted)
     }
 
@@ -146,6 +145,19 @@ class MapActivityView: BaseActivityView() {
 
     private fun removeSubscriptionToLocationUpdates() {
         locationManager?.removeUpdates(locationListener)
+    }
+
+    override fun onSelected() {
+
+    }
+
+    override fun verifyStep(): VerificationError? {
+        marker?.let { presenter.locationChosen(it.position) }
+        return null
+    }
+
+    override fun onError(error: VerificationError) {
+
     }
 
     fun requestLocation() {
