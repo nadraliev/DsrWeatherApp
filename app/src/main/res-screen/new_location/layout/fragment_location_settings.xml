@@ -60,6 +60,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/textInputLayout"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_check_dark"/>
+        app:srcCompat="?attr/themedCheckDrawable"/>
 
 </android.support.constraint.ConstraintLayout>

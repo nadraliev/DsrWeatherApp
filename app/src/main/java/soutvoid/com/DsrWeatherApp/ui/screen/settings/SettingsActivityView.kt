@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.TypedValue
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_settings.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
-import kotlinx.android.synthetic.main.activity_settings.view.*
 
 class SettingsActivityView: BaseActivityView() {
 
@@ -46,7 +46,9 @@ class SettingsActivityView: BaseActivityView() {
     private fun initToolbar() {
         setSupportActionBar(settings_toolbar)
         title = getString(R.string.settings)
-        settings_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.themedBackDrawable, typedValue, true)
+        settings_toolbar.navigationIcon = ContextCompat.getDrawable(this, typedValue.resourceId)
         settings_toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 

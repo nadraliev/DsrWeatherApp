@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.util.TypedValue
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
@@ -46,7 +47,9 @@ class NewLocationActivityView : BaseActivityView() {
     private fun initToolbar() {
         setSupportActionBar(new_location_toolbar)
         title = getString(R.string.new_location)
-        new_location_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.themedBackDrawable, typedValue, true)
+        new_location_toolbar.navigationIcon = ContextCompat.getDrawable(this, typedValue.resourceId)
         new_location_toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 

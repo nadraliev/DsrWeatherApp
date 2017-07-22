@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="themedBackDrawable" format="reference"/>
+    <attr name="themedMyLocationDrawable" format="reference"/>
+    <attr name="themedFavoriteDrawable" format="reference"/>
+    <attr name="themedFavoriteBorderDrawable" format="reference"/>
+    <attr name="themedAddDrawable" format="reference"/>
+    <attr name="themedSettingsDrawable" format="reference"/>
+    <attr name="themedCheckDrawable" format="reference"/>
+</resources>

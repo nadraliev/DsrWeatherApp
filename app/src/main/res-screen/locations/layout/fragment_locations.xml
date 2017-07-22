@@ -25,6 +25,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="32dp"
-        android:src="@drawable/ic_add_dark"/>
+        android:src="?attr/themedAddDrawable"/>
 
 </android.support.design.widget.CoordinatorLayout>

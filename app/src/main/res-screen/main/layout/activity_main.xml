@@ -37,7 +37,7 @@
                     app:layout_constraintBottom_toBottomOf="@+id/main_back_btn"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/main_back_btn"
-                    app:srcCompat="@drawable/ic_settings"/>
+                    app:srcCompat="?attr/themedSettingsDrawable"/>
 
                 <include
                     android:id="@+id/include"
@@ -56,7 +56,7 @@
                     android:layout_marginTop="16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_arrow_back_light"/>
+                    app:srcCompat="?attr/themedBackDrawable"/>
             </android.support.constraint.ConstraintLayout>
 
 
