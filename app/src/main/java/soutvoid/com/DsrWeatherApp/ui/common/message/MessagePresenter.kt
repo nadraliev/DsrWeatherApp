@@ -11,6 +11,8 @@ import com.agna.ferro.mvp.component.provider.ActivityProvider
 import com.agna.ferro.mvp.component.scope.PerScreen
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.interactor.util.TransformUtil
+import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
+import soutvoid.com.DsrWeatherApp.ui.util.isDarkThemePreferred
 import javax.inject.Inject
 
 
@@ -18,10 +20,20 @@ import javax.inject.Inject
 class MessagePresenter @Inject
 constructor(private val activityProvider: ActivityProvider) {
 
+    var backgroundColorId: Int
+
+    init {
+        if (activityProvider.get().getDefaultPreferences().isDarkThemePreferred())
+            backgroundColorId = R.color.grey_900
+        else
+            backgroundColorId = R.color.grey_400
+    }
+
     fun show(@StringRes stringId: Int) {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.show()
     }
 
@@ -29,6 +41,7 @@ constructor(private val activityProvider: ActivityProvider) {
         val v = view
         val snackbar = Snackbar.make(v, TransformUtil.sanitizeHtmlString(message), Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.show()
     }
 
@@ -36,6 +49,7 @@ constructor(private val activityProvider: ActivityProvider) {
         val v = activityProvider.get().findViewById<View>(parentViewId)
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.show()
     }
 
@@ -44,10 +58,15 @@ constructor(private val activityProvider: ActivityProvider) {
         textView.maxLines = 4
     }
 
+    private fun setSnackbarColor(snackbar: Snackbar) {
+        snackbar.view.setBackgroundResource(backgroundColorId)
+    }
+
     fun showWithAction(@StringRes stringId: Int, @StringRes actionStringId: Int, listener: (v: View) -> Unit) {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.setAction(actionStringId, listener)
         snackbar.show()
     }
@@ -56,6 +75,7 @@ constructor(private val activityProvider: ActivityProvider) {
         val v = view
         val snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.setAction(actionName, listener)
         snackbar.show()
     }
@@ -64,6 +84,7 @@ constructor(private val activityProvider: ActivityProvider) {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
         snackbar.setAction(actionName, listener)
         snackbar.show()
     }

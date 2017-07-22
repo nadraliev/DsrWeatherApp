@@ -38,7 +38,7 @@ fun Context.getDefaultPreferences(): SharedPreferences {
  */
 fun SharedPreferences.getPreferredThemeId(): Int {
     var themeNumber = getString(SettingsFragment.SHARED_PREFERENCES_THEME, "0").toInt()
-    val preferDark = getBoolean(SettingsFragment.SHARED_PREFERENCES_DARK_THEME, false)
+    val preferDark = isDarkThemePreferred()
     if (preferDark)
         themeNumber += 100  //dark themes "zone" is 1xx
     when(themeNumber) {
@@ -71,4 +71,8 @@ fun SharedPreferences.getPreferredThemeId(): Int {
 
         else -> return R.style.AppTheme_Light
     }
+}
+
+fun SharedPreferences.isDarkThemePreferred(): Boolean {
+    return getBoolean(SettingsFragment.SHARED_PREFERENCES_DARK_THEME, false)
 }
