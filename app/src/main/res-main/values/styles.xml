@@ -2,21 +2,21 @@
 
     <style name="DotStepper"/>
 
-    <!--______________________________White and black theme(0)__________________________-->
-    <style name="AppTheme.WhiteBlack" parent="Theme.AppCompat.Light.NoActionBar">
+    <!--______________________________Light theme(0)__________________________-->
+    <style name="AppTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/grey_50</item>
         <item name="colorPrimaryDark">@color/white_c</item>
-        <item name="colorAccent">@color/gray_6</item>
-        <item name="android:colorBackground">@color/white</item>
+        <item name="colorAccent">@color/grey_700</item>
+        <item name="android:colorBackground">@color/grey_50</item>
         <item name="android:textColor">@color/text_color_white_black</item>
         <item name="android:textColorPrimary">@color/black</item>
-        <item name="android:textColorPrimaryInverse">@color/white</item>
-        <item name="android:textColorSecondary">@color/gray_4</item>
+        <item name="android:textColorPrimaryInverse">@color/grey_50</item>
+        <item name="android:textColorSecondary">@color/grey_800</item>
         <item name="android:textColorSecondaryInverse">@color/white_c</item>
-        <item name="android:editTextStyle">@style/InputField.WhiteBlack</item>
+        <item name="android:editTextStyle">@style/InputField.Light</item>
         <item name="ico_color">@color/black</item>
-        <item name="ms_stepperStyle">@style/DotStepper.WhiteBlack</item>
+        <item name="ms_stepperStyle">@style/DotStepper.Light</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_black</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_white</item>
@@ -27,34 +27,36 @@
         <item name="themedCheckDrawable">@drawable/ic_check_white</item>
     </style>
 
-    <style name="InputField.WhiteBlack" parent="Widget.AppCompat.EditText">
+    <style name="InputField.Light" parent="Widget.AppCompat.EditText">
         <item name="android:background">@color/white_c</item>
     </style>
 
-    <style name="DotStepper.WhiteBlack">
+    <style name="DotStepper.Light">
         <item name="ms_stepperType">dots</item>
         <item name="ms_activeStepColor">@color/black</item>
-        <item name="ms_inactiveStepColor">@color/gray_4</item>
-        <item name="ms_bottomNavigationBackground">@color/white</item>
+        <item name="ms_inactiveStepColor">@color/grey_800</item>
+        <item name="ms_bottomNavigationBackground">@color/grey_50</item>
     </style>
 
     <!--_________________________________________________________________________________-->
 
-    <!--______________________________Gray and white theme(1)__________________________-->
-    <style name="AppTheme.GrayWhite" parent="Theme.AppCompat.NoActionBar">
+
+
+    <!--______________________________Dark theme(1)__________________________-->
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
-        <item name="colorPrimary">@color/gray_6</item>
-        <item name="colorPrimaryDark">@color/gray_4</item>
+        <item name="colorPrimary">@color/grey_700</item>
+        <item name="colorPrimaryDark">@color/grey_800</item>
         <item name="colorAccent">@color/white</item>
-        <item name="android:colorBackground">@color/gray_6</item>
+        <item name="android:colorBackground">@color/grey_700</item>
         <item name="android:textColor">@color/text_color_gray_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
         <item name="android:textColorSecondaryInverse">@color/black</item>
-        <item name="android:editTextStyle">@style/InputField.GrayWhite</item>
+        <item name="android:editTextStyle">@style/InputField.Dark</item>
         <item name="ico_color">@color/white</item>
-        <item name="ms_stepperStyle">@style/DotStepper.GrayWhite</item>
+        <item name="ms_stepperStyle">@style/DotStepper.Dark</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_white</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_black</item>
@@ -65,15 +67,95 @@
         <item name="themedCheckDrawable">@drawable/ic_check_black</item>
     </style>
 
-    <style name="InputField.GrayWhite" parent="Widget.AppCompat.EditText">
-        <item name="android:background">@color/gray_5</item>
+    <style name="InputField.Dark" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/grey_600</item>
     </style>
 
-    <style name="DotStepper.GrayWhite">
+    <style name="DotStepper.Dark">
         <item name="ms_stepperType">dots</item>
         <item name="ms_activeStepColor">@color/white</item>
         <item name="ms_inactiveStepColor">@color/white_c</item>
-        <item name="ms_bottomNavigationBackground">@color/gray_6</item>
+        <item name="ms_bottomNavigationBackground">@color/grey_700</item>
+    </style>
+
+    <!--_________________________________________________________________________________-->
+
+
+
+    <!--______________________________Purple theme(2)__________________________-->
+    <style name="AppTheme.Purple" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="colorPrimary">@color/purple_700</item>
+        <item name="colorPrimaryDark">@color/purple_800</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:colorBackground">@color/purple_700</item>
+        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/black</item>
+        <item name="android:textColorSecondary">@color/white_c</item>
+        <item name="android:textColorSecondaryInverse">@color/black</item>
+        <item name="android:editTextStyle">@style/InputField.Purple</item>
+        <item name="ico_color">@color/white</item>
+        <item name="ms_stepperStyle">@style/DotStepper.Purple</item>
+        <!-- drawables -->
+        <item name="themedBackDrawable">@drawable/ic_arrow_back_white</item>
+        <item name="themedMyLocationDrawable">@drawable/ic_my_location_black</item>
+        <item name="themedFavoriteDrawable">@drawable/ic_favorite_white</item>
+        <item name="themedFavoriteBorderDrawable">@drawable/ic_favorite_border_white</item>
+        <item name="themedAddDrawable">@drawable/ic_add_black</item>
+        <item name="themedSettingsDrawable">@drawable/ic_settings_white</item>
+        <item name="themedCheckDrawable">@drawable/ic_check_black</item>
+    </style>
+
+    <style name="InputField.Purple" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/purple_600</item>
+    </style>
+
+    <style name="DotStepper.Purple">
+        <item name="ms_stepperType">dots</item>
+        <item name="ms_activeStepColor">@color/white</item>
+        <item name="ms_inactiveStepColor">@color/white_c</item>
+        <item name="ms_bottomNavigationBackground">@color/purple_700</item>
+    </style>
+
+    <!--_________________________________________________________________________________-->
+
+
+
+    <!--______________________________Purple inverse theme(3)__________________________-->
+    <style name="AppTheme.PurpleInverse" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="colorPrimary">@color/grey_50</item>
+        <item name="colorPrimaryDark">@color/white_c</item>
+        <item name="colorAccent">@color/purple_700</item>
+        <item name="android:colorBackground">@color/grey_50</item>
+        <item name="android:textColor">@color/text_color_purple</item>
+        <item name="android:textColorPrimary">@color/purple_700</item>
+        <item name="android:textColorPrimaryInverse">@color/black</item>
+        <item name="android:textColorSecondary">@color/purple_400</item>
+        <item name="android:textColorSecondaryInverse">@color/ms_black_87_opacity</item>
+        <item name="android:editTextStyle">@style/InputField.PurpleInverse</item>
+        <item name="ico_color">@color/black</item>
+        <item name="ms_stepperStyle">@style/DotStepper.PurpleInverse</item>
+        <!-- drawables -->
+        <item name="themedBackDrawable">@drawable/ic_arrow_back_purple_700</item>
+        <item name="themedMyLocationDrawable">@drawable/ic_my_location_white</item>
+        <item name="themedFavoriteDrawable">@drawable/ic_favorite_purple_700</item>
+        <item name="themedFavoriteBorderDrawable">@drawable/ic_favorite_border_purple_700</item>
+        <item name="themedAddDrawable">@drawable/ic_add_white</item>
+        <item name="themedSettingsDrawable">@drawable/ic_settings_purple_700</item>
+        <item name="themedCheckDrawable">@drawable/ic_check_white</item>
+    </style>
+
+    <style name="InputField.PurpleInverse" parent="Widget.AppCompat.EditText">
+        <item name="android:background">@color/purple_700</item>
+    </style>
+
+    <style name="DotStepper.PurpleInverse">
+        <item name="ms_stepperType">dots</item>
+        <item name="ms_activeStepColor">@color/purple_700</item>
+        <item name="ms_inactiveStepColor">@color/purple_400</item>
+        <item name="ms_bottomNavigationBackground">@color/grey_50</item>
     </style>
 
     <!--_________________________________________________________________________________-->

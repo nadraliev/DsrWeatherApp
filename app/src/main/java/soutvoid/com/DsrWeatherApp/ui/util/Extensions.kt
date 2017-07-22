@@ -33,12 +33,15 @@ fun Context.getDefaultPreferences(): SharedPreferences {
 }
 
 /**
+ * чтобы добавить тему, напиши стиль в res-main styles, добавь записи в res-settings strings для экрана настроек, добавь опцию сюда
  * @return id текущей темы
  */
 fun SharedPreferences.getPreferredThemeId(): Int {
     val themeNumber = getString(SettingsFragment.SHARED_PREFERENCES_THEME, "0").toInt()
     when(themeNumber) {
-        1 -> return R.style.AppTheme_GrayWhite
-        else -> return R.style.AppTheme_WhiteBlack
+        1 -> return R.style.AppTheme_Dark
+        2 -> return R.style.AppTheme_Purple
+        3 -> return R.style.AppTheme_PurpleInverse
+        else -> return R.style.AppTheme_Light
     }
 }

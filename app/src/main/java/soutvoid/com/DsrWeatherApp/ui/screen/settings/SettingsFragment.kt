@@ -1,6 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.settings
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceFragment
 import soutvoid.com.DsrWeatherApp.R
@@ -13,18 +14,28 @@ class SettingsFragment: PreferenceFragment() {
         const val SHARED_PREFERENCES_THEME = "theme"
     }
 
+    lateinit var sharedPreferencesListener : SharedPreferences.OnSharedPreferenceChangeListener
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        preferenceManager.sharedPreferencesName = SettingsFragment.SHARED_PREFERENCES_NAME
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener { preferences, s ->
+        sharedPreferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { preferences, s ->
             if (s == SHARED_PREFERENCES_THEME) {
                 val intent = Intent(activity, LocationsActivityView::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 activity.startActivity(intent
                 )
             }
         }
 
+        preferenceManager.sharedPreferencesName = SettingsFragment.SHARED_PREFERENCES_NAME
+        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(sharedPreferencesListener)
+
         addPreferencesFromResource(R.xml.preferences)
+    }
+
+    override fun onDestroy() {
+        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(sharedPreferencesListener)
+        super.onDestroy()
     }
 }
