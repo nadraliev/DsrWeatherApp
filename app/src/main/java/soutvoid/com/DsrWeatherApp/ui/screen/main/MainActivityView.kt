@@ -81,7 +81,6 @@ class MainActivityView : TranslucentStatusActivityView() {
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
-        fillUviData(allWeatherData.ultraviolet)
     }
 
     fun fillCityName() {
@@ -107,10 +106,6 @@ class MainActivityView : TranslucentStatusActivityView() {
 
     fun fillForecastData(forecast: Forecast) {
         main_forecast.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
-    }
-
-    fun fillUviData(ultraviolet: Ultraviolet) {
-        main_uv_tv.text = ": ${ultraviolet.value}"
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {

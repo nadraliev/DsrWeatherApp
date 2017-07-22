@@ -165,24 +165,4 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textView5"
         app:layout_constraintLeft_toRightOf="@+id/textView5"/>
 
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/uv_index"
-        android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
-
-    <TextView
-        android:id="@+id/main_uv_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:textSize="20sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView8"
-        app:layout_constraintLeft_toRightOf="@+id/textView8"/>
-
 </android.support.constraint.ConstraintLayout>

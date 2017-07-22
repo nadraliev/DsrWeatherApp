@@ -69,9 +69,8 @@ class MainActivityPresenter
                 Schedulers.io(),
                 currentWeatherRep.getByCoordinates(savedLocation.latitude, savedLocation.longitude, units),
                 forecastRep.getByCoordinates(savedLocation.latitude, savedLocation.longitude, units),
-                uviRep.getByCoordinates(savedLocation.latitude, savedLocation.longitude, units),
                 forecastRep.getDailyByCoordinates(savedLocation.latitude, savedLocation.longitude, units)
-        ) { current, forecast, ultraviolet, dailyForecast -> AllWeatherData(current, forecast, ultraviolet, dailyForecast) }
+        ) { current, forecast, dailyForecast -> AllWeatherData(current, forecast, dailyForecast) }
     }
 
     /**
