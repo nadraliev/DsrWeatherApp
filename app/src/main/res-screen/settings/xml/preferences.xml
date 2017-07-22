@@ -7,4 +7,10 @@
         android:entryValues="@array/unitsValues"
         android:key="units"
         android:title="@string/units"/>
+    <ListPreference
+        android:defaultValue="0"
+        android:entries="@array/themes"
+        android:entryValues="@array/themesValues"
+        android:key="theme"
+        android:title="@string/theme"/>
 </PreferenceScreen>

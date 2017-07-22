@@ -36,7 +36,7 @@ fun Context.getDefaultPreferences(): SharedPreferences {
  * @return id текущей темы
  */
 fun SharedPreferences.getPreferredThemeId(): Int {
-    val themeNumber = getInt(SettingsFragment.SHARED_PREFERENCES_THEME, 0)
+    val themeNumber = getString(SettingsFragment.SHARED_PREFERENCES_THEME, "0").toInt()
     when(themeNumber) {
         1 -> return R.style.AppTheme_GrayWhite
         else -> return R.style.AppTheme_WhiteBlack

@@ -42,6 +42,7 @@
 
     <!--______________________________Gray and white theme(1)__________________________-->
     <style name="AppTheme.GrayWhite" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
         <item name="colorPrimary">@color/gray_6</item>
         <item name="colorPrimaryDark">@color/gray_4</item>
         <item name="colorAccent">@color/white</item>
