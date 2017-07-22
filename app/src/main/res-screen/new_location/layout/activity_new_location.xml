@@ -16,7 +16,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/new_location_toolbar"
-        app:ms_stepperType="tabs"/>
+        app:ms_stepperType="dots"/>
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/new_location_toolbar"

@@ -9,8 +9,8 @@ import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import javax.inject.Inject
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.StepperAdapter
+import javax.inject.Inject
 
 class NewLocationActivityView : BaseActivityView() {
 
@@ -43,9 +43,9 @@ class NewLocationActivityView : BaseActivityView() {
         initStepper()
     }
 
-        private fun initToolbar() {
+    private fun initToolbar() {
         setSupportActionBar(new_location_toolbar)
-        title = getString(R.string.choose_location)
+        title = getString(R.string.new_location)
         new_location_toolbar.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_arrow_back_light)
         new_location_toolbar.setNavigationOnClickListener { onBackPressed() }
     }

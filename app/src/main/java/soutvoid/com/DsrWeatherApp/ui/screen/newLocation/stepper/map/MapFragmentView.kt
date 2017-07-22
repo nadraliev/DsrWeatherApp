@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agna.ferro.mvp.component.ScreenComponent
+import com.facebook.stetho.common.android.FragmentCompat
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -21,7 +22,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.stepstone.stepper.Step
 import com.stepstone.stepper.VerificationError
-import kotlinx.android.synthetic.main.activity_map.*
+import kotlinx.android.synthetic.main.fragment_map.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
@@ -65,7 +66,7 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater?.inflate(R.layout.activity_map, container, false)
+        val rootView = inflater?.inflate(R.layout.fragment_map, container, false)
         return rootView
     }
 
@@ -101,7 +102,6 @@ class MapFragmentView : BaseFragmentView(), Step {
             requestLocation()
             myLocationButtonClicked = true
         }
-        map_add_location.setOnClickListener { marker?.let { presenter.locationChosen(it.position) } }
     }
 
     private fun initMap() {
@@ -123,7 +123,7 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     private fun requestLocationPermission() {
-        ActivityCompat.requestPermissions(activity, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
+        requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 0)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -152,6 +152,7 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     override fun verifyStep(): VerificationError? {
+        marker?.let { presenter.locationChosen(it.position) }
         return null
     }
 

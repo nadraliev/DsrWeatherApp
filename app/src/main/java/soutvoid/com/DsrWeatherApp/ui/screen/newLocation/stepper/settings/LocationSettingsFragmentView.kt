@@ -1,6 +1,5 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,14 +8,14 @@ import android.view.ViewGroup
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.stepstone.stepper.Step
 import com.stepstone.stepper.VerificationError
-import kotlinx.android.synthetic.main.activity_location_settings.*
+import kotlinx.android.synthetic.main.fragment_location_settings.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 
 class LocationSettingsFragmentView : BaseFragmentView(), Step {
 
@@ -24,12 +23,8 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
         const val NAME_KEY = "name"
         const val LATITUDE_KEY = "latitude"
         const val LONGITUDE_KEY = "longitude"
-        fun newInstance(name: String = "", latitude: Double = .0, longitude: Double = .0): LocationSettingsFragmentView {
+        fun newInstance(): LocationSettingsFragmentView {
             val locationSettingsView = LocationSettingsFragmentView()
-            locationSettingsView.arguments = Bundle()
-            locationSettingsView.arguments.putString(NAME_KEY, name)
-            locationSettingsView.arguments.putDouble(LATITUDE_KEY, latitude)
-            locationSettingsView.arguments.putDouble(LONGITUDE_KEY, longitude)
             return locationSettingsView
         }
     }
@@ -49,24 +44,18 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater?.inflate(R.layout.activity_location_settings, container, false)
+        val rootView = inflater?.inflate(R.layout.fragment_location_settings, container, false)
         return rootView
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initBackButton()
-        fillInitData()
         initCheckButton()
     }
 
-    private fun initBackButton() {
-        location_settings_back_btn.setOnClickListener { activity.onBackPressed() }
-    }
-
     private fun fillInitData() {
-        location_settings_name.setText(arguments.getString(NAME_KEY))
+        location_settings_name.setText(context.getDefaultPreferences().getString(NAME_KEY, ""))
     }
 
     private fun initCheckButton() {
@@ -74,10 +63,11 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
     }
 
     override fun onSelected() {
-
+        fillInitData()
     }
 
     override fun verifyStep(): VerificationError? {
+        presenter.checkPressed()
         return null
     }
 
@@ -87,8 +77,8 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
     fun getData(): SavedLocation {
         return SavedLocation(
                 location_settings_name.text.toString(),
-                arguments.getDouble(LONGITUDE_KEY, .0),
-                arguments.getDouble(LATITUDE_KEY, .0),
+                context.getDefaultPreferences().getFloat(LONGITUDE_KEY, 0f).toDouble(),
+                context.getDefaultPreferences().getFloat(LATITUDE_KEY, 0f).toDouble(),
                 location_settings_favorite.isChecked,
                 location_settings_show_forecast.isChecked
         )

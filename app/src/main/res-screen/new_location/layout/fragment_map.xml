@@ -21,39 +21,27 @@
         app:layout_constraintVertical_bias="0.0"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/map_add_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:clickable="true"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:srcCompat="@drawable/ic_check_dark"/>
-
-    <android.support.design.widget.FloatingActionButton
         android:id="@+id/map_my_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
         android:clickable="true"
         app:fabSize="normal"
-        app:layout_constraintBottom_toTopOf="@+id/map_add_location"
-        app:layout_constraintLeft_toLeftOf="@+id/map_add_location"
-        app:layout_constraintRight_toRightOf="@+id/map_add_location"
-        app:srcCompat="@drawable/ic_my_location"/>
+        app:srcCompat="@drawable/ic_my_location"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="24dp"
+        android:layout_marginRight="24dp"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <android.support.v7.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:cardBackgroundColor="@color/cardview_light_background"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/map_view">
 
         <fragment
             android:id="@+id/map_autocomplete_fragment"
