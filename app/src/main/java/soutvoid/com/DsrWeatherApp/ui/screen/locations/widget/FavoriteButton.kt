@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.util.TypedValue
 import android.widget.CompoundButton
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.app.log.Logger
 
 /**
  * кнопка для добавления/удаления из favorites
@@ -28,18 +27,22 @@ class FavoriteButton : CompoundButton {
         isClickable = true
     }
 
-    private fun initDrawables() {
+    private fun maybeInitDrawables() {
         val typedValue = TypedValue()
-        context.theme.resolveAttribute(R.attr.themedFavoriteDrawable, typedValue, true)
-        favoriteDrawableId = typedValue.resourceId
-        context.theme.resolveAttribute(R.attr.themedFavoriteBorderDrawable, typedValue, true)
-        favoriteBorderDrawableId = typedValue.resourceId
+        if (favoriteDrawableId == 0) {
+            context.theme.resolveAttribute(R.attr.themedFavoriteDrawable, typedValue, true)
+            favoriteDrawableId = typedValue.resourceId
+        }
+        if (favoriteBorderDrawableId == 0) {
+            context.theme.resolveAttribute(R.attr.themedFavoriteBorderDrawable, typedValue, true)
+            favoriteBorderDrawableId = typedValue.resourceId
+        }
     }
 
     override fun setChecked(checked: Boolean) {
         super.setChecked(checked)
 
-        initDrawables()
+        maybeInitDrawables()
 
         if (checked)
             buttonDrawable = ContextCompat.getDrawable(context, favoriteDrawableId)
