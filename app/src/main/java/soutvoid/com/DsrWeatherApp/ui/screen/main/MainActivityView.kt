@@ -21,12 +21,13 @@ import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 
 /**
  * экран для отображения погоды в определенной точке
  */
-class MainActivityView : TranslucentStatusActivityView() {
+class MainActivityView : BaseActivityView() {
 
     companion object {
         const val LOCATION_KEY = "location"

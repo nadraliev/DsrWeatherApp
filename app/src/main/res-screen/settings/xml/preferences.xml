@@ -13,4 +13,8 @@
         android:entryValues="@array/themesValues"
         android:key="theme"
         android:title="@string/theme"/>
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="prefer_dark"
+        android:title="@string/prefer_dark_theme"/>
 </PreferenceScreen>

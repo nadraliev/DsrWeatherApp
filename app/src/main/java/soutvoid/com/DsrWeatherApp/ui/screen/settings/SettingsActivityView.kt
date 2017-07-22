@@ -56,7 +56,7 @@ class SettingsActivityView: BaseActivityView() {
 
     private fun initPreferencesFragment() {
         fragmentManager.beginTransaction()
-                .replace(R.id.settings_content, SettingsFragment())
+                .replace(R.id.settings_content, SettingsFragment(presenter.messagePresenter))
                 .commit()
     }
 }

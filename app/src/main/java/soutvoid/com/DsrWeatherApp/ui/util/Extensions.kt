@@ -37,11 +37,38 @@ fun Context.getDefaultPreferences(): SharedPreferences {
  * @return id текущей темы
  */
 fun SharedPreferences.getPreferredThemeId(): Int {
-    val themeNumber = getString(SettingsFragment.SHARED_PREFERENCES_THEME, "0").toInt()
+    var themeNumber = getString(SettingsFragment.SHARED_PREFERENCES_THEME, "0").toInt()
+    val preferDark = getBoolean(SettingsFragment.SHARED_PREFERENCES_DARK_THEME, false)
+    if (preferDark)
+        themeNumber += 100  //dark themes "zone" is 1xx
     when(themeNumber) {
-        1 -> return R.style.AppTheme_Dark
-        2 -> return R.style.AppTheme_Purple
-        3 -> return R.style.AppTheme_PurpleInverse
+        0 -> return R.style.AppTheme_Light
+        1 -> return R.style.AppTheme_PurpleLight
+        2 -> return R.style.AppTheme_GreenLight
+        3 -> return R.style.AppTheme_RedLight
+        4 -> return R.style.AppTheme_BlueLight
+        5 -> return R.style.AppTheme_PinkLight
+        6 -> return R.style.AppTheme_DeepPurpleLight
+        7 -> return R.style.AppTheme_CyanLight
+        8 -> return R.style.AppTheme_TealLight
+        9 -> return R.style.AppTheme_YellowLight
+        10 -> return R.style.AppTheme_OrangeLight
+        11 -> return R.style.AppTheme_BrownLight
+
+
+        100 -> return R.style.AppTheme_Dark
+        101 -> return R.style.AppTheme_PurpleDark
+        102 -> return R.style.AppTheme_GreenDark
+        103 -> return R.style.AppTheme_RedDark
+        104 -> return R.style.AppTheme_BlueDark
+        105 -> return R.style.AppTheme_PinkDark
+        106 -> return R.style.AppTheme_Deep_purpleDark
+        107 -> return R.style.AppTheme_CyanDark
+        108 -> return R.style.AppTheme_TealDark
+        109 -> return R.style.AppTheme_YellowDark
+        110 -> return R.style.AppTheme_OrangeDark
+        111 -> return R.style.AppTheme_BrownDark
+
         else -> return R.style.AppTheme_Light
     }
 }

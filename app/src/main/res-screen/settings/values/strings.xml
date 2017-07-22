@@ -13,15 +13,34 @@
 
     <string name="theme">Theme</string>
     <string-array name="themes">
-        <item>Light</item>
-        <item>Dark</item>
+        <item>Default</item>
         <item>Purple</item>
-        <item>Purple inverse</item>
+        <item>Green</item>
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Pink</item>
+        <item>Deep purple</item>
+        <item>Cyan</item>
+        <item>Teal</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Brown</item>
     </string-array>
     <string-array name="themesValues">
         <item>0</item>
         <item>1</item>
         <item>2</item>
         <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
     </string-array>
+    <string name="prefer_dark_theme">Prefer darker theme</string>
+    <string name="restart_to_apply">Restart to apply</string>
+    <string name="restart_now">Restart now</string>
 </resources>
