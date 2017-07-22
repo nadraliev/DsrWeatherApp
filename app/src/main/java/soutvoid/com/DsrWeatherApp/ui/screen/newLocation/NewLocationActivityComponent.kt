@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.map
+package soutvoid.com.DsrWeatherApp.ui.screen.newLocation
 
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.component.scope.PerScreen
@@ -8,4 +8,4 @@ import soutvoid.com.DsrWeatherApp.ui.common.dagger.ActivityViewModule
 
 @PerScreen
 @Component(dependencies = arrayOf(AppComponent::class), modules = arrayOf(ActivityViewModule::class))
-interface MapActivityComponent: ScreenComponent<MapActivityView>
+interface NewLocationActivityComponent: ScreenComponent<NewLocationActivityView>

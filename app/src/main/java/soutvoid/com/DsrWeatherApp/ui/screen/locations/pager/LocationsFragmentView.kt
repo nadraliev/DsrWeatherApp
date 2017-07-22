@@ -3,7 +3,6 @@ package soutvoid.com.DsrWeatherApp.ui.screen.locations.pager
 import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,8 @@ import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.list.LocationsRecyclerAdapter
-import soutvoid.com.DsrWeatherApp.ui.screen.map.MapActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map.MapFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.SimpleItemSwipeCallback
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject
@@ -80,7 +80,7 @@ class LocationsFragmentView: BaseFragmentView() {
         if (isOnlyFavorite())
             locations_fab.visibility = View.GONE    //убрать кнопку добавления точки в списке с только любимыми
         else
-            locations_fab.setOnClickListener { MapActivityView.start(context) }
+            locations_fab.setOnClickListener { NewLocationActivityView.start(context) }
     }
 
     private fun initList() {

@@ -1,27 +1,24 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.map
+package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map
 
 import android.location.Geocoder
 import android.location.Location
 import com.agna.ferro.mvp.component.scope.PerScreen
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.model.LatLng
-import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
-import soutvoid.com.DsrWeatherApp.ui.common.error.StandardErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
-import soutvoid.com.DsrWeatherApp.ui.screen.locationSettings.LocationSettingsActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
 @PerScreen
-class MapActivityPresenter @Inject constructor(val messagePresenter: MessagePresenter,
+class MapFragmentPresenter @Inject constructor(val messagePresenter: MessagePresenter,
                                                errorHandler: ErrorHandler):
-    BasePresenter<MapActivityView>(errorHandler) {
+    BasePresenter<MapFragmentView>(errorHandler) {
 
     var locationChanged = false //если пользователь еще не поменял сам точку, то поставим на нее маркер
 
@@ -59,7 +56,7 @@ class MapActivityPresenter @Inject constructor(val messagePresenter: MessagePres
      * получить название города по координатам
      */
     private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()) : String {
-        val geocoder: Geocoder = Geocoder(view.baseContext, locale)
+        val geocoder: Geocoder = Geocoder(view.context, locale)
         val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
         if (addresses.isNotEmpty() && addresses[0].locality != null)
             return addresses[0].locality
@@ -90,7 +87,7 @@ class MapActivityPresenter @Inject constructor(val messagePresenter: MessagePres
     fun locationChosen(latLng: LatLng) {
         try {
             val locationName = getLocationName(latLng)
-            LocationSettingsActivityView.start(view, locationName, latLng.latitude, latLng.longitude)
+//            LocationSettingsFragmentView.newInstance(view.context, locationName, latLng.latitude, latLng.longitude)
         } catch (e: IOException) {
             val errorHandler = StandardWithActionErrorHandler(messagePresenter, view.getString(R.string.try_again))
                 { locationChosen(latLng) }
