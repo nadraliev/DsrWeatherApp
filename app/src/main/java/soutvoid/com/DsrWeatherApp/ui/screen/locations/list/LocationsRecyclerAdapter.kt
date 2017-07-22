@@ -20,7 +20,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.inflate
  * @param [onClick] слушатель нажатия на элемент списка
  * @param [favoriteStateChangedListener] слушатель нажатия на кнопку "сердце"
  */
-class LocationsRecyclerAdapter(var savedLocations: List<SavedLocation> = emptyList(),
+class LocationsRecyclerAdapter(var savedLocations: MutableList<SavedLocation> = mutableListOf(),
                                var currentWeathers: List<CurrentWeather> = emptyList(),
                                var onClick: (Int) -> Unit,
                                var favoriteStateChangedListener: (position: Int, state: Boolean) -> Unit)

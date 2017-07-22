@@ -93,7 +93,11 @@ class LocationsFragmentView: BaseFragmentView() {
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val simpleItemTouchCallback = SimpleItemSwipeCallback(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                {viewHolder, direction -> presenter.onLocationSwiped(adapter.savedLocations[viewHolder.adapterPosition]) })
+                {viewHolder, direction ->
+                    presenter.onLocationSwiped(adapter.savedLocations[viewHolder.adapterPosition])
+                    adapter.savedLocations.removeAt(viewHolder.adapterPosition)
+                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                })
         ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(locations_list)
     }
 
@@ -103,7 +107,7 @@ class LocationsFragmentView: BaseFragmentView() {
     }
 
     fun showData(savedLocations: List<SavedLocation>, currentWeathers: List<CurrentWeather>) {
-        adapter.savedLocations = savedLocations
+        adapter.savedLocations = savedLocations.toMutableList()
         adapter.currentWeathers = currentWeathers
         adapter.notifyDataSetChanged()
     }
