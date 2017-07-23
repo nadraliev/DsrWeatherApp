@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.base.activity
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.ActivityManager
 import android.content.Context
@@ -30,6 +31,7 @@ abstract class BaseActivityView : MvpActivityView() {
     val appComponent: AppComponent
         get() = (application as App).appComponent
 
+    @SuppressLint("NewApi")
     override fun onPreCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         setTheme(getDefaultPreferences().getPreferredThemeId())
         if (SdkUtil.supportsLollipop())

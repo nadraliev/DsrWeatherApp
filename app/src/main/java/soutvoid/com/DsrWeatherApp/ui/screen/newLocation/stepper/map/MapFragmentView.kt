@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.facebook.stetho.common.android.FragmentCompat
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
@@ -99,6 +100,7 @@ class MapFragmentView : BaseFragmentView(), Step {
      */
     private fun initButtons() {
         map_my_location.setOnClickListener {
+            map_locatin_progress_bar.visibility = View.VISIBLE
             requestLocation()
             myLocationButtonClicked = true
         }
@@ -144,6 +146,7 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     private fun removeSubscriptionToLocationUpdates() {
+        map_locatin_progress_bar.visibility = View.INVISIBLE
         locationManager?.removeUpdates(locationListener)
     }
 
@@ -164,6 +167,7 @@ class MapFragmentView : BaseFragmentView(), Step {
         if (!locationRequested) {
             locationRequested = true
             locationListener = LocationListener {
+                map_locatin_progress_bar.visibility = View.INVISIBLE
                 presenter.locationChanged(it)
                 removeSubscriptionToLocationUpdates()
                 locationRequested = false
