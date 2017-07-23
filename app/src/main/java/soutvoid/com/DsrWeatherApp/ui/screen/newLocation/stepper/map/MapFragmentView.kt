@@ -100,7 +100,6 @@ class MapFragmentView : BaseFragmentView(), Step {
      */
     private fun initButtons() {
         map_my_location.setOnClickListener {
-            map_locatin_progress_bar.visibility = View.VISIBLE
             requestLocation()
             myLocationButtonClicked = true
         }
@@ -165,6 +164,7 @@ class MapFragmentView : BaseFragmentView(), Step {
 
     fun requestLocation() {
         if (!locationRequested) {
+            map_locatin_progress_bar.visibility = View.VISIBLE
             locationRequested = true
             locationListener = LocationListener {
                 map_locatin_progress_bar.visibility = View.INVISIBLE
