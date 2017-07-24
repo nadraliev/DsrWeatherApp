@@ -46,6 +46,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
                         view.showData(locations, it)
                         view.setRefreshEnable(false)
                     },
+                    Action1 { view.setRefreshEnable(false) },
                     StandardWithActionErrorHandler(
                             messagePresenter,
                             view.getString(R.string.try_again))

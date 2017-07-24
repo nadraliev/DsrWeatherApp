@@ -53,6 +53,7 @@ class MainActivityPresenter
                     view.fillAllData(it)
                     view.setProgressBarEnabled(false)
                 },
+                Action1 { view.setProgressBarEnabled(false) },
                 StandardWithActionErrorHandler(messagePresenter,
                         view.getString(R.string.try_again))
                         { loadData() }
