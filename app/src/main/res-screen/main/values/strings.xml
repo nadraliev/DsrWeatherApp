@@ -25,4 +25,6 @@
         <item>W</item>
         <item>NW</item>
     </string-array>
+    <string name="today">today</string>
+    <string name="tomorrow">tomorrow</string>
 </resources>

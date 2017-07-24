@@ -15,6 +15,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import java.util.*
 
 import kotlinx.android.synthetic.main.view_time_of_day_weather.view.*
+import soutvoid.com.DsrWeatherApp.ui.util.CalendarUtils
 
 /**
  * view для отображения погоды в определенное время дня (утро, день и тд)
@@ -34,6 +35,9 @@ class TimeOfDayWeatherView : FrameLayout {
         with(threeHoursForecast) {
             val calendar: Calendar = Calendar.getInstance(locale)
             calendar.timeInMillis = timeOfData * 1000
+
+            view_tod_weather_date.text = getDateString(threeHoursForecast.timeOfData)
+
             view_tod_weather_name.text = getTimeOfDayNameByHour(calendar.get(Calendar.HOUR_OF_DAY))
             view_tod_weather_icon.setImageDrawable(IconicsDrawable(context)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather[0].id, timeOfData))
@@ -56,6 +60,15 @@ class TimeOfDayWeatherView : FrameLayout {
             TimeOfDay.EVENING -> return context.getString(R.string.evening)
             else -> return context.getString(R.string.night)
         }
+    }
+
+    private fun getDateString(dt: Long): String {
+        var dateStr = CalendarUtils.getNumericDate(dt)
+        if (CalendarUtils.isToday(dt))
+            dateStr = context.getString(R.string.today)
+        else if (CalendarUtils.isTomorrow(dt))
+            dateStr = context.getString(R.string.tomorrow)
+        return dateStr
     }
 
 }

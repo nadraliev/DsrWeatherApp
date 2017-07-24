@@ -46,4 +46,29 @@ object CalendarUtils {
         return DateFormat.getTimeInstance(DateFormat.SHORT, locale).format(date)
     }
 
+    fun isToday(seconds: Long, locale: Locale = Locale.getDefault()): Boolean {
+        val calendarNow = Calendar.getInstance(locale)
+        val calendarSubject = Calendar.getInstance(locale)
+        calendarSubject.timeInMillis = seconds * 1000
+        return calendarNow.get(Calendar.YEAR) == calendarSubject.get(Calendar.YEAR) &&
+                calendarNow.get(Calendar.DAY_OF_YEAR) == calendarSubject.get(Calendar.DAY_OF_YEAR)
+    }
+
+    fun isTomorrow(seconds: Long, locale: Locale = Locale.getDefault()): Boolean {
+        val calendarNow = Calendar.getInstance(locale)
+        val calendarSubject = Calendar.getInstance(locale)
+        calendarSubject.timeInMillis = seconds * 1000
+
+        val daysInYear = getDaysInYear(calendarNow.get(Calendar.YEAR))
+
+        return calendarNow.get(Calendar.YEAR) == calendarSubject.get(Calendar.YEAR) &&
+                (calendarNow.get(Calendar.DAY_OF_YEAR) + 1) % daysInYear == calendarSubject.get(Calendar.DAY_OF_YEAR)
+    }
+
+    fun getDaysInYear(year: Int): Int {
+        if (year % 4 == 0)
+            return 366
+        else return 365
+    }
+
 }
