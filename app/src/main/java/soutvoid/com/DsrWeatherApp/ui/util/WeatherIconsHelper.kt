@@ -1,6 +1,8 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
 import com.mikepenz.weather_icons_typeface_library.WeatherIcons
+import soutvoid.com.DsrWeatherApp.ui.screen.main.data.TimeOfDay
+import java.util.*
 
 object WeatherIconsHelper {
 
@@ -9,11 +11,12 @@ object WeatherIconsHelper {
      * в зависимости от текущего времени, времени заката и рассвета, возвращает разные иконки
      * @param [id] id погоды в openweathermap
      * @param [dt] время получения прогноза (обычно текущее время +- 10 мин) в секундах
-     * @param [sunrise] время восхода в секундах
-     * @param [sunset] время заката в секундах
      */
-    fun getWeatherIcon(id: Int, dt: Long, sunrise: Long = dt, sunset: Long = dt + 1) : WeatherIcons.Icon {
-        val day: Boolean = dt in sunrise..sunset
+    fun getWeatherIcon(id: Int, dt: Long, locale: Locale = Locale.getDefault()) : WeatherIcons.Icon {
+        val calendar = Calendar.getInstance(locale)
+        calendar.timeInMillis = dt * 1000
+        val timeOfDay = TimeOfDay.getByTime(calendar.get(Calendar.HOUR_OF_DAY))
+        val day: Boolean = timeOfDay == TimeOfDay.MORNING || timeOfDay == TimeOfDay.DAY
 
         if (day)
             return getDayWeatherIcon(id)

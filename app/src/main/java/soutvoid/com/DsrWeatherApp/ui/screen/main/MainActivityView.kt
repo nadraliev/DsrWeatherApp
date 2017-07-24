@@ -108,7 +108,7 @@ class MainActivityView : BaseActivityView() {
             val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
             main_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
             main_icon_iv.setImageDrawable(IconicsDrawable(this@MainActivityView)
-                    .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData, sys.sunrise, sys.sunset))
+                    .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData))
                     .color(primaryTextColor)
                     .sizeDp(100))
             main_description_tv.text = weather.first().description
