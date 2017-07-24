@@ -114,8 +114,8 @@ class MainActivityView : BaseActivityView() {
             main_description_tv.text = weather.first().description
             main_wind_speed_tv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
             main_wind_direction_tv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
-            main_pressure_tv.text = ": ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
-            main_humidity_tv.text = ": ${main.humidity}%"
+            main_pressure_tv.text = " ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
+            main_humidity_tv.text = " ${main.humidity}%"
         }
 
     }
