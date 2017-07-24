@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.dpToPx
+import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
 
 class TemperatureGraphView: View {
@@ -47,14 +48,14 @@ class TemperatureGraphView: View {
 
     private fun initDotPaint(): Paint {
         val dotPaint = Paint()
-        dotPaint.color = Color.BLACK
+        dotPaint.color = getThemedColor()
         dotPaint.flags = Paint.ANTI_ALIAS_FLAG
         return dotPaint
     }
 
     private fun initLinePaint() : Paint {
         val linePaint = Paint()
-        linePaint.color = Color.BLACK
+        linePaint.color = getThemedColor()
         linePaint.flags = Paint.ANTI_ALIAS_FLAG
         linePaint.style = Paint.Style.FILL_AND_STROKE
         linePaint.strokeWidth = 6f
@@ -63,7 +64,7 @@ class TemperatureGraphView: View {
 
     private fun initTextPaint(): Paint {
         val textPaint = Paint()
-        textPaint.color = Color.BLACK
+        textPaint.color = getThemedColor()
         textPaint.flags = Paint.ANTI_ALIAS_FLAG
         textPaint.textSize = 30f
         return textPaint
@@ -108,5 +109,9 @@ class TemperatureGraphView: View {
      */
     private fun calculateY(temperature: Double): Double {
         return (maxTemp - temperature) * 5 + 20
+    }
+
+    private fun getThemedColor(): Int {
+        return context.theme.getThemeColor(android.R.attr.textColorPrimary)
     }
 }
