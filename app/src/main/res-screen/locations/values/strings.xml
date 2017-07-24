@@ -4,4 +4,6 @@
     <string name="all_locations">All</string>
     <string name="favorite">Favorite</string>
     <string name="current_temperature">Current temperature</string>
+    <string name="location_removed">Location removed</string>
+    <string name="undo">Undo</string>
 </resources>

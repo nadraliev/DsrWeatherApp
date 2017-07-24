@@ -9,6 +9,7 @@ import butterknife.ButterKnife
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.pager.data.LocationWithWeather
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.widget.FavoriteButton
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
@@ -20,8 +21,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.inflate
  * @param [onClick] слушатель нажатия на элемент списка
  * @param [favoriteStateChangedListener] слушатель нажатия на кнопку "сердце"
  */
-class LocationsRecyclerAdapter(var savedLocations: MutableList<SavedLocation> = mutableListOf(),
-                               var currentWeathers: List<CurrentWeather> = emptyList(),
+class LocationsRecyclerAdapter(var locations: MutableList<LocationWithWeather> = mutableListOf(),
                                var onClick: (Int) -> Unit,
                                var favoriteStateChangedListener: (position: Int, state: Boolean) -> Unit)
     : RecyclerView.Adapter<LocationsRecyclerAdapter.LocationsViewHolder>() {
@@ -32,10 +32,10 @@ class LocationsRecyclerAdapter(var savedLocations: MutableList<SavedLocation> = 
     }
 
     override fun onBindViewHolder(holder: LocationsViewHolder?, position: Int) {
-        holder?.bind(savedLocations[position], currentWeathers[position])
+        holder?.bind(locations[position].location, locations[position].currentWeather)
     }
 
-    override fun getItemCount(): Int = savedLocations.size
+    override fun getItemCount(): Int = locations.size
 
 
     class LocationsViewHolder(view: View,
@@ -54,7 +54,8 @@ class LocationsRecyclerAdapter(var savedLocations: MutableList<SavedLocation> = 
             ButterKnife.bind(this, itemView)
             itemView.setOnClickListener { onClick(adapterPosition) }
             favoriteBtn.setOnCheckedChangeListener {
-                compoundButton, _ -> stateChangedListener(adapterPosition, compoundButton.isChecked)
+                compoundButton, _ ->
+                stateChangedListener(adapterPosition, compoundButton.isChecked)
             }
         }
 

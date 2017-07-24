@@ -15,6 +15,7 @@ import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.list.LocationsRecyclerAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.pager.data.LocationWithWeather
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map.MapFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.SimpleItemSwipeCallback
@@ -85,17 +86,17 @@ class LocationsFragmentView: BaseFragmentView() {
 
     private fun initList() {
         adapter = LocationsRecyclerAdapter(
-                onClick = { presenter.onLocationClick(adapter.savedLocations[it]) },
+                onClick = { presenter.onLocationClick(adapter.locations[it].location) },
                 favoriteStateChangedListener = {
-                    position, state ->  presenter.onFavoriteStateChanged(adapter.savedLocations[position], state)
+                    position, state ->  presenter.onFavoriteStateChanged(adapter.locations[position].location, state)
                 }
             )
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val simpleItemTouchCallback = SimpleItemSwipeCallback(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
                 {viewHolder, direction ->
-                    presenter.onLocationSwiped(adapter.savedLocations[viewHolder.adapterPosition])
-                    adapter.savedLocations.removeAt(viewHolder.adapterPosition)
+                    presenter.onLocationSwiped(adapter.locations[viewHolder.adapterPosition], viewHolder.adapterPosition)
+                    adapter.locations.removeAt(viewHolder.adapterPosition)
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 })
         ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(locations_list)
@@ -106,9 +107,8 @@ class LocationsFragmentView: BaseFragmentView() {
         locations_swipe_refresh.isRefreshing = enabled
     }
 
-    fun showData(savedLocations: List<SavedLocation>, currentWeathers: List<CurrentWeather>) {
-        adapter.savedLocations = savedLocations.toMutableList()
-        adapter.currentWeathers = currentWeathers
+    fun showData(locations: List<LocationWithWeather>) {
+        adapter.locations = locations.toMutableList()
         adapter.notifyDataSetChanged()
     }
 
@@ -135,5 +135,10 @@ class LocationsFragmentView: BaseFragmentView() {
         } catch (e: UninitializedPropertyAccessException) {
             //на случай, если lateinit presenter еще не был инициализирован
         }
+    }
+
+    fun addLocationToPosition(location: LocationWithWeather, position: Int) {
+        adapter.locations.add(position, location)
+        adapter.notifyItemInserted(position)
     }
 }

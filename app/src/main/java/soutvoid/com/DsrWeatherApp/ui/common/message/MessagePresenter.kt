@@ -29,28 +29,31 @@ constructor(private val activityProvider: ActivityProvider) {
             backgroundColorId = R.color.grey_400
     }
 
-    fun show(@StringRes stringId: Int) {
+    fun show(@StringRes stringId: Int): Snackbar {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.show()
+        return snackbar
     }
 
-    fun show(message: String) {
+    fun show(message: String): Snackbar {
         val v = view
         val snackbar = Snackbar.make(v, TransformUtil.sanitizeHtmlString(message), Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.show()
+        return snackbar
     }
 
-    fun show(@IdRes parentViewId: Int, @StringRes stringId: Int) {
+    fun show(@IdRes parentViewId: Int, @StringRes stringId: Int): Snackbar {
         val v = activityProvider.get().findViewById<View>(parentViewId)
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.show()
+        return snackbar
     }
 
     private fun setMultilineSnackbar(snackbar: Snackbar) {
@@ -62,31 +65,34 @@ constructor(private val activityProvider: ActivityProvider) {
         snackbar.view.setBackgroundResource(backgroundColorId)
     }
 
-    fun showWithAction(@StringRes stringId: Int, @StringRes actionStringId: Int, listener: (v: View) -> Unit) {
+    fun showWithAction(@StringRes stringId: Int, @StringRes actionStringId: Int, listener: (v: View) -> Unit): Snackbar {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.setAction(actionStringId, listener)
         snackbar.show()
+        return snackbar
     }
 
-    fun showWithAction(message: String, actionName: String, listener: (v: View) -> Unit) {
+    fun showWithAction(message: String, actionName: String, listener: (v: View) -> Unit): Snackbar {
         val v = view
         val snackbar = Snackbar.make(v, message, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.setAction(actionName, listener)
         snackbar.show()
+        return snackbar
     }
 
-    fun showWithAction(@StringRes stringId: Int, actionName: String, listener: (v: View) -> Unit) {
+    fun showWithAction(@StringRes stringId: Int, actionName: String, listener: (v: View) -> Unit): Snackbar {
         val v = view
         val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_LONG)
         setMultilineSnackbar(snackbar)
         setSnackbarColor(snackbar)
         snackbar.setAction(actionName, listener)
         snackbar.show()
+        return snackbar
     }
 
     /**

@@ -3,6 +3,8 @@ package soutvoid.com.DsrWeatherApp.ui.util
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
+import android.support.design.widget.BaseTransientBottomBar
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import com.google.android.gms.common.api.Status
@@ -60,8 +62,19 @@ fun PlaceSelectionListener(listener: (place: Place) -> Unit): PlaceSelectionList
             }
         }
 
-
+/**
+ * выполнить код, если оба аргумента не null
+ */
 inline fun <A, B, R> ifNotNull(a: A?, b: B?, code: (A,B) -> R) {
     if (a != null && b != null)
         code(a,b)
 }
+
+fun SnackbarDismissedListener(listener: (transientBottomBar: Snackbar?, event: Int) -> Unit)
+        : BaseTransientBottomBar.BaseCallback<Snackbar> =
+        object : BaseTransientBottomBar.BaseCallback<Snackbar>() {
+            override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
+                super.onDismissed(transientBottomBar, event)
+                listener(transientBottomBar, event)
+            }
+        }

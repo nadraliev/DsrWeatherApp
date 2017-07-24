@@ -15,7 +15,9 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.pager.data.LocationWithWeather
 import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.SnackbarDismissedListener
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import javax.inject.Inject
 
@@ -26,6 +28,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
 
     @Inject
     lateinit var currentWeatherRep: CurrentWeatherRepository
+
+    private var undoClicked = false
 
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
@@ -43,7 +47,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
             subscribeNetworkQuery(
                     prepareObservable(locations),
                     Action1 {
-                        view.showData(locations, it)
+                        view.showData(locations.zip(it)
+                            {a: SavedLocation, b: CurrentWeather -> LocationWithWeather(a,b) })
                         view.setRefreshEnable(false)
                     },
                     Action1 { view.setRefreshEnable(false) },
@@ -54,7 +59,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
             )
         } else {
             view.setRefreshEnable(false)
-            view.showData(locations, emptyList())
+            view.showData(emptyList())
         }
     }
 
@@ -65,8 +70,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
         val realm = Realm.getDefaultInstance()
         var locations : List<SavedLocation>
         if (view.isOnlyFavorite())
-            locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).equalTo("isFavorite", true).findAll())
-        else locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAll())
+            locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).equalTo("isFavorite", true).findAllSorted("id"))
+        else locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAllSorted("id"))
         realm.close()
         return locations
     }
@@ -90,6 +95,19 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
                 FuncN { it.map { it as CurrentWeather }.toList() }
         )
         return combinedObservable
+    }
+
+    private fun removeLocationFromDb(location: SavedLocation) {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
+        }
+        realm.close()
+    }
+
+    private fun onUndoClicked(locationWithWeather: LocationWithWeather, position: Int) {
+        view.addLocationToPosition(locationWithWeather, position)
+        undoClicked = true
     }
 
     /**
@@ -117,13 +135,14 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     /**
      * событие свайпа элемента списка
      */
-    fun onLocationSwiped(location: SavedLocation) {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
-        }
-        view.tryNotifyPagerDataSetChanged()
-        realm.close()
+    fun onLocationSwiped(locationWithWeather: LocationWithWeather, position: Int) {
+        messagePresenter.showWithAction(R.string.location_removed, R.string.undo,
+                { onUndoClicked(locationWithWeather, position)})  //undo deleting
+                .addCallback(SnackbarDismissedListener { _, _ ->
+                    if (!undoClicked)
+                        removeLocationFromDb(locationWithWeather.location)
+                    else undoClicked = false
+                })  //delete from db when snackbar disappears
     }
 
     /**
