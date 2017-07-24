@@ -24,15 +24,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/main_forecast_list"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/include"/>
-
                 <ImageView
                     android:id="@+id/main_settings_btn"
                     android:layout_width="24dp"
@@ -66,6 +57,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="?attr/themedBackDrawable"
                     android:layout_marginStart="16dp"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/main_forecast_list"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/include"/>
+
             </android.support.constraint.ConstraintLayout>
 
 

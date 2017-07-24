@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.dpToPx
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
@@ -17,8 +18,8 @@ class TemperatureGraphView: View {
     var currentTemp: Double? = null
     var nextTemp: Double? = null
 
-    var maxTemp: Double = .0
-    var minTemp: Double = .0
+    private var maxTemp: Double = .0
+    private var minTemp: Double = .0
 
     private var dotPaint: Paint
     private var linePaint: Paint
@@ -113,5 +114,23 @@ class TemperatureGraphView: View {
 
     private fun getThemedColor(): Int {
         return context.theme.getThemeColor(android.R.attr.textColorPrimary)
+    }
+
+    private fun resizeSelfToTemperature() {
+        layoutParams.height = dpToPx(calculateTempGraphHeight().toDouble()).toInt()
+    }
+
+    /**
+     * высота графика в зависимости от разброса температуры
+     * @return высота в dp
+     */
+    private fun calculateTempGraphHeight(): Int {
+        return (maxTemp - minTemp).toInt() * 7
+    }
+
+    fun setMinMaxTemp(minTemp: Double, maxTemp: Double) {
+        this.minTemp = minTemp
+        this.maxTemp = maxTemp
+        resizeSelfToTemperature()
     }
 }

@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
@@ -88,6 +89,7 @@ class MainActivityView : BaseActivityView() {
         if (getLocationParam().showForecast) {
             main_forecast_list.adapter = forecastAdapter
             main_forecast_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            main_forecast_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         }
     }
 
