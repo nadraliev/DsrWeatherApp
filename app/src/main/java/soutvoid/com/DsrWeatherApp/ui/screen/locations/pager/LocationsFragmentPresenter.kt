@@ -27,8 +27,8 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     @Inject
     lateinit var currentWeatherRep: CurrentWeatherRepository
 
-    override fun onResume() {
-        super.onResume()
+    override fun onLoad(viewRecreated: Boolean) {
+        super.onLoad(viewRecreated)
 
         view.setRefreshEnable(true)
         loadData()
