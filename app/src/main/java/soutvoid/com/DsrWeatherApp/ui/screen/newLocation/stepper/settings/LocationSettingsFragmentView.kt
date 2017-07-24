@@ -68,6 +68,14 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
         location_settings_check.setOnClickListener { presenter.checkPressed() }
     }
 
+    private fun eraseSharedPreferencesRecords() {
+        context.getDefaultPreferences().edit()
+                .remove(ID_KEY)
+                .remove(FAVORITE_KEY)
+                .remove(FORECAST_KEY)
+                .commit()
+    }
+
     override fun onSelected() {
         fillInitData()
     }
@@ -99,4 +107,8 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
         startActivity(intent)
     }
 
+    override fun onPause() {
+        eraseSharedPreferencesRecords()
+        super.onPause()
+    }
 }
