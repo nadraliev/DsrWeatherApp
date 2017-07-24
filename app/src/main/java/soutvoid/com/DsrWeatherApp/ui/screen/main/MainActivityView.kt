@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
 import kotlinx.android.synthetic.main.activity_main.*
@@ -22,6 +23,7 @@ import javax.inject.Inject
 import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 
 /**
@@ -46,12 +48,15 @@ class MainActivityView : BaseActivityView() {
     @Inject
     lateinit var presenter : MainActivityPresenter
 
+    private val forecastAdapter: ForecastListAdapter = ForecastListAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
         initSettingsButton()
         initBackButton()
         fillCityName()
+        maybeInitForecastList()
     }
 
     override fun getPresenter(): BasePresenter<*> = presenter
@@ -79,13 +84,21 @@ class MainActivityView : BaseActivityView() {
         main_back_btn.setOnClickListener { onBackPressed() }
     }
 
+    private fun maybeInitForecastList() {
+        if (getLocationParam().showForecast) {
+            main_forecast_list.adapter = forecastAdapter
+            main_forecast_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun fillCityName() {
+        main_city_tv.text = getLocationParam().name
+    }
+
     fun fillAllData(allWeatherData: AllWeatherData) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
-    }
-
-    fun fillCityName() {
-        main_city_tv.text = getLocationParam().name
+        maybeFillNextDaysForecast(allWeatherData.forecast)
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
@@ -107,6 +120,13 @@ class MainActivityView : BaseActivityView() {
 
     fun fillForecastData(forecast: Forecast) {
         main_forecast.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
+    }
+
+    fun maybeFillNextDaysForecast(forecast: Forecast) {
+        if (getLocationParam().showForecast) {
+            forecastAdapter.forecasts = forecast.list
+            forecastAdapter.notifyDataSetChanged()
+        }
     }
 
     fun setProgressBarEnabled(enabled: Boolean) {

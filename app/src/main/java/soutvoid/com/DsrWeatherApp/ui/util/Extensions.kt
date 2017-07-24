@@ -76,3 +76,8 @@ fun SharedPreferences.getPreferredThemeId(): Int {
 fun SharedPreferences.isDarkThemePreferred(): Boolean {
     return getBoolean(SettingsFragment.SHARED_PREFERENCES_DARK_THEME, false)
 }
+
+fun View.dpToPx(dp: Double): Double {
+    val scale = context.resources.displayMetrics.density
+    return dp * scale + 0.5f
+}

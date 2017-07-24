@@ -19,7 +19,7 @@ import soutvoid.com.DsrWeatherApp.app.log.Logger
  * листенер получения нового положения через геолокацию
  */
 fun LocationListener(listener: (location: Location) -> Unit): LocationListener = object : LocationListener {
-    override fun onLocationChanged(p0: Location?){
+    override fun onLocationChanged(p0: Location?) {
         p0?.let(listener)
     }
 
@@ -49,7 +49,7 @@ fun SimpleItemSwipeCallback(swipeDirections: Int, callback: (viewHolder: Recycle
 /**
  * листенер, вызываемый PlaceAutocompleteFragment при выборе места пользователем
  */
-fun PlaceSelectionListener(listener: (place: Place) -> Unit) : PlaceSelectionListener =
+fun PlaceSelectionListener(listener: (place: Place) -> Unit): PlaceSelectionListener =
         object : PlaceSelectionListener {
             override fun onPlaceSelected(p0: Place?) {
                 p0?.let { listener(it) }
@@ -59,3 +59,9 @@ fun PlaceSelectionListener(listener: (place: Place) -> Unit) : PlaceSelectionLis
                 p0?.statusMessage?.let { Logger.d(it) }
             }
         }
+
+
+inline fun <A, B, R> ifNotNull(a: A?, b: B?, code: (A,B) -> R) {
+    if (a != null && b != null)
+        code(a,b)
+}
