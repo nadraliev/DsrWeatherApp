@@ -15,10 +15,6 @@ import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
-import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
-import soutvoid.com.DsrWeatherApp.ui.util.WindUtils
-import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
 
 import kotlinx.android.synthetic.main.layout_current_weather.*
@@ -26,6 +22,7 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.*
 
 /**
  * экран для отображения погоды в определенной точке
@@ -106,6 +103,7 @@ class MainActivityView : BaseActivityView() {
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         with(currentWeather) {
             val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
+            main_date_tv.text = CalendarUtils.getFormattedDate(timeOfData)
             main_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
             main_icon_iv.setImageDrawable(IconicsDrawable(this@MainActivityView)
                     .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData))
