@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DsrWeather</string>
+    <string name="app_name">Weather</string>
     <string name="server_error_message">Server error</string>
     <string name="no_internet_connection_error_message">Connection error</string>
     <string name="bad_response_error_message">Bad response</string>
