@@ -54,6 +54,10 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
         lateinit var icon: ImageView
         @BindView(R.id.forecast_item_graph)
         lateinit var graph: TemperatureGraphView
+        @BindView(R.id.forecast_item_wind_icon)
+        lateinit var windIcon: ImageView
+        @BindView(R.id.forecast_item_wind)
+        lateinit var windTv: TextView
 
         init {
             ButterKnife.bind(this, itemView)
@@ -74,6 +78,12 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
             graph.prevTemp = prevForecast?.main?.temperature
             graph.currentTemp = currentForecast.main.temperature
             graph.nextTemp = nextForecast?.main?.temperature
+
+            windIcon.setImageDrawable(IconicsDrawable(itemView.context)
+                    .icon(WeatherIconsHelper.getDirectionalIcon(currentForecast.wind.degrees))
+                    .color(itemView.context.theme.getThemeColor(android.R.attr.textColorPrimary))
+                    .sizeDp(16))
+            windTv.text = "${currentForecast.wind.speed} ${UnitsUtils.getVelocityUnits(itemView.context)}"
         }
 
     }
