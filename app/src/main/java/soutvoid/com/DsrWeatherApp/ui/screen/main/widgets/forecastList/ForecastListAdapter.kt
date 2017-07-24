@@ -29,7 +29,7 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ForecastViewHolder? {
         val view = parent?.inflate(R.layout.forecast_list_item)
-        view?.let { initTempGraph(it.findViewById(R.id.surfaceView)) }
+        view?.let { initTempGraph(it.findViewById(R.id.tempGraph)) }
         return view?.let { ForecastViewHolder(it) }
     }
 
@@ -55,7 +55,7 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
 
     class ForecastViewHolder(view: View): RecyclerView.ViewHolder(view) {
 
-        @BindView(R.id.surfaceView)
+        @BindView(R.id.tempGraph)
         lateinit var graph: TemperatureGraphView
 
         init {

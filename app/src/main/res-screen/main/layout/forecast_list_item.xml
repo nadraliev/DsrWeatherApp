@@ -5,7 +5,7 @@
               android:orientation="vertical">
 
     <soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.widgets.TemperatureGraphView
-        android:id="@+id/surfaceView"
+        android:id="@+id/tempGraph"
         android:layout_width="50dp"
         android:layout_height="50dp"/>
 </LinearLayout>

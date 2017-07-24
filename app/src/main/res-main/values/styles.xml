@@ -52,7 +52,7 @@
         <item name="colorPrimaryDark">@color/grey_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/grey_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -138,7 +138,7 @@
         <item name="colorPrimaryDark">@color/purple_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/purple_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -223,7 +223,7 @@
         <item name="colorPrimaryDark">@color/green_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/green_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -308,7 +308,7 @@
         <item name="colorPrimaryDark">@color/red_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/red_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -393,7 +393,7 @@
         <item name="colorPrimaryDark">@color/blue_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/blue_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -479,7 +479,7 @@
         <item name="colorPrimaryDark">@color/pink_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/pink_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -565,7 +565,7 @@
         <item name="colorPrimaryDark">@color/deep_purple_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/deep_purple_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -651,7 +651,7 @@
         <item name="colorPrimaryDark">@color/cyan_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/cyan_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -737,7 +737,7 @@
         <item name="colorPrimaryDark">@color/teal_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/teal_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -823,7 +823,7 @@
         <item name="colorPrimaryDark">@color/yellow_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/yellow_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -908,7 +908,7 @@
         <item name="colorPrimaryDark">@color/orange_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/orange_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>
@@ -994,7 +994,7 @@
         <item name="colorPrimaryDark">@color/brown_800</item>
         <item name="colorAccent">@color/white</item>
         <item name="android:colorBackground">@color/brown_700</item>
-        <item name="android:textColor">@color/text_color_gray_white</item>
+        <item name="android:textColor">@color/text_color_grey_white</item>
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorPrimaryInverse">@color/black</item>
         <item name="android:textColorSecondary">@color/white_c</item>

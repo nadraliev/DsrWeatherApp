@@ -30,6 +30,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.LocationListener
 import soutvoid.com.DsrWeatherApp.ui.util.PlaceSelectionListener
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 
@@ -140,8 +141,16 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     private fun subscribeToLocationUpdates() {
-        locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
-        locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
+        try {
+            locationManager?.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+        } catch (e: IllegalArgumentException) {
+            //ignored
+        }
+        try {
+            locationManager?.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, locationListener)
+        } catch (e: IllegalArgumentException) {
+            //ignored
+        }
     }
 
     private fun removeSubscriptionToLocationUpdates() {
