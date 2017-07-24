@@ -133,9 +133,9 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     }
 
     /**
-     * событие свайпа элемента списка
+     * пользователь нажал кнопку "удплить" или свайпнул по месту
      */
-    fun onLocationSwiped(locationWithWeather: LocationWithWeather, position: Int) {
+    fun onLocationRemoveRequested(locationWithWeather: LocationWithWeather, position: Int) {
         messagePresenter.showWithAction(R.string.location_removed, R.string.undo,
                 { onUndoClicked(locationWithWeather, position)})  //undo deleting
                 .addCallback(SnackbarDismissedListener { _, _ ->
@@ -143,6 +143,10 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
                         removeLocationFromDb(locationWithWeather.location)
                     else undoClicked = false
                 })  //delete from db when snackbar disappears
+    }
+
+    fun onEditClicked(locationWithWeather: LocationWithWeather, position: Int) {
+        view.openEditLocationScreen(locationWithWeather.location)
     }
 
     /**

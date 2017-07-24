@@ -6,4 +6,6 @@
     <string name="current_temperature">Current temperature</string>
     <string name="location_removed">Location removed</string>
     <string name="undo">Undo</string>
+    <string name="edit">Edit</string>
+    <string name="remove">Remove</string>
 </resources>

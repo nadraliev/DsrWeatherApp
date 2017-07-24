@@ -7,4 +7,5 @@
     <attr name="themedAddDrawable" format="reference"/>
     <attr name="themedSettingsDrawable" format="reference"/>
     <attr name="themedCheckDrawable" format="reference"/>
+    <attr name="themedMoreDrawable" format="reference"/>
 </resources>

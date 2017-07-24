@@ -11,13 +11,12 @@ import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.presenter.MvpPresenter
 import kotlinx.android.synthetic.main.fragment_locations.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
+import soutvoid.com.DsrWeatherApp.ui.screen.editLocation.EditLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.list.LocationsRecyclerAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.pager.data.LocationWithWeather
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map.MapFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.SimpleItemSwipeCallback
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 import javax.inject.Inject
@@ -89,17 +88,21 @@ class LocationsFragmentView: BaseFragmentView() {
                 onClick = { presenter.onLocationClick(adapter.locations[it].location) },
                 favoriteStateChangedListener = {
                     position, state ->  presenter.onFavoriteStateChanged(adapter.locations[position].location, state)
-                }
+                },
+                editBtnClickedListener = { presenter.onEditClicked(adapter.locations[it], it) },
+                removeBtnClickedListener = { locationRemoveRequest(it) }
             )
         locations_list.adapter = adapter
         locations_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val simpleItemTouchCallback = SimpleItemSwipeCallback(ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT,
-                {viewHolder, direction ->
-                    presenter.onLocationSwiped(adapter.locations[viewHolder.adapterPosition], viewHolder.adapterPosition)
-                    adapter.locations.removeAt(viewHolder.adapterPosition)
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                })
+                {viewHolder, direction -> locationRemoveRequest(viewHolder.adapterPosition)})
         ItemTouchHelper(simpleItemTouchCallback).attachToRecyclerView(locations_list)
+    }
+
+    private fun locationRemoveRequest(position: Int) {
+        presenter.onLocationRemoveRequested(adapter.locations[position], position)
+        adapter.locations.removeAt(position)
+        adapter.notifyItemRemoved(position)
     }
 
 
@@ -140,5 +143,10 @@ class LocationsFragmentView: BaseFragmentView() {
     fun addLocationToPosition(location: LocationWithWeather, position: Int) {
         adapter.locations.add(position, location)
         adapter.notifyItemInserted(position)
+    }
+
+    fun openEditLocationScreen(location: SavedLocation) {
+        EditLocationActivityView.start(context, location.name, location.isFavorite, location.showForecast,
+                location.id, location.latitude.toFloat(), location.longitude.toFloat())
     }
 }

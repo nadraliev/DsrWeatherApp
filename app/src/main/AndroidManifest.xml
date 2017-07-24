@@ -31,6 +31,8 @@
 
         <activity android:name=".ui.screen.newLocation.NewLocationActivityView"/>
 
+        <activity android:name=".ui.screen.editLocation.EditLocationActivityView"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="6b5749ebdeeac0c5f3e6670361e6818564d70f78"/>

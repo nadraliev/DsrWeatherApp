@@ -12,7 +12,7 @@ class LocationSettingsFragmentPresenter @Inject constructor(errorHandler: ErrorH
 
     fun checkPressed() {
         val realm = Realm.getDefaultInstance()
-        realm.executeTransaction { it.copyToRealm(view.getData()) }
+        realm.executeTransaction { it.copyToRealmOrUpdate(view.getData()) }
         realm.close()
         view.returnToHome()
     }

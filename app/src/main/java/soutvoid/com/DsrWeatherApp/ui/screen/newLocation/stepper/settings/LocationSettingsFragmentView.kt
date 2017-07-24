@@ -23,6 +23,9 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
         const val NAME_KEY = "name"
         const val LATITUDE_KEY = "latitude"
         const val LONGITUDE_KEY = "longitude"
+        const val FAVORITE_KEY = "favorite"
+        const val FORECAST_KEY = "forecast"
+        const val ID_KEY = "id"
         fun newInstance(): LocationSettingsFragmentView {
             val locationSettingsView = LocationSettingsFragmentView()
             return locationSettingsView
@@ -52,10 +55,13 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
         super.onViewCreated(view, savedInstanceState)
 
         initCheckButton()
+        fillInitData()
     }
 
     private fun fillInitData() {
         location_settings_name.setText(context.getDefaultPreferences().getString(NAME_KEY, ""))
+        location_settings_favorite.isChecked = context.getDefaultPreferences().getBoolean(FAVORITE_KEY, false)
+        location_settings_show_forecast.isChecked = context.getDefaultPreferences().getBoolean(FORECAST_KEY, false)
     }
 
     private fun initCheckButton() {
@@ -75,13 +81,16 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
     }
 
     fun getData(): SavedLocation {
-        return SavedLocation(
+        val id = context.getDefaultPreferences().getInt(ID_KEY, 0)
+        val location = SavedLocation(
                 location_settings_name.text.toString(),
                 context.getDefaultPreferences().getFloat(LONGITUDE_KEY, 0f).toDouble(),
                 context.getDefaultPreferences().getFloat(LATITUDE_KEY, 0f).toDouble(),
                 location_settings_favorite.isChecked,
                 location_settings_show_forecast.isChecked
         )
+        if (id != 0) location.id = id
+        return location
     }
 
     fun returnToHome() {
