@@ -1,6 +1,8 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings
 
 import android.content.Intent
+import android.graphics.Point
+import android.graphics.PointF
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +16,9 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
+import soutvoid.com.DsrWeatherApp.ui.screen.editLocation.EditLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 
 class LocationSettingsFragmentView : BaseFragmentView(), Step {
@@ -102,13 +106,19 @@ class LocationSettingsFragmentView : BaseFragmentView(), Step {
     }
 
     fun returnToHome() {
-        val intent = Intent(activity, LocationsActivityView::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+        (activity as? NewLocationActivityView)?.returnToHome(getCheckBtnCoords())
+        (activity as? EditLocationActivityView)?.returnToHome(getCheckBtnCoords())
     }
 
     override fun onPause() {
         eraseSharedPreferencesRecords()
         super.onPause()
+    }
+
+    fun getCheckBtnCoords(): Point {
+        return Point(
+                location_settings_check.left + location_settings_check.measuredWidth / 2,
+                location_settings_check.top + location_settings_check.measuredHeight / 2
+        )
     }
 }

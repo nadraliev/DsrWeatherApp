@@ -2,14 +2,19 @@ package soutvoid.com.DsrWeatherApp.ui.screen.editLocation
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Point
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import android.view.View
+import android.view.ViewAnimationUtils
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
+import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import javax.inject.Inject
@@ -19,8 +24,10 @@ import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.Locatio
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.ID_KEY
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.LATITUDE_KEY
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.LONGITUDE_KEY
+import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
+import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
-class EditLocationActivityView: BaseActivityView() {
+class EditLocationActivityView: TranslucentStatusActivityView() {
 
     companion object {
         fun start(context: Context, name: String, isFavorite: Boolean, showForecast: Boolean,
@@ -55,6 +62,9 @@ class EditLocationActivityView: BaseActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
 
+        if (!SdkUtil.supportsKitkat())
+            edit_location_fake_statusbar.visibility = View.GONE
+
         initToolbar()
         writeData()
         attachFragment()
@@ -85,5 +95,29 @@ class EditLocationActivityView: BaseActivityView() {
         supportFragmentManager.beginTransaction().
                 add(R.id.edit_location_container, LocationSettingsFragmentView.newInstance())
                 .commit()
+    }
+
+    fun returnToHome(fabPoint: Point = Point()) {
+        if (SdkUtil.supportsKitkat()) {
+            val animator = ViewAnimationUtils.createCircularReveal(
+                    edit_location_reveal_view,
+                    fabPoint.x,
+                    edit_location_container.top + fabPoint.y,
+                    0f,
+                    maxOf(edit_location_reveal_view.measuredHeight, edit_location_reveal_view.measuredWidth).toFloat()
+            )
+            animator.addListener(AnimationEndedListener {
+                startLocationsActivity()
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            })
+            edit_location_reveal_view.visibility = View.VISIBLE
+            animator.start()
+        } else startLocationsActivity()
+    }
+
+    private fun startLocationsActivity() {
+        val intent = Intent(this, LocationsActivityView::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }
