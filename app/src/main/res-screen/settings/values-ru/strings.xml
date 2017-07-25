@@ -10,4 +10,37 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+
+    <string name="theme">Тема</string>
+    <string-array name="themes">
+        <item>По-умолчанию</item>
+        <item>Фиолетовая</item>
+        <item>Зеленая</item>
+        <item>Красная</item>
+        <item>Голубая</item>
+        <item>Розовая</item>
+        <item>Темно-фиолетовая</item>
+        <item>Светло-голубая</item>
+        <item>Бирюзовая</item>
+        <item>Желтая</item>
+        <item>Оранжева</item>
+        <item>Коричневая</item>
+    </string-array>
+    <string-array name="themesValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+    <string name="prefer_dark_theme">Предпочитать темную тему</string>
+    <string name="restart_to_apply">Необходим перезапуск</string>
+    <string name="restart_now">Перезапустить сейчас</string>
 </resources>

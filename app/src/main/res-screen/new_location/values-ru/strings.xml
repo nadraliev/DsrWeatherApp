@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="choose_location">Выберите место</string>
+    <string name="new_location">Новое место</string>
+    <string name="name">Название</string>
+    <string name="show_forecast">Показывать прогноз</string>
+    <string name="add_to_favorite">Добавить в любимые</string>
 </resources>

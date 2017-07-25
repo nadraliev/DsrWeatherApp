@@ -25,4 +25,6 @@
         <item>З</item>
         <item>СЗ</item>
     </string-array>
+    <string name="today">сегодня</string>
+    <string name="tomorrow">завтра</string>
 </resources>
