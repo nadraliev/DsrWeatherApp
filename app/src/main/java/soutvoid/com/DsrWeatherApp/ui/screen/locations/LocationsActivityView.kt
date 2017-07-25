@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.locations
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -49,7 +50,17 @@ class LocationsActivityView : BaseActivityView() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        item?.let { if (it.itemId == R.id.locations_settings) SettingsActivityView.start(this)}
+        item?.let { if (it.itemId == R.id.locations_settings) SettingsActivityView.startForResult(this, 0)}
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        data?.let {
+            if (it.getBooleanExtra(SettingsActivityView.RESTART_REQUIRED, false)) {
+                val intent = Intent(this, LocationsActivityView::class.java)
+                finish()
+                startActivity(intent)
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
+import android.animation.Animator
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.animation.Animation
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.location.places.ui.PlaceSelectionListener
@@ -78,3 +80,16 @@ fun SnackbarDismissedListener(listener: (transientBottomBar: Snackbar?, event: I
                 listener(transientBottomBar, event)
             }
         }
+
+
+fun AnimationEndedListener(listener: (animator: Animator?) -> Unit)
+    :Animator.AnimatorListener = object : Animator.AnimatorListener {
+
+    override fun onAnimationRepeat(p0: Animator?) {}
+
+    override fun onAnimationEnd(p0: Animator?) { listener(p0) }
+
+    override fun onAnimationCancel(p0: Animator?) {}
+
+    override fun onAnimationStart(p0: Animator?) {}
+}

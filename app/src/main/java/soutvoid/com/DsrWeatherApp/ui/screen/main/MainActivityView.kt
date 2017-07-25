@@ -48,7 +48,6 @@ class MainActivityView : BaseActivityView() {
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
-        initSettingsButton()
         initBackButton()
         fillCityName()
         maybeInitForecastList()
@@ -69,10 +68,6 @@ class MainActivityView : BaseActivityView() {
 
     private fun initSwipeRefresh() {
         main_refresh_layout.setOnRefreshListener { presenter.refresh() }
-    }
-
-    private fun initSettingsButton() {
-        main_settings_btn.setOnClickListener { SettingsActivityView.start(this) }
     }
 
     private fun initBackButton() {
