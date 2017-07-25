@@ -10,6 +10,9 @@ import soutvoid.com.DsrWeatherApp.ui.util.dpToPx
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
 
+/**
+ * рисует точку с текстом температуры и линии до соседних точек
+ */
 class TemperatureGraphView: View {
 
     var prevTemp: Double? = null
@@ -126,6 +129,9 @@ class TemperatureGraphView: View {
         return (maxTemp - minTemp).toInt() * 7
     }
 
+    /**
+     * установить разброс температуры
+     */
     fun setMinMaxTemp(minTemp: Double, maxTemp: Double) {
         this.minTemp = minTemp
         this.maxTemp = maxTemp
