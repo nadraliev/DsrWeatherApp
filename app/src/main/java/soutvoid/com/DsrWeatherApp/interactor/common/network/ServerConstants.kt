@@ -10,7 +10,7 @@ object ServerConstants {
 
     const val QUERY_PARAMETER = "q"
 
-    const val CITY_ID_PAREMETER = "id"
+    const val CITY_ID_PARAMETER = "id"
 
     const val LATITUDE_PARAMETER = "lat"
 

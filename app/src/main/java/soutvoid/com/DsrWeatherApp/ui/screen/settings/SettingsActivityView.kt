@@ -10,8 +10,6 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
-import java.lang.ref.WeakReference
 import javax.inject.Inject
 
 class SettingsActivityView: BaseActivityView() {

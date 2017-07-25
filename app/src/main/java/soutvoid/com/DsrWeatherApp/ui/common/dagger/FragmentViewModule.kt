@@ -8,5 +8,4 @@ import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandlerModule
         FragmentModule::class,
         ErrorHandlerModule::class
 ))
-class FragmentViewModule {
-}
+class FragmentViewModule

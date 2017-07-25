@@ -1,19 +1,10 @@
 package soutvoid.com.DsrWeatherApp.interactor.util
 
-import java.util.Arrays
-
 import rx.Observable
 import rx.Scheduler
-import rx.functions.Func2
-import rx.functions.Func3
-import rx.functions.Func4
-import rx.functions.Func5
-import rx.functions.Func6
-import rx.functions.Func7
-import rx.functions.Func8
-import rx.functions.Func9
 import rx.functions.FuncN
 import rx.functions.Functions
+import java.util.*
 
 /**
  * содержит недостающие методы для Observable

@@ -17,8 +17,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
 /**
  * адаптер для списка сохраненных точек
- * @param [savedLocations] список сохраненных точек
- * @param [currentWeathers] погода для сохраненных точек
+ * @param [locations] список сохраненных точек и погоды для них
  * @param [onClick] слушатель нажатия на элемент списка
  * @param [favoriteStateChangedListener] слушатель нажатия на кнопку "сердце"
  */

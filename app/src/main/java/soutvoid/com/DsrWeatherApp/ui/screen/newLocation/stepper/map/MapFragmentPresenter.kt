@@ -5,14 +5,11 @@ import android.location.Location
 import com.agna.ferro.mvp.component.scope.PerScreen
 import com.google.android.gms.location.places.Place
 import com.google.android.gms.maps.model.LatLng
-import com.stepstone.stepper.StepperLayout
-import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
-import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import java.io.IOException

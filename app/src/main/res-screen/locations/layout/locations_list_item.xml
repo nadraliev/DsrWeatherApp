@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,7 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
-        android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
         app:layout_constraintLeft_toRightOf="@+id/textView7"
         android:layout_marginStart="4dp"/>
@@ -50,7 +48,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/locations_item_more_btn"
-        android:layout_marginRight="8dp"/>
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"/>
 
     <ImageButton
         android:id="@+id/locations_item_more_btn"

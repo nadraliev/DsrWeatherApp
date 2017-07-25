@@ -10,7 +10,6 @@ import soutvoid.com.DsrWeatherApp.interactor.common.network.error.HttpError
 import soutvoid.com.DsrWeatherApp.interactor.common.network.error.NoInternetException
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import java.util.*
-import javax.inject.Inject
 
 @PerScreen
 class StandardWithActionErrorHandler

@@ -10,9 +10,6 @@ import soutvoid.com.DsrWeatherApp.app.log.RemoteLogger
 
 abstract class BaseFragmentView: MvpFragmentV4View() {
 
-    private val DEFAULT_DELAY = 50 //ms
-    private val handler = Handler()
-
     override fun onPause() {
         super.onPause()
         RemoteLogger.logMessage(String.format(LogConstants.LOG_SCREEN_PAUSE_FORMAT, name))

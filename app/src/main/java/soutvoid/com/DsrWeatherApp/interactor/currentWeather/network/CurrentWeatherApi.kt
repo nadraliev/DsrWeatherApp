@@ -17,7 +17,7 @@ interface CurrentWeatherApi {
             : Observable<CurrentWeather>
 
     @GET(ServerUrls.CURRENT_WEATHER_URL)
-    fun getByCityId(@Query(ServerConstants.CITY_ID_PAREMETER) cityId: Int,
+    fun getByCityId(@Query(ServerConstants.CITY_ID_PARAMETER) cityId: Int,
                     @Query(ServerConstants.UNITS_PARAMETER) units: String = "metric",
                     @Query(ServerConstants.ACCURACY_PARAMETER) accuracyType: String = "like",
                     @Query(ServerConstants.LANG_PARAMETER) lang: String = "en")

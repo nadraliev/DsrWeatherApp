@@ -3,7 +3,6 @@ package soutvoid.com.DsrWeatherApp.interactor.forecast.network
 import retrofit2.http.GET
 import retrofit2.http.Query
 import rx.Observable
-import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.DailyForecast
 import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.interactor.common.network.ServerConstants
@@ -19,7 +18,7 @@ interface ForecastApi {
             : Observable<Forecast>
 
     @GET(ServerUrls.FORECAST_URL)
-    fun getByCityId(@Query(ServerConstants.CITY_ID_PAREMETER) cityId: Int,
+    fun getByCityId(@Query(ServerConstants.CITY_ID_PARAMETER) cityId: Int,
                     @Query(ServerConstants.UNITS_PARAMETER) units: String = "metric",
                     @Query(ServerConstants.ACCURACY_PARAMETER) accuracyType: String = "like",
                     @Query(ServerConstants.LANG_PARAMETER) lang: String = "en")
@@ -42,10 +41,10 @@ interface ForecastApi {
             : Observable<DailyForecast>
 
     @GET(ServerUrls.DAILY_FORECAST_URL)
-    fun getDailyByCityId(@Query(ServerConstants.CITY_ID_PAREMETER) cityId: Int,
-                    @Query(ServerConstants.UNITS_PARAMETER) units: String = "metric",
-                    @Query(ServerConstants.ACCURACY_PARAMETER) accuracyType: String = "like",
-                    @Query(ServerConstants.LANG_PARAMETER) lang: String = "en")
+    fun getDailyByCityId(@Query(ServerConstants.CITY_ID_PARAMETER) cityId: Int,
+                         @Query(ServerConstants.UNITS_PARAMETER) units: String = "metric",
+                         @Query(ServerConstants.ACCURACY_PARAMETER) accuracyType: String = "like",
+                         @Query(ServerConstants.LANG_PARAMETER) lang: String = "en")
             : Observable<DailyForecast>
 
     @GET(ServerUrls.DAILY_FORECAST_URL)

@@ -8,21 +8,18 @@ import android.support.v7.widget.LinearLayoutManager
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.mikepenz.iconics.IconicsDrawable
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.Forecast
-import soutvoid.com.DsrWeatherApp.domain.ultraviolet.Ultraviolet
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import javax.inject.Inject
-
-import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
+import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
+import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.*
+import javax.inject.Inject
 
 /**
  * экран для отображения погоды в определенной точке

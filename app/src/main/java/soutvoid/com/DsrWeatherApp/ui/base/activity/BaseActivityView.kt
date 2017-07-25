@@ -8,7 +8,6 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
-import android.view.WindowManager
 import butterknife.ButterKnife
 import com.agna.ferro.mvp.component.ScreenComponent
 import com.agna.ferro.mvp.view.activity.MvpActivityView

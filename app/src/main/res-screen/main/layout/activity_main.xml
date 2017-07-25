@@ -30,7 +30,7 @@
                     android:id="@+id/main_settings_btn"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_gravity="top|right"
+                    android:layout_gravity="top|end"
                     android:layout_margin="10dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"

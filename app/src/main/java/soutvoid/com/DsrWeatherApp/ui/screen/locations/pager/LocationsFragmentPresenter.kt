@@ -68,7 +68,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
      */
     private fun getSavedFromDB() : List<SavedLocation> {
         val realm = Realm.getDefaultInstance()
-        var locations : List<SavedLocation>
+        val locations : List<SavedLocation>
         if (view.isOnlyFavorite())
             locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).equalTo("isFavorite", true).findAllSorted("id"))
         else locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAllSorted("id"))

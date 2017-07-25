@@ -1,7 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
 import java.text.DateFormat
-import java.text.DateFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.*
 

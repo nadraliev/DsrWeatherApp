@@ -2,11 +2,9 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.widgets
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.dpToPx
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor

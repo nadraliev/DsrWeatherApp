@@ -1,8 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.base.activity
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 

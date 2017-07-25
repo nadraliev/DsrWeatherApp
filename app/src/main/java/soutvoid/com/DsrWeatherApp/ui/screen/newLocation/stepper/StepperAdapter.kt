@@ -7,7 +7,7 @@ import com.stepstone.stepper.adapter.AbstractFragmentStepAdapter
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map.MapFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 
-class StepperAdapter(val fm: FragmentManager, context: Context)
+class StepperAdapter(fm: FragmentManager, context: Context)
     : AbstractFragmentStepAdapter(fm, context) {
 
     override fun getCount(): Int = 2
