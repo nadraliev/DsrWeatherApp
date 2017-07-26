@@ -1,11 +1,14 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
+import android.animation.Animator
+import android.annotation.TargetApi
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
@@ -80,4 +83,15 @@ fun SharedPreferences.isDarkThemePreferred(): Boolean {
 fun View.dpToPx(dp: Double): Double {
     val scale = context.resources.displayMetrics.density
     return dp * scale + 0.5f
+}
+
+@TargetApi(21)
+fun View.createFullScreenCircularReveal(startX: Int, startY: Int): Animator {
+    return ViewAnimationUtils.createCircularReveal(
+            this,
+            startX,
+            startY,
+            0f,
+            maxOf(this.measuredHeight, this.measuredWidth).toFloat()
+    )
 }

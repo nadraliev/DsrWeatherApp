@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.settings
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
@@ -15,10 +16,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
-import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
-import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
-import soutvoid.com.DsrWeatherApp.ui.util.getPreferredThemeId
-import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
+import soutvoid.com.DsrWeatherApp.ui.util.*
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 import javax.inject.Inject
 
@@ -66,6 +64,7 @@ class SettingsActivityView: TranslucentStatusActivityView() {
                 intentData.putExtra(RESTART_REQUIRED, true)
                 setResult(0, intentData)
 
+                @SuppressLint("NewApi")
                 if (SdkUtil.supportsKitkat()) {
                     restartWithReveal()
                 } else {
@@ -111,11 +110,10 @@ class SettingsActivityView: TranslucentStatusActivityView() {
     private fun restartWithReveal() {
         setTheme(getDefaultPreferences().getPreferredThemeId())
         settings_reveal_view.setBackgroundColor(theme.getThemeColor(android.R.attr.colorBackground))
-        val animation = ViewAnimationUtils.createCircularReveal(settings_reveal_view,
+        val animation = settings_reveal_view.createFullScreenCircularReveal(
                 settings_reveal_view.measuredWidth / 2,
-                settings_reveal_view.measuredHeight / 2,
-                0f,
-                maxOf(settings_reveal_view.measuredHeight, settings_reveal_view.measuredWidth).toFloat())
+                settings_reveal_view.measuredHeight / 2
+                )
         animation.duration = 300
         animation.addListener(AnimationEndedListener { restart() })
         settings_reveal_view.visibility = View.VISIBLE

@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.editLocation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Point
@@ -7,7 +8,6 @@ import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
-import android.view.ViewAnimationUtils
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import soutvoid.com.DsrWeatherApp.R
@@ -24,6 +24,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.Locatio
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.LATITUDE_KEY
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.LONGITUDE_KEY
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
+import soutvoid.com.DsrWeatherApp.ui.util.createFullScreenCircularReveal
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 class EditLocationActivityView: TranslucentStatusActivityView() {
@@ -93,14 +94,16 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
                 .commit()
     }
 
-    fun returnToHome(fabPoint: Point = Point()) {
+
+    /**
+     * возвратиться на домашний экран. с api 21 с анимацией в центре в точке @param [animationCenter]
+     */
+    @SuppressLint("NewApi")
+    fun returnToHome(animationCenter: Point = Point()) {
         if (SdkUtil.supportsKitkat()) {
-            val animator = ViewAnimationUtils.createCircularReveal(
-                    edit_location_reveal_view,
-                    fabPoint.x,
-                    edit_location_container.top + fabPoint.y,
-                    0f,
-                    maxOf(edit_location_reveal_view.measuredHeight, edit_location_reveal_view.measuredWidth).toFloat()
+            val animator = edit_location_reveal_view.createFullScreenCircularReveal(
+                    animationCenter.x,
+                    edit_location_container.top + animationCenter.y
             )
             animator.addListener(AnimationEndedListener {
                 startLocationsActivity()
