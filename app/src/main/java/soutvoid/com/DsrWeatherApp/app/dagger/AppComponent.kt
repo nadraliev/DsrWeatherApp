@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.interactor.network.NetworkConnectionChecker
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
+import soutvoid.com.DsrWeatherApp.ui.widget.SmallWidgetProvider
 
 @PerApplication
 @Component(modules = arrayOf(
