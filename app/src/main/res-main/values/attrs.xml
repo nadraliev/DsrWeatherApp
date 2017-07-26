@@ -8,4 +8,6 @@
     <attr name="themedSettingsDrawable" format="reference"/>
     <attr name="themedCheckDrawable" format="reference"/>
     <attr name="themedMoreDrawable" format="reference"/>
+    <attr name="themedEmptyDrawable" format="reference"/>
+    <attr name="themedNoFavoritesDrawable" format="reference"/>
 </resources>

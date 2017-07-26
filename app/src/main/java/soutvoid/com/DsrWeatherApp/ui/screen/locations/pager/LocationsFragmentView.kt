@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -148,5 +149,29 @@ class LocationsFragmentView: BaseFragmentView() {
     fun openEditLocationScreen(location: SavedLocation) {
         EditLocationActivityView.start(context, location.name, location.isFavorite, location.showForecast,
                 location.id, location.latitude.toFloat(), location.longitude.toFloat())
+    }
+
+    fun showMessageEmpty() {
+        locations_placeholder.show(getEmptyMessage(), getEmptyImageId())
+    }
+
+    fun hidePlaceholder() {
+        locations_placeholder.hide()
+    }
+
+    fun getEmptyMessage(): String {
+        if (isOnlyFavorite())
+            return getString(R.string.no_favorites)
+        else return getString(R.string.no_locations)
+    }
+
+    fun getEmptyImageId(): Int {
+        val typedValue = TypedValue()
+        if (isOnlyFavorite()) {
+            context.theme.resolveAttribute(R.attr.themedNoFavoritesDrawable, typedValue, true)
+        } else {
+            context.theme.resolveAttribute(R.attr.themedEmptyDrawable, typedValue, true)
+        }
+        return typedValue.resourceId
     }
 }

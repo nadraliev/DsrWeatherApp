@@ -27,6 +27,8 @@
         <item name="themedSettingsDrawable">@drawable/ic_settings_grey_900</item>
         <item name="themedCheckDrawable">@drawable/ic_check_white</item>
         <item name="themedMoreDrawable">@drawable/ic_more_vert_grey_900</item>
+        <item name="themedEmptyDrawable">@drawable/ic_empty_grey_900</item>
+        <item name="themedNoFavoritesDrawable">@drawable/ic_no_favorites_grey_900</item>
     </style>
 
     <style name="InputField.Light" parent="Widget.AppCompat.EditText">
@@ -76,6 +78,8 @@
         <item name="themedSettingsDrawable">@drawable/ic_settings_white</item>
         <item name="themedCheckDrawable">@drawable/ic_check_grey_900</item>
         <item name="themedMoreDrawable">@drawable/ic_more_vert_white</item>
+        <item name="themedEmptyDrawable">@drawable/ic_empty_white</item>
+        <item name="themedNoFavoritesDrawable">@drawable/ic_no_favorites_white</item>
     </style>
 
     <style name="InputField.Dark" parent="Widget.AppCompat.EditText">

@@ -27,4 +27,10 @@
         android:layout_margin="32dp"
         android:src="?attr/themedAddDrawable"/>
 
+    <soutvoid.com.DsrWeatherApp.ui.common.widgets.PlaceholderView
+        android:id="@+id/locations_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
 </android.support.design.widget.CoordinatorLayout>

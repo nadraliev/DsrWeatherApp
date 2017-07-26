@@ -47,6 +47,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
             subscribeNetworkQuery(
                     prepareObservable(locations),
                     Action1 {
+                        view.hidePlaceholder()
                         view.showData(locations.zip(it)
                             {a: SavedLocation, b: CurrentWeather -> LocationWithWeather(a,b) })
                         view.setRefreshEnable(false)
@@ -60,6 +61,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
         } else {
             view.setRefreshEnable(false)
             view.showData(emptyList())
+            view.showMessageEmpty()
         }
     }
 
@@ -103,6 +105,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
             it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
         }
         realm.close()
+        view.tryNotifyPagerDataSetChanged()
     }
 
     private fun onUndoClicked(locationWithWeather: LocationWithWeather, position: Int) {
