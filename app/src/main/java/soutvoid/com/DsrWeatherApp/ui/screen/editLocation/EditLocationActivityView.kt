@@ -11,9 +11,8 @@ import android.view.ViewAnimationUtils
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_edit_location.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
@@ -61,9 +60,6 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
-
-        if (!SdkUtil.supportsKitkat())
-            edit_location_fake_statusbar.visibility = View.GONE
 
         initToolbar()
         writeData()

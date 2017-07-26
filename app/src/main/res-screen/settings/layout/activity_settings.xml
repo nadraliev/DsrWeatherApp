@@ -42,7 +42,7 @@
 
     </FrameLayout>
 
-    <View
+    <soutvoid.com.DsrWeatherApp.ui.common.widgets.FakeStatusBarView
         android:id="@+id/settings_reveal_view"
         android:layout_width="0dp"
         android:layout_height="0dp"

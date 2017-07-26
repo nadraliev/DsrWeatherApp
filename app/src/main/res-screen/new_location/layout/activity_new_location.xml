@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <View
+    <soutvoid.com.DsrWeatherApp.ui.common.widgets.FakeStatusBarView
         android:layout_width="0dp"
         android:layout_height="25dp"
         app:layout_constraintLeft_toLeftOf="parent"

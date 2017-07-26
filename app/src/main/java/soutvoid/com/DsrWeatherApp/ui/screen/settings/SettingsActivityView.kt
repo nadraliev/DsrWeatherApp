@@ -5,9 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.res.Resources
 import android.os.Bundle
-import android.support.transition.Fade
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.View
@@ -15,10 +13,8 @@ import android.view.ViewAnimationUtils
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_settings.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
+import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import soutvoid.com.DsrWeatherApp.ui.util.getPreferredThemeId
@@ -58,9 +54,6 @@ class SettingsActivityView: TranslucentStatusActivityView() {
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
-
-        if (!SdkUtil.supportsKitkat())
-            settings_fake_statusbar.visibility = View.GONE
 
         maybeWriteInitData()
 

@@ -11,9 +11,8 @@ import android.view.ViewAnimationUtils
 import com.agna.ferro.mvp.component.ScreenComponent
 import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.base.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.StepperAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
@@ -46,9 +45,6 @@ class NewLocationActivityView : TranslucentStatusActivityView() {
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
-
-        if (!SdkUtil.supportsKitkat())
-            new_location_fake_statusbar.visibility = View.GONE
 
         initToolbar()
         initStepper()

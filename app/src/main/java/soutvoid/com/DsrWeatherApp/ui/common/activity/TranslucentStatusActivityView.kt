@@ -1,7 +1,8 @@
-package soutvoid.com.DsrWeatherApp.ui.base.activity
+package soutvoid.com.DsrWeatherApp.ui.common.activity
 
 import android.os.Bundle
 import android.view.WindowManager
+import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 abstract class TranslucentStatusActivityView : BaseActivityView() {
