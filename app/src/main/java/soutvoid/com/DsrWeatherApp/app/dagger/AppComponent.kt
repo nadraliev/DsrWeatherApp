@@ -11,6 +11,8 @@ import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherReposi
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastModule
 import soutvoid.com.DsrWeatherApp.interactor.forecast.ForecastRepository
 import soutvoid.com.DsrWeatherApp.interactor.network.NetworkConnectionChecker
+import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersModule
+import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
@@ -24,7 +26,8 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
         ActivityModule::class,
         CurrentWeatherModule::class,
         ForecastModule::class,
-        UviModule::class
+        UviModule::class,
+        TriggersModule::class
 ))
 interface AppComponent {
     fun context() : Context
@@ -32,4 +35,5 @@ interface AppComponent {
     fun currentWeatherRepository() : CurrentWeatherRepository
     fun forecastRepository() : ForecastRepository
     fun uviRepository() : UviRepository
+    fun triggersRepository() : TriggersRepository
 }

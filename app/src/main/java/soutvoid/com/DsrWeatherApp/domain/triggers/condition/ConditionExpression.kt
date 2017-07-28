@@ -1,14 +1,18 @@
 package soutvoid.com.DsrWeatherApp.domain.triggers.condition
 
-enum class ConditionExpression(val str: String) {
-    gt("\$gt"),
-    lt("\$lt"),
-    gte("\$gte"),
-    lte("\$lte"),
-    eq("\$eq"),
-    ne("\$ne");
+import com.google.gson.annotations.SerializedName
 
-    override fun toString(): String {
-        return str
-    }
+enum class ConditionExpression {
+    @SerializedName("${'$'}gt")
+    gt,
+    @SerializedName("${'$'}lt")
+    lt,
+    @SerializedName("${'$'}gte")
+    gte,
+    @SerializedName("${'$'}lte")
+    lte,
+    @SerializedName("${'$'}eq")
+    eq,
+    @SerializedName("${'$'}ne")
+    ne
 }
