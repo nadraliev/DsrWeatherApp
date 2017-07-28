@@ -14,4 +14,8 @@ class TriggersRepository @Inject constructor(val api: TriggersApi) {
         return api.newTrigger(newTriggerRequest)
     }
 
+    fun getTrigger(id: String): Observable<TriggerResponse> {
+        return api.getTrigger(id)
+    }
+
 }
