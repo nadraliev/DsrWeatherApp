@@ -5,12 +5,14 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.support.annotation.StringRes
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -94,4 +96,15 @@ fun View.createFullScreenCircularReveal(startX: Int, startY: Int): Animator {
             0f,
             maxOf(this.measuredHeight, this.measuredWidth).toFloat()
     )
+}
+
+fun ConditionName.getNiceNameStringId(): Int {
+    when(this) {
+        ConditionName.temp -> return R.string.temperature
+        ConditionName.humidity -> return R.string.humidity
+        ConditionName.clouds -> return R.string.clouds
+        ConditionName.pressure -> return R.string.pressure
+        ConditionName.wind_direction -> return R.string.wind_direction
+        ConditionName.wind_speed -> return R.string.wind_speed
+    }
 }

@@ -2,6 +2,8 @@ package soutvoid.com.DsrWeatherApp.ui.screen.triggers
 
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
+import android.support.v7.widget.DividerItemDecoration
+import android.support.v7.widget.LinearLayoutManager
 import android.util.TypedValue
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
@@ -9,11 +11,15 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_triggers.*
+import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
+import soutvoid.com.DsrWeatherApp.ui.screen.triggers.list.TriggersListAdapter
 
 class TriggersActivityView: BaseActivityView() {
 
     @Inject
     lateinit var presenter: TriggersActivityPresenter
+
+    lateinit var adapter: TriggersListAdapter
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -32,9 +38,10 @@ class TriggersActivityView: BaseActivityView() {
         super.onCreate(savedInstanceState, viewRecreated)
 
         initToolbar()
+        initList()
     }
 
-    fun initToolbar() {
+    private fun initToolbar() {
         setSupportActionBar(triggers_toolbar)
         title = getString(R.string.notifications)
         val typedValue = TypedValue()
@@ -42,4 +49,20 @@ class TriggersActivityView: BaseActivityView() {
         triggers_toolbar.navigationIcon = ContextCompat.getDrawable(this, typedValue.resourceId)
         triggers_toolbar.setNavigationOnClickListener { onBackPressed() }
     }
+
+    private fun initList() {
+        adapter = TriggersListAdapter(
+                onItemClickListener = { presenter.onTriggerClicked(adapter.triggers[it]) },
+                onSwitchClickListener = { position, state ->  presenter.onSwitchClicked(adapter.triggers[position], state) }
+        )
+        triggers_list.adapter = adapter
+        triggers_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        triggers_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
+
+    fun showData(triggers: List<SavedTrigger>) {
+        adapter.triggers = triggers
+        adapter.notifyDataSetChanged()
+    }
+
 }

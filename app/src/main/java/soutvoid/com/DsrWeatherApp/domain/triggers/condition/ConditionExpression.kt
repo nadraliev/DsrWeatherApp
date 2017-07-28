@@ -2,17 +2,17 @@ package soutvoid.com.DsrWeatherApp.domain.triggers.condition
 
 import com.google.gson.annotations.SerializedName
 
-enum class ConditionExpression {
+enum class ConditionExpression(val symbol: String) {
     @SerializedName("${'$'}gt")
-    gt,
+    gt(">"),
     @SerializedName("${'$'}lt")
-    lt,
+    lt("<"),
     @SerializedName("${'$'}gte")
-    gte,
+    gte("≥"),
     @SerializedName("${'$'}lte")
-    lte,
+    lte("≤"),
     @SerializedName("${'$'}eq")
-    eq,
+    eq("="),
     @SerializedName("${'$'}ne")
-    ne
+    ne("≠")
 }
