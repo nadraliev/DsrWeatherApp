@@ -7,14 +7,15 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.NewTriggerActivityView
 import javax.inject.Inject
 
 @PerScreen
 class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
     :BasePresenter<TriggersActivityView>(errorHandler) {
 
-    override fun onLoad(viewRecreated: Boolean) {
-        super.onLoad(viewRecreated)
+    override fun onResume() {
+        super.onResume()
 
         loadData()
     }

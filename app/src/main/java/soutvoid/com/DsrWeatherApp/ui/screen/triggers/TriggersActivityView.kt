@@ -12,6 +12,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_triggers.*
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.NewTriggerActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.triggers.list.TriggersListAdapter
 
 class TriggersActivityView: BaseActivityView() {
@@ -39,6 +40,7 @@ class TriggersActivityView: BaseActivityView() {
 
         initToolbar()
         initList()
+        initAddBtn()
     }
 
     private fun initToolbar() {
@@ -58,6 +60,10 @@ class TriggersActivityView: BaseActivityView() {
         triggers_list.adapter = adapter
         triggers_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         triggers_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    }
+
+    private fun initAddBtn() {
+        triggers_add.setOnClickListener { NewTriggerActivityView.start(this) }
     }
 
     fun showData(triggers: List<SavedTrigger>) {
