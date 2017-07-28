@@ -2,6 +2,7 @@
   <dictionary name="andrew">
     <words>
       <w>butterknife</w>
+      <w>choosable</w>
       <w>crashlytics</w>
       <w>ferro</w>
       <w>interactor</w>

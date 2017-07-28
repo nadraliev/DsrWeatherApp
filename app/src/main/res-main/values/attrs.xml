@@ -10,4 +10,7 @@
     <attr name="themedMoreDrawable" format="reference"/>
     <attr name="themedEmptyDrawable" format="reference"/>
     <attr name="themedNoFavoritesDrawable" format="reference"/>
+    <attr name="themedLocationOnDrawable" format="reference"/>
+    <attr name="themedCloudDrawable" format="reference"/>
+    <attr name="themedTimeDrawable" format="reference"/>
 </resources>

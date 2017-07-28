@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="new_notification">Новое уведомление</string>
+    <string name="choose_location">Выберете место</string>
+    <string name="add_location">Добавить место</string>
 </resources>
