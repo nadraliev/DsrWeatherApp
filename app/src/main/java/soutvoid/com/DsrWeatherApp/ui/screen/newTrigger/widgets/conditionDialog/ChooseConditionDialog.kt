@@ -10,7 +10,7 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
-import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.conditionDialog.list.FactorsAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.list.SelectableListItemAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.*
 
 class ChooseConditionDialog() : DialogFragment() {
@@ -24,7 +24,7 @@ class ChooseConditionDialog() : DialogFragment() {
     private lateinit var factorsNames: List<String>
 
     private var inputField: TextInputLayout? = null
-    private var factorsAdapter: FactorsAdapter? = null
+    private var factorsAdapter: SelectableListItemAdapter? = null
 
     private var chosenCondition = -1    //выбранное условие. (-1 - не выбрано)
 
@@ -87,7 +87,7 @@ class ChooseConditionDialog() : DialogFragment() {
         builder.setView(view)
 
         val list = view.findViewById<ListView>(R.id.conditions_factors_dialog_list)
-        factorsAdapter = FactorsAdapter(activity, factorsNames.map { "${conditionsNames[chosenCondition]} $it" })
+        factorsAdapter = SelectableListItemAdapter(activity, factorsNames.map { "${conditionsNames[chosenCondition]} $it" })
         list.adapter = factorsAdapter
 
         inputField = view.findViewById<TextInputLayout>(R.id.conditions_factors_dialog_input_field)

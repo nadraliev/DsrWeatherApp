@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="new_notification">Новое уведомление</string>
     <string name="choose_location">Выберете место</string>
     <string name="add_location">Добавить место</string>
@@ -12,4 +12,24 @@
     <string name="value">Значение</string>
     <string name="enter_value">Введите значение</string>
     <string name="no_condition">Без состояния</string>
+    <string name="add_time">Добавить время</string>
+    <string name="no_time">Без времени</string>
+    <plurals name="days">
+        <item quantity="one" tools:ignore="ImpliedQuantity">день</item>
+        <item quantity="two">дня</item>
+        <item quantity="zero">дней</item>
+        <item quantity="few">дней</item>
+        <item quantity="many">дней</item>
+        <item quantity="other">дней</item>
+    </plurals>
+    <plurals name="hours">
+        <item quantity="one" tools:ignore="ImpliedQuantity">час</item>
+        <item quantity="two">часа</item>
+        <item quantity="zero">часов</item>
+        <item quantity="few">часов</item>
+        <item quantity="many">часов</item>
+        <item quantity="other">часов</item>
+    </plurals>
+    <string name="custom">Свое</string>
+    <string name="before">перед</string>
 </resources>

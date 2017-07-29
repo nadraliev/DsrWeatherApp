@@ -6,6 +6,7 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId
 import javax.inject.Inject
@@ -16,6 +17,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     private lateinit var location: SavedLocation
     private val conditions = mutableListOf<Condition>()
+    private val notificationTimes = mutableListOf<NotificationTime>()
 
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
@@ -84,6 +86,31 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
         } else {
             conditions.removeAt(position)
             view.removeCondition(position)
+        }
+    }
+
+    fun onAddTimeClicked() {
+        view.showNewTimeDialog()
+    }
+
+    fun onTimeClicked(position: Int) {
+        view.showEditTimeDialog(position)
+    }
+
+    fun onNewTimeChosen(before: NotificationTime?) {
+        before?.let {
+            notificationTimes.add(it)
+            view.showNewTime(it)
+        }
+    }
+
+    fun onTimeEdited(position: Int, before: NotificationTime?) {
+        if (before != null) {
+            notificationTimes[position] = before
+            view.editTime(position, before)
+        } else {
+            notificationTimes.removeAt(position)
+            view.removeTime(position)
         }
     }
 }

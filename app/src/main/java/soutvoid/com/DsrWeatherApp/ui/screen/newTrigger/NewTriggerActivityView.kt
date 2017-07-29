@@ -13,6 +13,8 @@ import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityVi
 import kotlinx.android.synthetic.main.activity_new_trigger.*
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.conditionDialog.ChooseConditionDialog
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.ChooseTimeDialog
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.DialogUtils
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
@@ -47,6 +49,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
 
         initToolbar()
         initConditionsList()
+        initTimeList()
         initListeners()
     }
 
@@ -65,6 +68,15 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
                 textSize = 18f,
                 textColor = theme.getThemeColor(android.R.attr.textColorSecondary))
         { presenter.onAddConditionClicked() }
+    }
+    
+    private fun initTimeList() {
+        new_trigger_time_container.addLineToTop(
+                strId = R.string.add_time,
+                textSize = 18f,
+                textColor = theme.getThemeColor(android.R.attr.textColorSecondary)
+        )
+        { presenter.onAddTimeClicked() }
     }
 
     private fun initListeners() {
@@ -115,5 +127,32 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
 
     fun removeCondition(position: Int) {
         new_trigger_conditions_container.removeLine(position)
+    }
+
+    fun showNewTimeDialog() {
+        ChooseTimeDialog(
+                {presenter.onNewTimeChosen(it)}
+        ).show(fragmentManager, "")
+    }
+
+    fun showEditTimeDialog(position: Int) {
+        ChooseTimeDialog(
+                {presenter.onTimeEdited(position, it)}
+        ).show(fragmentManager, "")
+    }
+
+    fun showNewTime(time: NotificationTime) {
+        val str = "${time.getNiceString(this)} ${getString(R.string.before)}"
+        new_trigger_time_container.addLineToIndex(new_trigger_time_container.size() - 1, str, textSize = 18f)
+        { presenter.onTimeClicked(it) }
+    }
+
+    fun editTime(position: Int, time: NotificationTime) {
+        val str = "${time.getNiceString(this)} ${getString(R.string.before)}"
+        new_trigger_time_container.getLine(position).text = str
+    }
+
+    fun removeTime(position: Int) {
+        new_trigger_time_container.removeLine(position)
     }
 }
