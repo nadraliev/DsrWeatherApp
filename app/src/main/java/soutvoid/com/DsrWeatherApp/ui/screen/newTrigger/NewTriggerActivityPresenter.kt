@@ -57,19 +57,25 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
         view.showEditConditionDialog(position)
     }
 
-    fun onNewConditionChosen(condition: Condition) {
-        view.showNewCondition(
-                condition.name.getNiceNameStringId(),
-                condition.expression.getNiceStringId(),
-                condition.amount
-        )
+    fun onNewConditionChosen(condition: Condition?) {
+        condition?.let {
+            view.showNewCondition(
+                    it.name.getNiceNameStringId(),
+                    it.expression.getNiceStringId(),
+                    it.amount
+            )
+        }
     }
 
-    fun onConditionEdited(position: Int, condition: Condition) {
-        view.editCondition(
-                position,
-                condition.name.getNiceNameStringId(),
-                condition.expression.getNiceStringId(),
-                condition.amount)
+    fun onConditionEdited(position: Int, condition: Condition?) {
+        if (condition != null) {
+            view.editCondition(
+                    position,
+                    condition.name.getNiceNameStringId(),
+                    condition.expression.getNiceStringId(),
+                    condition.amount)
+        } else {
+            view.removeCondition(position)
+        }
     }
 }

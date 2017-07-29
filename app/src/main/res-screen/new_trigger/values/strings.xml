@@ -11,4 +11,5 @@
     <string name="ok">OK</string>
     <string name="value">Value</string>
     <string name="enter_value">Enter value</string>
+    <string name="no_condition">No condition</string>
 </resources>

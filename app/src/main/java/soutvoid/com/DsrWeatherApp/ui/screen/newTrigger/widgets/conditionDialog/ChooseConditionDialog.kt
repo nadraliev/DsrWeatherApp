@@ -15,7 +15,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.*
 
 class ChooseConditionDialog() : DialogFragment() {
 
-    var conditionChosenListener: ((Condition) -> Unit)? = null
+    var conditionChosenListener: ((Condition?) -> Unit)? = null
 
     private lateinit var conditions: List<ConditionName>
     private lateinit var conditionsNames: List<String>
@@ -28,7 +28,7 @@ class ChooseConditionDialog() : DialogFragment() {
 
     private var chosenCondition = -1    //выбранное условие. (-1 - не выбрано)
 
-    constructor(conditionChosenListener: ((Condition) -> Unit)?) : this() {
+    constructor(conditionChosenListener: ((Condition?) -> Unit)?) : this() {
         this.conditionChosenListener = conditionChosenListener
     }
 
@@ -59,9 +59,10 @@ class ChooseConditionDialog() : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         if (chosenCondition < 0) { //показать диалог с именами условий
+            val items = conditionsNames.plusElementFront(getString(R.string.no_condition))
             return DialogUtils.createSimpleListDialog(
                     activity,
-                    items = conditionsNames,
+                    items = items,
                     listener = { showSecondDialog(it) }
             )
         } else {    //показать диалог с выбором фактора
@@ -70,9 +71,14 @@ class ChooseConditionDialog() : DialogFragment() {
     }
 
     private fun showSecondDialog(position: Int) {
-        chosenCondition = position
-        dismiss()
-        show(fragmentManager, "")
+        if (position == 0) {    //первая опция - без состояния
+            conditionChosenListener?.invoke(null)
+            dismiss()
+        } else {
+            chosenCondition = position - 1
+            dismiss()
+            show(fragmentManager, "")
+        }
     }
 
     private fun createSecondDialog(): Dialog {

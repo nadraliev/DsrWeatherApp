@@ -127,3 +127,9 @@ fun <T> T?.ifNotNullOr(alt: T): T {
     else
         return this
 }
+
+fun <T> List<T>.plusElementFront(element: T) : List<T> {
+    val newList = this.toMutableList()
+    newList.add(0, element)
+    return newList.toList()
+}

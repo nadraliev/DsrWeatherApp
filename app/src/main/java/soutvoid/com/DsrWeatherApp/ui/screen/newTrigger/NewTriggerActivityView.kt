@@ -112,4 +112,8 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         val str = "${getString(name).capitalize()} ${getString(expression)} $value"
         new_trigger_conditions_container.getLine(position).text = str
     }
+
+    fun removeCondition(position: Int) {
+        new_trigger_conditions_container.removeLine(position)
+    }
 }

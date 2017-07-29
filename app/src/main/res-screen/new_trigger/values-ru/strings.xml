@@ -11,4 +11,5 @@
     <string name="ok">ОК</string>
     <string name="value">Значение</string>
     <string name="enter_value">Введите значение</string>
+    <string name="no_condition">Без состояния</string>
 </resources>
