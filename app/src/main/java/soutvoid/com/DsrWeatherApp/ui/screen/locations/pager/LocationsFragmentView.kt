@@ -161,8 +161,8 @@ class LocationsFragmentView: BaseFragmentView() {
 
     fun getEmptyMessage(): String {
         if (isOnlyFavorite())
-            return getString(R.string.no_favorites)
-        else return getString(R.string.no_locations)
+            return getString(R.string.no_favorites_message)
+        else return getString(R.string.no_locations_message)
     }
 
     fun getEmptyImageId(): Int {

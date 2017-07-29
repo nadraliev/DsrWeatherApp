@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
 import kotlinx.android.synthetic.main.activity_new_trigger.*
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.DialogUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
 import javax.inject.Inject
 
@@ -71,21 +72,10 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
     }
 
     fun showNoLocationsDialog() {
-        val message = getString(R.string.add_location)
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle(R.string.choose_location)
-        dialogBuilder.setAdapter(
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, listOf(message)))
-        { dialogInterface, i -> NewLocationActivityView.start(this)}
-        dialogBuilder.create().show()
+        DialogUtils.showNoLocationsDialog(this) { NewLocationActivityView.start(this) }
     }
 
     fun showLocationsDialog(locationsNames: List<String>) {
-        val dialogBuilder = AlertDialog.Builder(this)
-        dialogBuilder.setTitle(R.string.choose_location)
-        dialogBuilder.setAdapter(
-                ArrayAdapter(this, android.R.layout.simple_list_item_1, locationsNames))
-                { dialogInterface, i -> presenter.onLocationChosen(i)}
-        dialogBuilder.create().show()
+        DialogUtils.showLocationsDialog(this, locationsNames) { presenter.onLocationChosen(it) }
     }
 }

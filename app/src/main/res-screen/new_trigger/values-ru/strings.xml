@@ -3,4 +3,5 @@
     <string name="new_notification">Новое уведомление</string>
     <string name="choose_location">Выберете место</string>
     <string name="add_location">Добавить место</string>
+    <string name="no_locations">Нет мест</string>
 </resources>
