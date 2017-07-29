@@ -9,6 +9,7 @@ import rx.schedulers.Schedulers
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
@@ -102,6 +103,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     private fun removeLocationFromDb(location: SavedLocation) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
+            it.where(SavedTrigger::class.java).equalTo("location.id", location.id).findAll().deleteAllFromRealm()
             it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
         }
         realm.close()

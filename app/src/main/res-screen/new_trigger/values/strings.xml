@@ -32,4 +32,5 @@
     </plurals>
     <string name="custom">Custom</string>
     <string name="before">before</string>
+    <string name="empty_fields">Empty fields</string>
 </resources>

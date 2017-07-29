@@ -32,4 +32,5 @@
     </plurals>
     <string name="custom">Свое</string>
     <string name="before">перед</string>
+    <string name="empty_fields">Поля не заполнены</string>
 </resources>

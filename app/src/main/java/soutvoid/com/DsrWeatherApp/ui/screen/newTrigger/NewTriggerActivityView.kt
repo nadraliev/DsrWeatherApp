@@ -165,4 +165,8 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
     fun getTypedName(): String {
         return new_trigger_name_edt.text.toString()
     }
+
+    fun showEmptyFieldsMessage() {
+        Toast.makeText(this, getString(R.string.empty_fields), Toast.LENGTH_LONG).show()
+    }
 }

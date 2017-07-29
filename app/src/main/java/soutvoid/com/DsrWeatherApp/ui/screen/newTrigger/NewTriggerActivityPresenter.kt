@@ -20,7 +20,7 @@ import javax.inject.Inject
 class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
     : BasePresenter<NewTriggerActivityView>(errorHandler) {
 
-    private lateinit var location: SavedLocation
+    private var location: SavedLocation? = null
     private val conditions = mutableListOf<Condition>()
     private val notificationTimes = mutableListOf<NotificationTime>()
 
@@ -34,10 +34,11 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     private fun loadInitLocation() {
         val realm = Realm.getDefaultInstance()
-        val location = realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
+        val locationRealm = realm.where(SavedLocation::class.java).findFirst()
+        location = locationRealm?.let { realm.copyFromRealm(locationRealm) }
         if (location != null) {
             this.location = location
-            view.setLocationName(location.name)
+            view.setLocationName(location!!.name)
         } else
             view.setLocationNameChoosable()
         realm.close()
@@ -68,7 +69,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     fun onLocationChosen(position: Int) {
         location = getAllLocations()[position]
-        view.setLocationName(location.name)
+        location?.let { view.setLocationName(it.name) }
     }
 
     fun onAddConditionClicked() {
@@ -132,22 +133,25 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     fun onCheckClicked() {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            val savedConditions = RealmList<SavedCondition>()
-            savedConditions.addAll(conditions.map { SavedCondition(it.name.toString(), it.expression.toString(), it.amount) })
-            val savedNotificationTimes = RealmList<NotificationTime>()
-            savedNotificationTimes.addAll(notificationTimes)
-            val trigger = SavedTrigger(
-                    name = view.getTypedName(),
-                    enabled = true,
-                    location = location,
-                    conditions = savedConditions,
-                    notificationTimes = savedNotificationTimes
-            )
-            it.copyToRealmOrUpdate(trigger)
-        }
-        realm.close()
-        view.finish()
+        if (location != null && conditions.size != 0 && notificationTimes.size != 0) {
+            val realm = Realm.getDefaultInstance()
+            realm.executeTransaction {
+                val savedConditions = RealmList<SavedCondition>()
+                savedConditions.addAll(conditions.map { SavedCondition(it.name.toString(), it.expression.toString(), it.amount) })
+                val savedNotificationTimes = RealmList<NotificationTime>()
+                savedNotificationTimes.addAll(notificationTimes)
+                val trigger = SavedTrigger(
+                        name = view.getTypedName(),
+                        enabled = true,
+                        location = location!!,
+                        conditions = savedConditions,
+                        notificationTimes = savedNotificationTimes
+                )
+                it.copyToRealmOrUpdate(trigger)
+            }
+            realm.close()
+            view.finish()
+        } else
+            view.showEmptyFieldsMessage()
     }
 }
