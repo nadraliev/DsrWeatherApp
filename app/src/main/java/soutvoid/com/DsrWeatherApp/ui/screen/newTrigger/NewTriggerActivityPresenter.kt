@@ -14,6 +14,9 @@ import javax.inject.Inject
 class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
     :BasePresenter<NewTriggerActivityView>(errorHandler) {
 
+    private lateinit var location: SavedLocation
+    private val conditions = mutableListOf<Condition>()
+
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
@@ -24,9 +27,10 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     private fun loadInitLocation() {
         val realm = Realm.getDefaultInstance()
         val location = realm.where(SavedLocation::class.java).findFirst()
-        if (location != null)
+        if (location != null) {
+            this.location = location
             view.setLocationName(location.name)
-        else
+        } else
             view.setLocationNameChoosable()
         realm.close()
     }
@@ -46,7 +50,8 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     fun onLocationChosen(position: Int) {
-        view.setLocationName(getAllLocations()[position].name)
+        location = getAllLocations()[position]
+        view.setLocationName(location.name)
     }
 
     fun onAddConditionClicked() {
@@ -59,6 +64,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     fun onNewConditionChosen(condition: Condition?) {
         condition?.let {
+            conditions.add(it)
             view.showNewCondition(
                     it.name.getNiceNameStringId(),
                     it.expression.getNiceStringId(),
@@ -69,12 +75,14 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     fun onConditionEdited(position: Int, condition: Condition?) {
         if (condition != null) {
+            conditions[position] = condition
             view.editCondition(
                     position,
                     condition.name.getNiceNameStringId(),
                     condition.expression.getNiceStringId(),
                     condition.amount)
         } else {
+            conditions.removeAt(position)
             view.removeCondition(position)
         }
     }
