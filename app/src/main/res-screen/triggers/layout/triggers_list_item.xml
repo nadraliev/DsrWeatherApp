@@ -47,4 +47,15 @@
         app:alignItems="flex_start"
         app:showDivider="middle|end"
         app:dividerDrawable="@drawable/divider"/>
+
+    <ImageButton
+        android:id="@+id/triggers_list_item_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
+        android:background="?selectableItemBackground"
+        android:src="?attr/themedCrossDrawable"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 </android.support.constraint.ConstraintLayout>

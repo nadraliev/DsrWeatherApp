@@ -5,4 +5,5 @@
     <string name="clouds">Clouds</string>
     <string name="wind_direction">Wind direction</string>
     <string name="wind_speed">Wind speed</string>
+    <string name="trigger_removed">Notification removed</string>
 </resources>

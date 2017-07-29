@@ -5,4 +5,5 @@
     <string name="clouds">Облака</string>
     <string name="wind_direction">Направление ветра</string>
     <string name="wind_speed">Скорость ветра</string>
+    <string name="trigger_removed">Уведомление удалено</string>
 </resources>

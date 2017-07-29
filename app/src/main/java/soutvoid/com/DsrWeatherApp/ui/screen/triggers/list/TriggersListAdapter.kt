@@ -9,7 +9,6 @@ import android.widget.TextView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.google.android.flexbox.FlexboxLayout
-import kotlinx.android.synthetic.main.triggers_list_item.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
@@ -21,15 +20,16 @@ import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
 class TriggersListAdapter(
-        var triggers: List<SavedTrigger> = emptyList(),
+        var triggers: MutableList<SavedTrigger> = mutableListOf(),
         var onItemClickListener: (position: Int) -> Unit,
-        var onSwitchClickListener: (position: Int, state: Boolean) -> Unit
+        var onSwitchClickListener: (position: Int, state: Boolean) -> Unit,
+        var onDeleteBtnClickListener: (position: Int) -> Unit
 )
     : RecyclerView.Adapter<TriggersListAdapter.TriggerViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): TriggerViewHolder? {
         val view = parent?.inflate(R.layout.triggers_list_item)
-        return view?.let { TriggerViewHolder(it, onItemClickListener, onSwitchClickListener) }
+        return view?.let { TriggerViewHolder(it, onItemClickListener, onSwitchClickListener, onDeleteBtnClickListener) }
     }
 
     override fun getItemCount(): Int = triggers.size
@@ -40,7 +40,8 @@ class TriggersListAdapter(
 
     class TriggerViewHolder(view: View,
                             onItemClickListener: (position: Int) -> Unit,
-                            onSwitchClickListener: (position: Int, state: Boolean) -> Unit)
+                            onSwitchClickListener: (position: Int, state: Boolean) -> Unit,
+                            var onDeleteBtnClickListener: (position: Int) -> Unit)
         : RecyclerView.ViewHolder(view) {
 
         @BindView(R.id.triggers_list_item_name)
@@ -48,12 +49,15 @@ class TriggersListAdapter(
         var switch: Switch //for some reason butterknife can't bind this switch in time
         @BindView(R.id.triggers_list_item_details)
         lateinit var details: FlexboxLayout
+        @BindView(R.id.triggers_list_item_delete)
+        lateinit var delete: View
 
         init {
             ButterKnife.bind(this, itemView)
             switch = itemView.findViewById(R.id.triggers_list_item_switch)
             itemView.setOnClickListener { onItemClickListener(adapterPosition) }
             switch.setOnCheckedChangeListener { compoundButton, b -> onSwitchClickListener(adapterPosition, compoundButton.isChecked) }
+            delete.setOnClickListener { onDeleteBtnClickListener(adapterPosition) }
         }
 
         fun bind(trigger: SavedTrigger) {

@@ -15,4 +15,5 @@
     <attr name="themedCloudDrawable" format="reference"/>
     <attr name="themedTimeDrawable" format="reference"/>
     <attr name="themedDividerColor" format="reference"/>
+    <attr name="themedCrossDrawable" format="reference"/>
 </resources>

@@ -34,6 +34,7 @@
         <item name="themedLocationOnDrawable">@drawable/ic_location_on_grey_900</item>
         <item name="themedCloudDrawable">@drawable/ic_cloud_queue_grey_900</item>
         <item name="themedTimeDrawable">@drawable/ic_access_time_grey_900</item>
+        <item name="themedCrossDrawable">@drawable/ic_clear_grey_900</item>
     </style>
 
     <style name="InputField.Light" parent="Widget.AppCompat.EditText">
@@ -90,6 +91,7 @@
         <item name="themedLocationOnDrawable">@drawable/ic_location_on_white</item>
         <item name="themedCloudDrawable">@drawable/ic_cloud_queue_white</item>
         <item name="themedTimeDrawable">@drawable/ic_access_time_white</item>
+        <item name="themedCrossDrawable">@drawable/ic_clear_white</item>
     </style>
 
     <style name="InputField.Dark" parent="Widget.AppCompat.EditText">
