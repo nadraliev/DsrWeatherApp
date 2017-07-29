@@ -2,8 +2,13 @@ package soutvoid.com.DsrWeatherApp.ui.screen.newTrigger
 
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
+import io.realm.RealmList
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.SavedCondition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
@@ -13,7 +18,7 @@ import javax.inject.Inject
 
 @PerScreen
 class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
-    :BasePresenter<NewTriggerActivityView>(errorHandler) {
+    : BasePresenter<NewTriggerActivityView>(errorHandler) {
 
     private lateinit var location: SavedLocation
     private val conditions = mutableListOf<Condition>()
@@ -23,12 +28,13 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
         super.onLoad(viewRecreated)
 
         loadInitLocation()
-
+        showInitCondition()
+        showInitNotificationTime()
     }
 
     private fun loadInitLocation() {
         val realm = Realm.getDefaultInstance()
-        val location = realm.where(SavedLocation::class.java).findFirst()
+        val location = realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
         if (location != null) {
             this.location = location
             view.setLocationName(location.name)
@@ -40,7 +46,16 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     private fun getAllLocations(): List<SavedLocation> {
         val realm = Realm.getDefaultInstance()
         val locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAll())
+        realm.close()
         return locations
+    }
+
+    private fun showInitCondition() {
+        onNewConditionChosen(Condition(ConditionName.temp, ConditionExpression.gt, 302.7))
+    }
+
+    private fun showInitNotificationTime() {
+        onNewTimeChosen(NotificationTime(1, 0))
     }
 
     fun onLocationClicked() {
@@ -112,5 +127,25 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
             notificationTimes.removeAt(position)
             view.removeTime(position)
         }
+    }
+
+    fun onCheckClicked() {
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            val savedConditions = RealmList<SavedCondition>()
+            savedConditions.addAll(conditions.map { SavedCondition(it.name.toString(), it.expression.toString(), it.amount) })
+            val savedNotificationTimes = RealmList<NotificationTime>()
+            savedNotificationTimes.addAll(notificationTimes)
+            val trigger = SavedTrigger(
+                    name = view.getTypedName(),
+                    enabled = true,
+                    location = location,
+                    conditions = savedConditions,
+                    notificationTimes = savedNotificationTimes
+            )
+            it.copyToRealmOrUpdate(trigger)
+        }
+        realm.close()
+        view.finish()
     }
 }

@@ -48,11 +48,11 @@ class ChooseTimeDialog(): DialogFragment() {
 
     private fun initData() {
         quickOptions = listOf(
-                NotificationTime(5, NotificationTime.Unit.days),
-                NotificationTime(2, NotificationTime.Unit.days),
-                NotificationTime(1, NotificationTime.Unit.days),
-                NotificationTime(10, NotificationTime.Unit.hours),
-                NotificationTime(2, NotificationTime.Unit.hours)
+                NotificationTime(5, 0),
+                NotificationTime(2, 0),
+                NotificationTime(1, 0),
+                NotificationTime(10, 1),
+                NotificationTime(2, 1)
         )
     }
 
@@ -120,7 +120,7 @@ class ChooseTimeDialog(): DialogFragment() {
                     input.error =
                             "${activity.getString(R.string.max)} $maxHours ${activity.resources.getQuantityString(R.plurals.hours, maxHours)}"
                 else {
-                    val notificationTime = NotificationTime(value, unit)
+                    val notificationTime = NotificationTime(value, adapter.selectedPosition)
                     timeChosenListener?.invoke(notificationTime)
                     dismiss()
                 }

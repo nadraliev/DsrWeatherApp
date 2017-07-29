@@ -1,12 +1,15 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data
 
 import android.content.Context
+import io.realm.RealmObject
 import soutvoid.com.DsrWeatherApp.R
+import java.io.Serializable
 
-data class NotificationTime(
-        var value: Int,
-        var unit: Unit
-) {
+open class NotificationTime(
+        var value: Int = 0,
+        var unit: Int = 0   //пришлось хранить индекс enum вместо самого enum для хранения в бд
+) : RealmObject(), Serializable
+{
     enum class Unit{
         days, hours;
 
@@ -19,6 +22,6 @@ data class NotificationTime(
     }
 
     fun getNiceString(context: Context): String {
-        return "$value ${unit.getNiceString(context, value)}"
+        return "$value ${NotificationTime.Unit.values()[unit].getNiceString(context, value)}"
     }
 }

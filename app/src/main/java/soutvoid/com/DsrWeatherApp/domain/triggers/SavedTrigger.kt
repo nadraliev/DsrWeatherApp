@@ -6,6 +6,7 @@ import io.realm.annotations.PrimaryKey
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.SavedCondition
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import java.io.Serializable
 
 open class SavedTrigger(
@@ -14,6 +15,7 @@ open class SavedTrigger(
         var enabled: Boolean = false,
         var location: SavedLocation = SavedLocation(),
         var conditions: RealmList<SavedCondition> = RealmList(),
+        var notificationTimes: RealmList<NotificationTime> = RealmList(),
         @PrimaryKey
         var id: Int = SavedTrigger.getNextKey()
 ) : RealmObject(), Serializable {

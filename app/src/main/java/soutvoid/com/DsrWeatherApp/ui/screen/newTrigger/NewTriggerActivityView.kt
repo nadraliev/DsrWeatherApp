@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.v4.content.ContextCompat
 import android.util.TypedValue
+import android.widget.Toast
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
@@ -81,6 +82,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
 
     private fun initListeners() {
         new_trigger_location.setOnClickListener { presenter.onLocationClicked() }
+        new_trigger_check_btn.setOnClickListener { presenter.onCheckClicked() }
     }
 
     fun setLocationName(locationName: String) {
@@ -154,5 +156,9 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
 
     fun removeTime(position: Int) {
         new_trigger_time_container.removeLine(position)
+    }
+
+    fun getTypedName(): String {
+        return new_trigger_name_edt.text.toString()
     }
 }
