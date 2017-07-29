@@ -6,7 +6,6 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
-import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId
 import javax.inject.Inject
@@ -51,14 +50,26 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     fun onAddConditionClicked() {
-        view.showConditionsDialog()
+        view.showNewConditionsDialog()
     }
 
-    fun onConditionChosen(condition: Condition) {
+    fun onConditionClicked(position: Int) {
+        view.showEditConditionDialog(position)
+    }
+
+    fun onNewConditionChosen(condition: Condition) {
         view.showNewCondition(
                 condition.name.getNiceNameStringId(),
                 condition.expression.getNiceStringId(),
                 condition.amount
         )
+    }
+
+    fun onConditionEdited(position: Int, condition: Condition) {
+        view.editCondition(
+                position,
+                condition.name.getNiceNameStringId(),
+                condition.expression.getNiceStringId(),
+                condition.amount)
     }
 }

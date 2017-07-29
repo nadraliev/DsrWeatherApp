@@ -15,6 +15,8 @@ class TextLinearLayout : LinearLayout {
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes)
 
+
+
     private fun createLine(str: String,
                            marginBottom: Int = 14,
                            textSizeSp: Float = 14f,
@@ -34,9 +36,11 @@ class TextLinearLayout : LinearLayout {
                        str: String,
                        marginBottom: Int = 14,
                        textSize: Float = 14f,
-                       textColor: Int = -1)
+                       textColor: Int = -1,
+                       listener: ((Int) -> Unit)? = null)
             : TextView {
         val view = createLine(str, marginBottom, textSize, textColor)
+        listener?.let { view.setOnClickListener { it(index) } }
         addView(view, index)
         return view
     }
@@ -45,32 +49,36 @@ class TextLinearLayout : LinearLayout {
                        @StringRes strId: Int,
                        marginBottom: Int = 14,
                        textSize: Float = 14f,
-                       textColor: Int = -1)
+                       textColor: Int = -1,
+                       listener: ((Int) -> Unit)? = null)
             : TextView {
         return addLineToIndex(index,
                 context.getString(strId),
                 marginBottom,
                 textSize,
-                textColor)
+                textColor,
+                listener)
     }
 
     fun addLineToTop(str: String,
                      marginBottom: Int = 14,
                      textSizeSp: Float = 14f,
-                     textColor: Int = -1)
+                     textColor: Int = -1,
+                     listener: ((Int) -> Unit)? = null)
             : TextView {
-        return addLineToIndex(0, str, marginBottom, textSizeSp, textColor)
+        return addLineToIndex(0, str, marginBottom, textSizeSp, textColor, listener)
     }
 
     fun addLineToTop(@StringRes strId: Int,
                      marginBottom: Int = 14,
                      textSize: Float = 14f,
-                     textColor: Int = -1)
-            : TextView {
+                     textColor: Int = -1,
+                     listener: ((Int) -> Unit)? = null): TextView {
         return addLineToTop(context.getString(strId),
                 marginBottom,
                 textSize,
-                textColor)
+                textColor,
+                listener)
     }
 
     fun getLine(index: Int): TextView {

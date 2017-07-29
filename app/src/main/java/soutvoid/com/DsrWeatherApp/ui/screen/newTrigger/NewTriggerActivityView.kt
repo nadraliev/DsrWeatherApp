@@ -64,9 +64,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
                 strId = R.string.add_condition,
                 textSize = 18f,
                 textColor = theme.getThemeColor(android.R.attr.textColorSecondary))
-                .setOnClickListener {
-                    presenter.onAddConditionClicked()
-                }
+        { presenter.onAddConditionClicked() }
     }
 
     private fun initListeners() {
@@ -90,9 +88,15 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         DialogUtils.showLocationsDialog(this, locationsNames) { presenter.onLocationChosen(it) }
     }
 
-    fun showConditionsDialog() {
+    fun showNewConditionsDialog() {
         ChooseConditionDialog(
-                {presenter.onConditionChosen(it)}
+                {presenter.onNewConditionChosen(it)}
+        ).show(fragmentManager, "")
+    }
+
+    fun showEditConditionDialog(position: Int) {
+        ChooseConditionDialog(
+                {presenter.onConditionEdited(position, it)}
         ).show(fragmentManager, "")
     }
 
@@ -100,5 +104,12 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         val value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount))
         val str = "${getString(name).capitalize()} ${getString(expression)} $value"
         new_trigger_conditions_container.addLineToIndex(new_trigger_conditions_container.size() - 1, str, textSize = 18f)
+        { presenter.onConditionClicked(it) }
+    }
+
+    fun editCondition(position: Int, @StringRes name: Int, @StringRes expression: Int, amount: Double) {
+        val value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount))
+        val str = "${getString(name).capitalize()} ${getString(expression)} $value"
+        new_trigger_conditions_container.getLine(position).text = str
     }
 }
