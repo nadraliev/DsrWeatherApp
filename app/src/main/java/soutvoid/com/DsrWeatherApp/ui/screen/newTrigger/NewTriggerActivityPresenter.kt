@@ -51,7 +51,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     private fun showInitCondition() {
-        onNewConditionChosen(Condition(ConditionName.temp, ConditionExpression.gt, 302.7))
+        onNewConditionChosen(Condition(ConditionName.temp, ConditionExpression.gt, 303.0))
     }
 
     private fun showInitNotificationTime() {
@@ -85,7 +85,8 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
             view.showNewCondition(
                     it.name.getNiceNameStringId(),
                     it.expression.getNiceStringId(),
-                    it.amount
+                    it.amount.toInt(),
+                    it.name == ConditionName.temp
             )
         }
     }
@@ -97,7 +98,8 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
                     position,
                     condition.name.getNiceNameStringId(),
                     condition.expression.getNiceStringId(),
-                    condition.amount)
+                    condition.amount.toInt(),
+                    condition.name == ConditionName.temp)
         } else {
             conditions.removeAt(position)
             view.removeCondition(position)

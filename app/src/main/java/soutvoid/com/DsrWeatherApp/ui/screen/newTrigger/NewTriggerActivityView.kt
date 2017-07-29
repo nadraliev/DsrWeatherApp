@@ -114,15 +114,19 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         ).show(fragmentManager, "")
     }
 
-    fun showNewCondition(@StringRes name: Int, @StringRes expression: Int, amount: Double) {
-        val value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount))
+    fun showNewCondition(@StringRes name: Int, @StringRes expression: Int, amount: Int, isTemp: Boolean) {
+        var value = amount
+        if (isTemp)
+            value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount.toDouble())).toInt()
         val str = "${getString(name).capitalize()} ${getString(expression)} $value"
         new_trigger_conditions_container.addLineToIndex(new_trigger_conditions_container.size() - 1, str, textSize = 18f)
         { presenter.onConditionClicked(it) }
     }
 
-    fun editCondition(position: Int, @StringRes name: Int, @StringRes expression: Int, amount: Double) {
-        val value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount))
+    fun editCondition(position: Int, @StringRes name: Int, @StringRes expression: Int, amount: Int, isTemp: Boolean) {
+        var value = amount
+        if (isTemp)
+            value = Math.round(UnitsUtils.kelvinToPreferredUnit(this, amount.toDouble())).toInt()
         val str = "${getString(name).capitalize()} ${getString(expression)} $value"
         new_trigger_conditions_container.getLine(position).text = str
     }

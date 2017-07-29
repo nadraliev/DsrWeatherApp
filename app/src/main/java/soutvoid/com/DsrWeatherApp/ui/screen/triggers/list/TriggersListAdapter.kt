@@ -12,7 +12,11 @@ import kotlinx.android.synthetic.main.triggers_list_item.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.SavedCondition
+import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
+import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
 class TriggersListAdapter(
@@ -55,6 +59,7 @@ class TriggersListAdapter(
             with(trigger) {
                 nameTv.text = name
                 switch.isChecked = enabled
+                details.removeAllViews()
                 details.addView(getLocationDetailVew(location))
                 conditions.forEach { details.addView(getConditionDetailView(it)) }
             }
@@ -68,7 +73,12 @@ class TriggersListAdapter(
 
         fun getConditionDetailView(savedCondition: SavedCondition): TextView {
             val view = TextView(itemView.context)
-            view.text = "${savedCondition.name} ${savedCondition.expression} ${savedCondition.amount}"
+            val name = itemView.context.getString(ConditionName.valueOf(savedCondition.name).getNiceNameStringId())
+            val symbol = ConditionExpression.valueOf(savedCondition.expression).symbol
+            var value = savedCondition.amount.toInt()
+            if (ConditionName.valueOf(savedCondition.name) == ConditionName.temp)
+                value = Math.round(UnitsUtils.kelvinToPreferredUnit(itemView.context, savedCondition.amount)).toInt()
+            view.text = "$name $symbol $value"
             return view
         }
 

@@ -103,11 +103,13 @@ class ChooseConditionDialog() : DialogFragment() {
             if (input.editText?.text == null || input.editText?.text.toString() == "")
                 input.error = activity.getString(R.string.enter_value)
             else {
-                val value = input.editText?.text.toString().toDouble()
+                var value = input.editText?.text.toString().toDouble()
+                if (conditions[chosenCondition] == ConditionName.temp)
+                    value = UnitsUtils.preferredUnitToKelvin(activity, value)
                 val condition = Condition(
                         conditions[chosenCondition],
                         factors[adapter.selectedPosition],
-                        UnitsUtils.preferredUnitToKelvin(activity, value)
+                        value
                 )
                 conditionChosenListener?.invoke(condition)
                 dismiss()
