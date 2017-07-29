@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/factors_list_item_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="?selectableItemBackground"
+    android:paddingTop="14dp"
+    android:paddingBottom="14dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="24dp">
+
+    <TextView
+        android:id="@+id/factors_list_item_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:textSize="16sp"
+        />
+
+    <ImageView
+        android:id="@+id/factors_list_item_check"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="?attr/themedCheckDrawableInverse"/>
+
+</LinearLayout>

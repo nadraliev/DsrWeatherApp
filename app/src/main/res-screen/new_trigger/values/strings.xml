@@ -4,4 +4,11 @@
     <string name="choose_location">Choose location</string>
     <string name="add_location">Add location</string>
     <string name="no_locations">No locations</string>
+    <string name="add_condition">Add condition</string>
+    <string name="more_than">more than</string>
+    <string name="less_than">less than</string>
+    <string name="equals">equals</string>
+    <string name="ok">OK</string>
+    <string name="value">Value</string>
+    <string name="enter_value">Enter value</string>
 </resources>

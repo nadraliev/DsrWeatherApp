@@ -4,4 +4,11 @@
     <string name="choose_location">Выберете место</string>
     <string name="add_location">Добавить место</string>
     <string name="no_locations">Нет мест</string>
+    <string name="add_condition">Добавить состояние</string>
+    <string name="more_than">больше чем</string>
+    <string name="less_than">меньше чем</string>
+    <string name="equals">равно</string>
+    <string name="ok">ОК</string>
+    <string name="value">Значение</string>
+    <string name="enter_value">Введите значение</string>
 </resources>

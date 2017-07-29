@@ -3,8 +3,12 @@ package soutvoid.com.DsrWeatherApp.ui.screen.newTrigger
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.Condition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
+import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
+import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
+import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId
 import javax.inject.Inject
 
 @PerScreen
@@ -44,5 +48,17 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
 
     fun onLocationChosen(position: Int) {
         view.setLocationName(getAllLocations()[position].name)
+    }
+
+    fun onAddConditionClicked() {
+        view.showConditionsDialog()
+    }
+
+    fun onConditionChosen(condition: Condition) {
+        view.showNewCondition(
+                condition.name.getNiceNameStringId(),
+                condition.expression.getNiceStringId(),
+                condition.amount
+        )
     }
 }

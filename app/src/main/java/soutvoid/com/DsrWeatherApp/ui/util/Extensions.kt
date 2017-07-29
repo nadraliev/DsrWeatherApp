@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 
@@ -107,4 +108,22 @@ fun ConditionName.getNiceNameStringId(): Int {
         ConditionName.wind_direction -> return R.string.wind_direction
         ConditionName.wind_speed -> return R.string.wind_speed
     }
+}
+
+fun ConditionExpression.getNiceStringId(): Int {
+    when(this) {
+        ConditionExpression.gt -> return R.string.more_than
+        ConditionExpression.lt -> return R.string.less_than
+        else -> return R.string.equals
+    }
+}
+
+/**
+ * возвращает @param [alt], если this == null
+ */
+fun <T> T?.ifNotNullOr(alt: T): T {
+    if (this == null)
+        return alt
+    else
+        return this
 }
