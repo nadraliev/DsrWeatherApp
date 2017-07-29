@@ -14,4 +14,5 @@
     <attr name="themedLocationOnDrawable" format="reference"/>
     <attr name="themedCloudDrawable" format="reference"/>
     <attr name="themedTimeDrawable" format="reference"/>
+    <attr name="themedDividerColor" format="reference"/>
 </resources>

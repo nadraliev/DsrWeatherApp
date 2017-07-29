@@ -18,6 +18,7 @@
         <item name="ico_color">@color/black</item>
         <item name="ms_stepperStyle">@style/DotStepper.Light</item>
         <item name="android:popupMenuStyle">@style/PopupStyleLight</item>
+        <item name="themedDividerColor">@color/divider_color_black</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_grey_900</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_white</item>
@@ -73,6 +74,7 @@
         <item name="ico_color">@color/white</item>
         <item name="ms_stepperStyle">@style/DotStepper.Dark</item>
         <item name="android:popupMenuStyle">@style/PopupStyleDark</item>
+        <item name="themedDividerColor">@color/divider_color_white</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_white</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_grey_900</item>
