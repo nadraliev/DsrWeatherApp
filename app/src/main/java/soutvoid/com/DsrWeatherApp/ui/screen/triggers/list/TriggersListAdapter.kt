@@ -1,6 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.triggers.list
 
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
@@ -65,20 +66,20 @@ class TriggersListAdapter(
             }
         }
 
-        fun getLocationDetailVew(location: SavedLocation): TextView {
-            val view = TextView(itemView.context)
-            view.text = location.name
+        fun getLocationDetailVew(location: SavedLocation): View {
+            val view = LayoutInflater.from(itemView.context).inflate(R.layout.detail_view, null, false)
+            view.findViewById<TextView>(R.id.detail_view_text).text = location.name
             return view
         }
 
-        fun getConditionDetailView(savedCondition: SavedCondition): TextView {
-            val view = TextView(itemView.context)
-            val name = itemView.context.getString(ConditionName.valueOf(savedCondition.name).getNiceNameStringId())
+        fun getConditionDetailView(savedCondition: SavedCondition): View {
+            val view = LayoutInflater.from(itemView.context).inflate(R.layout.detail_view, null, false)
+            val name = itemView.context.getString(ConditionName.valueOf(savedCondition.name).getNiceNameStringId()).capitalize()
             val symbol = ConditionExpression.valueOf(savedCondition.expression).symbol
             var value = savedCondition.amount.toInt()
             if (ConditionName.valueOf(savedCondition.name) == ConditionName.temp)
                 value = Math.round(UnitsUtils.kelvinToPreferredUnit(itemView.context, savedCondition.amount)).toInt()
-            view.text = "$name $symbol $value"
+            view.findViewById<TextView>(R.id.detail_view_text).text = "$name $symbol $value"
             return view
         }
 
