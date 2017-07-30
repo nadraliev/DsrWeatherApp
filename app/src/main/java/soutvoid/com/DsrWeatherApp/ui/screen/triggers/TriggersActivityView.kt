@@ -89,7 +89,7 @@ class TriggersActivityView: BaseActivityView() {
         adapter.notifyItemInserted(position)
     }
 
-    fun notifyServiceTriggerDeleted(id: Int) {
+    fun notifyServiceTriggerDeleted(id: String) {
         NotificationSchedulerService.startActionDelete(this, listOf(id))
     }
 

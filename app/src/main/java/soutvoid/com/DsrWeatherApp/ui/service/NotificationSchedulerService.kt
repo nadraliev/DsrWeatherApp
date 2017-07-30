@@ -26,19 +26,19 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
     companion object {
         const val ACTION_KEY = "action"
         const val TRIGGERS_IDS_LIST_KEY = "triggers_ids_list"
-        fun startActionAdd(context: Context, triggersIds: List<Int>) {
+        fun startActionAdd(context: Context, triggersIds: List<Int>) {  //id
             val intent = Intent(context, NotificationSchedulerService::class.java)
             intent.putExtra(ACTION_KEY, Action.ADD)
             intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toIntArray())
             context.startService(intent)
         }
-        fun startActionDelete(context: Context, triggersIds: List<Int>) {
+        fun startActionDelete(context: Context, triggersIds: List<String>) {   //triggerId
             val intent = Intent(context, NotificationSchedulerService::class.java)
             intent.putExtra(ACTION_KEY, Action.DELETE)
-            intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toIntArray())
+            intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toTypedArray())
             context.startService(intent)
         }
-        fun startActionToggle(context: Context, triggersIds: List<Int>) {
+        fun startActionToggle(context: Context, triggersIds: List<Int>) {   //id
             val intent = Intent(context, NotificationSchedulerService::class.java)
             intent.putExtra(ACTION_KEY, Action.TOGGLE)
             intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toIntArray())
@@ -62,7 +62,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
             satisfyDependencies()
             when (intent.getSerializableExtra(ACTION_KEY)) {
                 Action.ADD -> addTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
-                Action.DELETE -> deleteTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
+                Action.DELETE -> deleteTriggers(intent.getStringArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.TOGGLE -> toggleTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.SCHEDULE_NOTIFICATIONS -> scheduleAllNotifications()
             }
@@ -134,12 +134,10 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
     /**
      * удалить триггеры с сервера и из бд
      */
-    private fun deleteTriggers(triggersIds: IntArray) {
+    private fun deleteTriggers(triggersIds: Array<String>) {
         if (triggersIds.isNotEmpty()) {
-            val savedTriggers = getSavedTriggers(triggersIds)
-            deleteServerTriggers(savedTriggers)
+            deleteServerTriggers(triggersIds)
             cancelAllNotifications()
-            deleteSavedTriggers(savedTriggers)
             scheduleAllNotifications()
         }
     }
@@ -147,8 +145,8 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
     /**
      * удалить триггеры с сервера
      */
-    private fun deleteServerTriggers(triggers: List<SavedTrigger>) {
-        triggers.forEach { triggersRep.deleteTrigger(it.triggerId).subscribe {  } }
+    private fun deleteServerTriggers(triggersIds: Array<String>) {
+        triggersIds.forEach { triggersRep.deleteTrigger(it).subscribe {  } }
     }
 
     /**
@@ -156,14 +154,15 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
      */
     private fun deleteSavedTriggers(triggers: List<SavedTrigger>) {
         if (triggers.isNotEmpty()) {
-            val realm = Realm.getDefaultInstance()
-            realm.executeTransaction {
-                it.where(SavedTrigger::class.java).
-                        `in`("id", triggers
-                                .map { it.id }
-                                .toTypedArray()).findAll().deleteAllFromRealm()
+            val ids = triggers.map { it.id }.toTypedArray()
+            if (ids.isNotEmpty()) {
+                val realm = Realm.getDefaultInstance()
+                realm.executeTransaction {
+                    it.where(SavedTrigger::class.java).
+                            `in`("id", ids).findAll().deleteAllFromRealm()
+                }
+                realm.close()
             }
-            realm.close()
         }
     }
 
@@ -178,7 +177,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         if (trigger.enabled) {
             addTriggers(intArrayOf(trigger.id))
         } else {
-            deleteServerTriggers(listOf(trigger))
+            deleteServerTriggers(arrayOf(trigger.triggerId))
             cancelAllNotifications()
             scheduleAllNotifications()
         }

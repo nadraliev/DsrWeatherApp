@@ -61,7 +61,12 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
     }
 
     private fun removeNotificationFromDb(savedTrigger: SavedTrigger) {
-        view.notifyServiceTriggerDeleted(savedTrigger.id)
+        view?.notifyServiceTriggerDeleted(savedTrigger.triggerId)
+        val realm = Realm.getDefaultInstance()
+        realm.executeTransaction {
+            it.where(SavedTrigger::class.java)
+                    .equalTo("id", savedTrigger.id).findAll().deleteAllFromRealm()
+        }
     }
 
     override fun onPause() {
