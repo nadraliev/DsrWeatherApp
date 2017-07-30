@@ -16,6 +16,7 @@ open class SavedTrigger(
         var location: SavedLocation = SavedLocation(),
         var conditions: RealmList<SavedCondition> = RealmList(),
         var notificationTimes: RealmList<NotificationTime> = RealmList(),
+        var alerts: RealmList<RealmLong> = RealmList(),
         @PrimaryKey
         var id: Int = SavedTrigger.getNextKey()
 ) : RealmObject(), Serializable {

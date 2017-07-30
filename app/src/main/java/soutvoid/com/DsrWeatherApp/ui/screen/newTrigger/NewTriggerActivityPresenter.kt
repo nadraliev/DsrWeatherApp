@@ -148,6 +148,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
                         notificationTimes = savedNotificationTimes
                 )
                 it.copyToRealmOrUpdate(trigger)
+                view.notifyService(trigger.id)
             }
             realm.close()
             view.finish()

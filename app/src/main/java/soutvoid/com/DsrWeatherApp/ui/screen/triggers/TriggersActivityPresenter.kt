@@ -2,14 +2,11 @@ package soutvoid.com.DsrWeatherApp.ui.screen.triggers
 
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
-import io.realm.RealmList
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
-import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.NewTriggerActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.SnackbarDismissedListener
 import javax.inject.Inject
 
@@ -50,7 +47,7 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
                 { onUndoClicked(savedTrigger, position)})  //undo deleting
                 .addCallback(SnackbarDismissedListener { _, _ ->
                     if (!undoClicked)
-                        removeLocationFromDb(savedTrigger)
+                        removeNotificationFromDb(savedTrigger)
                     else undoClicked = false
                 })  //delete from db when snackbar disappears
     }
@@ -60,11 +57,7 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
         undoClicked = true
     }
 
-    private fun removeLocationFromDb(savedTrigger: SavedTrigger) {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            it.where(SavedTrigger::class.java).equalTo("id", savedTrigger.id).findAll().deleteAllFromRealm()
-        }
-        realm.close()
+    private fun removeNotificationFromDb(savedTrigger: SavedTrigger) {
+        view.notifyService(savedTrigger.id)
     }
 }

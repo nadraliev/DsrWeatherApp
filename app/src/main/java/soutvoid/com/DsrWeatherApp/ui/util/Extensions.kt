@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import io.realm.RealmList
+import io.realm.RealmModel
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
@@ -132,4 +134,10 @@ fun <T> List<T>.plusElementFront(element: T) : List<T> {
     val newList = this.toMutableList()
     newList.add(0, element)
     return newList.toList()
+}
+
+fun <T> realmListOf(elements: Iterable<T>): RealmList<T> where T: RealmModel{
+    val list = RealmList<T>()
+    list.addAll(elements)
+    return list
 }

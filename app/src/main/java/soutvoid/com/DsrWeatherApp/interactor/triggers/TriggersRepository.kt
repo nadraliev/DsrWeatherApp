@@ -18,4 +18,8 @@ class TriggersRepository @Inject constructor(val api: TriggersApi) {
         return api.getTrigger(id)
     }
 
+    fun deleteTrigger(id: String): Observable<Void> {
+        return api.deleteTrigger(id)
+    }
+
 }

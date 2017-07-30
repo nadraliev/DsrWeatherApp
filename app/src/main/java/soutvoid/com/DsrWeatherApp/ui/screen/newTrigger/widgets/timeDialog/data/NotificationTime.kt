@@ -10,8 +10,8 @@ open class NotificationTime(
         var unit: Int = 0   //пришлось хранить индекс enum вместо самого enum для хранения в бд
 ) : RealmObject(), Serializable
 {
-    enum class Unit{
-        days, hours;
+    enum class Unit(val millis: Long){
+        days(1000*60*60*24), hours(1000*60*60);
 
         fun getNiceString(context: Context, count: Int = 10): String {
             when(this) {
@@ -23,5 +23,9 @@ open class NotificationTime(
 
     fun getNiceString(context: Context): String {
         return "$value ${NotificationTime.Unit.values()[unit].getNiceString(context, value)}"
+    }
+
+    fun getMilliseconds(): Long {
+        return value * Unit.values()[unit].millis
     }
 }

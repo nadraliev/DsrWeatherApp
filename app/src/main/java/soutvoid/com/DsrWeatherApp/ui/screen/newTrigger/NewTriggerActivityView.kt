@@ -16,6 +16,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.conditionDialog.ChooseConditionDialog
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.ChooseTimeDialog
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
+import soutvoid.com.DsrWeatherApp.ui.service.NotificationSchedulerService
 import soutvoid.com.DsrWeatherApp.ui.util.DialogUtils
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
@@ -168,5 +169,9 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
 
     fun showEmptyFieldsMessage() {
         Toast.makeText(this, getString(R.string.empty_fields), Toast.LENGTH_LONG).show()
+    }
+
+    fun notifyService(triggerId: Int) {
+        NotificationSchedulerService.startActionAdd(this, listOf(triggerId))
     }
 }

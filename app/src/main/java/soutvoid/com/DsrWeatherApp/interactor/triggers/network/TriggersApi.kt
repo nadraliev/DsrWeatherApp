@@ -1,9 +1,6 @@
 package soutvoid.com.DsrWeatherApp.interactor.triggers.network
 
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 import rx.Observable
 import soutvoid.com.DsrWeatherApp.interactor.common.network.ServerUrls
 import soutvoid.com.DsrWeatherApp.interactor.triggers.data.NewTriggerRequest
@@ -16,5 +13,8 @@ interface TriggersApi {
 
     @GET("${ServerUrls.TRIGGERS_URL}/{id}")
     fun getTrigger(@Path("id") id: String) : Observable<TriggerResponse>
+
+    @DELETE("${ServerUrls.TRIGGERS_URL}/{id}")
+    fun deleteTrigger(@Path("id") id: String) : Observable<Void>
 
 }
