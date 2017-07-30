@@ -108,16 +108,20 @@ class SettingsActivityView: TranslucentStatusActivityView() {
 
     @TargetApi(21)
     private fun restartWithReveal() {
-        setTheme(getDefaultPreferences().getPreferredThemeId())
-        settings_reveal_view.setBackgroundColor(theme.getThemeColor(android.R.attr.colorBackground))
-        val animation = settings_reveal_view.createFullScreenCircularReveal(
-                settings_reveal_view.measuredWidth / 2,
-                settings_reveal_view.measuredHeight / 2
-                )
-        animation.duration = 300
-        animation.addListener(AnimationEndedListener { restart() })
-        settings_reveal_view.visibility = View.VISIBLE
-        animation.start()
+        try {
+            setTheme(getDefaultPreferences().getPreferredThemeId())
+            settings_reveal_view.setBackgroundColor(theme.getThemeColor(android.R.attr.colorBackground))
+            val animation = settings_reveal_view.createFullScreenCircularReveal(
+                    settings_reveal_view.measuredWidth / 2,
+                    settings_reveal_view.measuredHeight / 2
+            )
+            animation.duration = 300
+            animation.addListener(AnimationEndedListener { restart() })
+            settings_reveal_view.visibility = View.VISIBLE
+            animation.start()
+        } catch (e: NoClassDefFoundError) {
+            restart()
+        }
     }
 
     override fun onDestroy() {

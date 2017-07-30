@@ -18,8 +18,8 @@ import javax.inject.Inject
 
 @PerScreen
 class MapFragmentPresenter @Inject constructor(val messagePresenter: MessagePresenter,
-                                               errorHandler: ErrorHandler):
-    BasePresenter<MapFragmentView>(errorHandler) {
+                                               errorHandler: ErrorHandler) :
+        BasePresenter<MapFragmentView>(errorHandler) {
 
     var locationChanged = false //если пользователь еще не поменял сам точку, то поставим на нее маркер
 
@@ -56,7 +56,7 @@ class MapFragmentPresenter @Inject constructor(val messagePresenter: MessagePres
     /**
      * получить название города по координатам
      */
-    private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()) : String {
+    private fun getLocationName(latLng: LatLng, locale: Locale = Locale.getDefault()): String {
         val geocoder: Geocoder = Geocoder(view.context, locale)
         val addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
         if (addresses.isNotEmpty() && addresses[0].locality != null)
@@ -86,18 +86,19 @@ class MapFragmentPresenter @Inject constructor(val messagePresenter: MessagePres
      * пользователь выбрал точку и нажал "подтвердить"
      */
     fun locationChosen(latLng: LatLng) {
+        var locationName = ""
         try {
-            val locationName = getLocationName(latLng)
-            view.context.getDefaultPreferences().edit()
-                    .putString(LocationSettingsFragmentView.NAME_KEY, locationName)
-                    .putFloat(LocationSettingsFragmentView.LATITUDE_KEY, latLng.latitude.toFloat())
-                    .putFloat(LocationSettingsFragmentView.LONGITUDE_KEY, latLng.longitude.toFloat())
-                    .commit()
+            locationName = getLocationName(latLng)
         } catch (e: IOException) {
             val errorHandler = StandardWithActionErrorHandler(messagePresenter, view.getString(R.string.try_again))
-                { locationChosen(latLng) }
+            { locationChosen(latLng) }
             errorHandler.handleError(e)
         }
+        view.context.getDefaultPreferences().edit()
+                .putString(LocationSettingsFragmentView.NAME_KEY, locationName)
+                .putFloat(LocationSettingsFragmentView.LATITUDE_KEY, latLng.latitude.toFloat())
+                .putFloat(LocationSettingsFragmentView.LONGITUDE_KEY, latLng.longitude.toFloat())
+                .commit()
     }
 
     /**

@@ -101,16 +101,20 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
     @SuppressLint("NewApi")
     fun returnToHome(animationCenter: Point = Point()) {
         if (SdkUtil.supportsKitkat()) {
-            val animator = edit_location_reveal_view.createFullScreenCircularReveal(
-                    animationCenter.x,
-                    edit_location_container.top + animationCenter.y
-            )
-            animator.addListener(AnimationEndedListener {
+            try {
+                val animator = edit_location_reveal_view.createFullScreenCircularReveal(
+                        animationCenter.x,
+                        edit_location_container.top + animationCenter.y
+                )
+                animator.addListener(AnimationEndedListener {
+                    startLocationsActivity()
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                })
+                edit_location_reveal_view.visibility = View.VISIBLE
+                animator.start()
+            } catch (e: NoClassDefFoundError) {
                 startLocationsActivity()
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            })
-            edit_location_reveal_view.visibility = View.VISIBLE
-            animator.start()
+            }
         } else startLocationsActivity()
     }
 

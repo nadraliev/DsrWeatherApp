@@ -71,15 +71,19 @@ class NewLocationActivityView : TranslucentStatusActivityView() {
     @SuppressLint("NewApi")
     fun returnToHome(animationCenter: Point = Point()) {
         if (SdkUtil.supportsKitkat()) {
-            val animator = new_location_reveal_view.createFullScreenCircularReveal(
-                    animationCenter.x,
-                    new_location_stepper.top + animationCenter.y)
-            animator.addListener(AnimationEndedListener {
+            try {
+                val animator = new_location_reveal_view.createFullScreenCircularReveal(
+                        animationCenter.x,
+                        new_location_stepper.top + animationCenter.y)
+                animator.addListener(AnimationEndedListener {
+                    startLocationsActivity()
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                })
+                new_location_reveal_view.visibility = View.VISIBLE
+                animator.start()
+            } catch (e: NoClassDefFoundError) {
                 startLocationsActivity()
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            })
-            new_location_reveal_view.visibility = View.VISIBLE
-            animator.start()
+            }
         } else startLocationsActivity()
     }
 
