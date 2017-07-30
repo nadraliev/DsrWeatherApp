@@ -8,6 +8,7 @@ import android.content.Intent
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
 import io.realm.RealmResults
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.domain.triggers.RealmLong
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
@@ -154,12 +155,16 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
      * удалить триггеры из бд
      */
     private fun deleteSavedTriggers(triggers: List<SavedTrigger>) {
-        val realm = Realm.getDefaultInstance()
-        realm.executeTransaction {
-            it.where(SavedTrigger::class.java).
-                    `in`("id", triggers.map { it.id }.toTypedArray()).findAll().deleteAllFromRealm()
+        if (triggers.isNotEmpty()) {
+            val realm = Realm.getDefaultInstance()
+            realm.executeTransaction {
+                it.where(SavedTrigger::class.java).
+                        `in`("id", triggers
+                                .map { it.id }
+                                .toTypedArray()).findAll().deleteAllFromRealm()
+            }
+            realm.close()
         }
-        realm.close()
     }
 
     private fun toggleTriggers(triggersIds: IntArray) {
@@ -237,6 +242,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         val realmResults = realm.where(RequestCode::class.java).findAll()
         var results = emptyList<Int>()
         realmResults?.let { results = realm.copyFromRealm(realmResults).map { it.value } }
+        realm.close()
         return results
     }
 }

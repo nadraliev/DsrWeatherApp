@@ -31,6 +31,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     lateinit var currentWeatherRep: CurrentWeatherRepository
 
     private var undoClicked = false
+    private var removeCandidate: SavedLocation? = null
 
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
@@ -107,7 +108,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
             it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
         }
         realm.close()
-        view.tryNotifyPagerDataSetChanged()
+        view?.tryNotifyPagerDataSetChanged()
     }
 
     private fun onUndoClicked(locationWithWeather: LocationWithWeather, position: Int) {
@@ -141,6 +142,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
      * пользователь нажал кнопку "удплить" или свайпнул по месту
      */
     fun onLocationRemoveRequested(locationWithWeather: LocationWithWeather, position: Int) {
+        removeCandidate = locationWithWeather.location
         messagePresenter.showWithAction(R.string.location_removed, R.string.undo,
                 { onUndoClicked(locationWithWeather, position)})  //undo deleting
                 .addCallback(SnackbarDismissedListener { _, _ ->
@@ -159,5 +161,10 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
      */
     fun refresh() {
         loadData()
+    }
+
+    override fun onPause() {
+        removeCandidate?.let { removeLocationFromDb(it) }
+        super.onPause()
     }
 }

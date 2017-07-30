@@ -16,6 +16,7 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
     :BasePresenter<TriggersActivityView>(errorHandler) {
 
     private var undoClicked = false
+    private var removeCandidate: SavedTrigger? = null
 
     override fun onResume() {
         super.onResume()
@@ -44,6 +45,7 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
     }
 
     fun onTriggerRemoveRequested(savedTrigger: SavedTrigger, position: Int) {
+        removeCandidate = savedTrigger
         messagePresenter.showWithAction(R.string.trigger_removed, R.string.undo,
                 { onUndoClicked(savedTrigger, position)})  //undo deleting
                 .addCallback(SnackbarDismissedListener { _, _ ->
@@ -60,5 +62,10 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
 
     private fun removeNotificationFromDb(savedTrigger: SavedTrigger) {
         view.notifyServiceTriggerDeleted(savedTrigger.id)
+    }
+
+    override fun onPause() {
+        removeCandidate?.let { removeNotificationFromDb(it) }
+        super.onPause()
     }
 }

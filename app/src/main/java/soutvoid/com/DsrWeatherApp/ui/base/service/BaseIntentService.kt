@@ -12,17 +12,17 @@ abstract class BaseIntentService(val name: String): IntentService(name) {
 
 
     override fun onCreate() {
-        RemoteLogger.logMessage(String.format(LogConstants.LOG_SERVICE_CREATE_FORMAT, name))
+        Logger.i(LogConstants.LOG_SERVICE_CREATE_FORMAT, name)
         super.onCreate()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        RemoteLogger.logMessage(String.format(LogConstants.LOG_SERVICE_START_COMMAND_FORMAT, name))
+        Logger.i(LogConstants.LOG_SERVICE_START_COMMAND_FORMAT, name)
         return super.onStartCommand(intent, flags, startId)
     }
 
     override fun onDestroy() {
-        RemoteLogger.logMessage(String.format(LogConstants.LOG_SERVICE_DESTROY_FORMAT, name))
+        Logger.i(LogConstants.LOG_SERVICE_DESTROY_FORMAT, name)
         super.onDestroy()
     }
 
