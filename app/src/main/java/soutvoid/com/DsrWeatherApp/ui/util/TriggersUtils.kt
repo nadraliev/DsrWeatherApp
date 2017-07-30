@@ -29,7 +29,7 @@ object TriggersUtils {
         )
         val end = Time(
                 TimeExpression.after,
-                notificationsTimes.map { it.getMilliseconds() }.max()!!
+                5 * 24 * 60 * 60 * 1000
         )
         return TimePeriod(start, end)
     }

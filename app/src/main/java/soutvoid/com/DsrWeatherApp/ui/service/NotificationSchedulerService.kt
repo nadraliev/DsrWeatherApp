@@ -1,15 +1,20 @@
 package soutvoid.com.DsrWeatherApp.ui.service
 
+import android.app.AlarmManager
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
-import io.realm.RealmList
 import io.realm.RealmResults
 import soutvoid.com.DsrWeatherApp.domain.triggers.RealmLong
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.ui.base.service.BaseIntentService
+import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
+import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
+import soutvoid.com.DsrWeatherApp.ui.util.NotificationUtils
 import soutvoid.com.DsrWeatherApp.ui.util.TriggersUtils
 import soutvoid.com.DsrWeatherApp.ui.util.realmListOf
 import javax.inject.Inject
@@ -44,8 +49,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
      * @property [ADD] создать новый триггер на сервере и создать нотификации
      * @property [DELETE] удалить нотификации, триггер с сервера и из бд
      * @property [TOGGLE] удалить нотификации, с сервера, но не из бд/создать триггер на сервере
+     * @property [SCHEDULE_NOTIFICATIONS] заново планирует все нотификации после перезагрузки устройства
      */
-    enum class Action { ADD, DELETE, TOGGLE }
+    enum class Action { ADD, DELETE, TOGGLE, SCHEDULE_NOTIFICATIONS }
 
     @Inject
     lateinit var triggersRep: TriggersRepository
@@ -57,6 +63,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
                 Action.ADD -> addTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.DELETE -> deleteTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.TOGGLE -> toggleTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
+                Action.SCHEDULE_NOTIFICATIONS -> scheduleAllNotifications()
             }
         }
     }
@@ -98,6 +105,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
             }
             updateDbTriggers(savedTriggers)
             loadAlerts(savedTriggers)
+            scheduleNotifications(savedTriggers)
         }
     }
 
@@ -129,7 +137,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         if (triggersIds.isNotEmpty()) {
             val savedTriggers = getSavedTriggers(triggersIds)
             deleteServerTriggers(savedTriggers)
+            cancelAllNotifications()
             deleteSavedTriggers(savedTriggers)
+            scheduleAllNotifications()
         }
     }
 
@@ -164,6 +174,69 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
             addTriggers(intArrayOf(trigger.id))
         } else {
             deleteServerTriggers(listOf(trigger))
+            cancelAllNotifications()
+            scheduleAllNotifications()
         }
+    }
+
+    private fun scheduleNotifications(triggers: List<SavedTrigger>) {
+        val alarmManager = baseContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        triggers.forEach { trigger ->
+            getNotificationTimesMillis(trigger).forEach { time ->
+                val notification = NotificationUtils.createTriggerNotification(
+                        baseContext,
+                        trigger.name,
+                        trigger.location.name)
+                alarmManager.set(AlarmManager.RTC_WAKEUP,
+                        time,
+                        createPendingIntent(notification))
+            }
+        }
+    }
+
+    private fun cancelAllNotifications() {
+        val alarmManager = baseContext.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        getAllRequestCodes().forEach {
+            alarmManager.cancel(
+                    PendingIntent.getBroadcast(baseContext, it, Intent(baseContext, NotificationPublisher::class.java), 0)
+            )
+        }
+    }
+
+    private fun scheduleAllNotifications() {
+        val triggers = getSavedTriggers().filter { it.enabled }
+        scheduleNotifications(triggers)
+    }
+
+    private fun createPendingIntent(notification: Notification): PendingIntent {
+        val intent = Intent(baseContext, NotificationPublisher::class.java)
+        intent.putExtra(NotificationPublisher.NOTIFICATION, notification)
+        return PendingIntent.getBroadcast(baseContext, getNewRequestCode(), intent, 0)
+    }
+
+    private fun getNotificationTimesMillis(trigger: SavedTrigger): List<Long> {
+        val result = mutableListOf<Long>()
+        trigger.alerts.forEach { alert ->
+            trigger.notificationTimes.forEach { time ->
+                result.add(alert.value - time.getMilliseconds())
+            }
+        }
+        return result.toList().filter { it > System.currentTimeMillis() }
+    }
+
+    private fun getNewRequestCode(): Int {
+        val realm = Realm.getDefaultInstance()
+        val requestCode = RequestCode()
+        realm.executeTransaction { it.copyToRealm(requestCode) }
+        realm.close()
+        return requestCode.value
+    }
+
+    private fun getAllRequestCodes(): List<Int> {
+        val realm = Realm.getDefaultInstance()
+        val realmResults = realm.where(RequestCode::class.java).findAll()
+        var results = emptyList<Int>()
+        realmResults?.let { results = realm.copyFromRealm(realmResults).map { it.value } }
+        return results
     }
 }
