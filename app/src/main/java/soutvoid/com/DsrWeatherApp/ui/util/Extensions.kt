@@ -90,6 +90,11 @@ fun View.dpToPx(dp: Double): Double {
     return dp * scale + 0.5f
 }
 
+fun View.spToPx(sp: Float): Int {
+    val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, sp, context.resources.displayMetrics).toInt()
+    return px
+}
+
 @TargetApi(21)
 fun View.createFullScreenCircularReveal(startX: Int, startY: Int): Animator {
     return ViewAnimationUtils.createCircularReveal(

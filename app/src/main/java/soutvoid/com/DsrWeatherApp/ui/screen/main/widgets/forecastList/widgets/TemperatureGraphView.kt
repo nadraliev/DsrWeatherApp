@@ -5,10 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.View
-import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
-import soutvoid.com.DsrWeatherApp.ui.util.dpToPx
-import soutvoid.com.DsrWeatherApp.ui.util.getThemeColor
-import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
+import soutvoid.com.DsrWeatherApp.ui.util.*
 
 /**
  * рисует точку с текстом температуры и линии до соседних точек
@@ -60,7 +57,7 @@ class TemperatureGraphView: View {
         linePaint.color = getThemedColor()
         linePaint.flags = Paint.ANTI_ALIAS_FLAG
         linePaint.style = Paint.Style.FILL_AND_STROKE
-        linePaint.strokeWidth = 6f
+        linePaint.strokeWidth = dpToPx(2.7).toFloat()
         return linePaint
     }
 
@@ -68,7 +65,7 @@ class TemperatureGraphView: View {
         val textPaint = Paint()
         textPaint.color = getThemedColor()
         textPaint.flags = Paint.ANTI_ALIAS_FLAG
-        textPaint.textSize = 20f
+        textPaint.textSize = spToPx(14f).toFloat()
         return textPaint
     }
 
