@@ -34,6 +34,11 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         }
     }
 
+    /**
+     * @property [ADD] создать новый триггер на сервере
+     * @property [DELETE] удалить триггер с сервера и из бд
+     * @property [TOGGLE] удалить с сервера, но не из бд/создать триггер на сервере
+     */
     enum class Action { ADD, DELETE, TOGGLE }
 
     @Inject
@@ -56,6 +61,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         component.inject(this)
     }
 
+    /**
+     * получить сохраненные в бд триггеры по списку id
+     */
     private fun getSavedTriggers(triggersIds: IntArray = intArrayOf()): List<SavedTrigger> {
         val realm = Realm.getDefaultInstance()
         var realmResults: RealmResults<SavedTrigger>?
@@ -71,6 +79,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         return list
     }
 
+    /**
+     * создать триггеры на сервере и обновить @see [SavedTrigger.triggerId] в бд, полученные от api
+     */
     private fun addTriggers(triggersIds: IntArray) {
         if (triggersIds.isNotEmpty()) {
             val savedTriggers = getSavedTriggers(triggersIds)
@@ -83,12 +94,18 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         }
     }
 
+    /**
+     * сохранить внесенные изменения в бд
+     */
     private fun updateDbTriggers(triggers: List<SavedTrigger>) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction { it.copyToRealmOrUpdate(triggers) }
         realm.close()
     }
 
+    /**
+     * получить алерты триггеров от api, записать в бд
+     */
     private fun loadAlerts(triggers: List<SavedTrigger>) {
         triggers.forEach { trigger->
             triggersRep.getTrigger(trigger.triggerId).subscribe {
@@ -98,6 +115,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         updateDbTriggers(triggers)
     }
 
+    /**
+     * удалить триггеры с сервера и из бд
+     */
     private fun deleteTriggers(triggersIds: IntArray) {
         if (triggersIds.isNotEmpty()) {
             val savedTriggers = getSavedTriggers(triggersIds)
@@ -106,6 +126,9 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
         }
     }
 
+    /**
+     * удалить триггеры из бд
+     */
     private fun deleteSavedTriggers(triggers: List<SavedTrigger>) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
