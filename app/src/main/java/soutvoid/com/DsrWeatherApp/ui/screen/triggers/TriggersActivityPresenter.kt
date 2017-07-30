@@ -33,13 +33,14 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
 
     }
 
-    fun onSwitchClicked(savedTrigger: SavedTrigger, state: Boolean) {
-        savedTrigger.enabled = state
+    fun onSwitchClicked(savedTrigger: SavedTrigger) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
-            it.copyToRealmOrUpdate(savedTrigger)
+            val triggerRealm = it.where(SavedTrigger::class.java).equalTo("id", savedTrigger.id).findFirst()
+            triggerRealm.enabled = !triggerRealm.enabled
         }
         realm.close()
+        view.notifyServiceTriggerToggled(savedTrigger.id)
     }
 
     fun onTriggerRemoveRequested(savedTrigger: SavedTrigger, position: Int) {
@@ -58,6 +59,6 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
     }
 
     private fun removeNotificationFromDb(savedTrigger: SavedTrigger) {
-        view.notifyService(savedTrigger.id)
+        view.notifyServiceTriggerDeleted(savedTrigger.id)
     }
 }

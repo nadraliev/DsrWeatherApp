@@ -22,7 +22,7 @@ import soutvoid.com.DsrWeatherApp.ui.util.inflate
 class TriggersListAdapter(
         var triggers: MutableList<SavedTrigger> = mutableListOf(),
         var onItemClickListener: (position: Int) -> Unit,
-        var onSwitchClickListener: (position: Int, state: Boolean) -> Unit,
+        var onSwitchClickListener: (position: Int) -> Unit,
         var onDeleteBtnClickListener: (position: Int) -> Unit
 )
     : RecyclerView.Adapter<TriggersListAdapter.TriggerViewHolder>() {
@@ -40,7 +40,7 @@ class TriggersListAdapter(
 
     class TriggerViewHolder(view: View,
                             onItemClickListener: (position: Int) -> Unit,
-                            onSwitchClickListener: (position: Int, state: Boolean) -> Unit,
+                            onSwitchClickListener: (position: Int) -> Unit,
                             var onDeleteBtnClickListener: (position: Int) -> Unit)
         : RecyclerView.ViewHolder(view) {
 
@@ -56,7 +56,7 @@ class TriggersListAdapter(
             ButterKnife.bind(this, itemView)
             switch = itemView.findViewById(R.id.triggers_list_item_switch)
             itemView.setOnClickListener { onItemClickListener(adapterPosition) }
-            switch.setOnCheckedChangeListener { compoundButton, b -> onSwitchClickListener(adapterPosition, compoundButton.isChecked) }
+            switch.setOnClickListener { onSwitchClickListener(adapterPosition) }
             delete.setOnClickListener { onDeleteBtnClickListener(adapterPosition) }
         }
 

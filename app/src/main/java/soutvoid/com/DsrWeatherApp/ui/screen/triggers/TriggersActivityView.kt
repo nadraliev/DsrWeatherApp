@@ -58,7 +58,7 @@ class TriggersActivityView: BaseActivityView() {
     private fun initList() {
         adapter = TriggersListAdapter(
                 onItemClickListener = { presenter.onTriggerClicked(adapter.triggers[it]) },
-                onSwitchClickListener = { position, state ->  presenter.onSwitchClicked(adapter.triggers[position], state) },
+                onSwitchClickListener = { presenter.onSwitchClicked(adapter.triggers[it]) },
                 onDeleteBtnClickListener = { triggerRemoveRequest(it)}
         )
         triggers_list.adapter = adapter
@@ -89,8 +89,12 @@ class TriggersActivityView: BaseActivityView() {
         adapter.notifyItemInserted(position)
     }
 
-    fun notifyService(id: Int) {
+    fun notifyServiceTriggerDeleted(id: Int) {
         NotificationSchedulerService.startActionDelete(this, listOf(id))
+    }
+
+    fun notifyServiceTriggerToggled(id: Int) {
+        NotificationSchedulerService.startActionToggle(this, listOf(id))
     }
 
 }

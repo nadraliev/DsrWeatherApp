@@ -32,12 +32,18 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
             intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toIntArray())
             context.startService(intent)
         }
+        fun startActionToggle(context: Context, triggersIds: List<Int>) {
+            val intent = Intent(context, NotificationSchedulerService::class.java)
+            intent.putExtra(ACTION_KEY, Action.TOGGLE)
+            intent.putExtra(TRIGGERS_IDS_LIST_KEY, triggersIds.toIntArray())
+            context.startService(intent)
+        }
     }
 
     /**
-     * @property [ADD] создать новый триггер на сервере
-     * @property [DELETE] удалить триггер с сервера и из бд
-     * @property [TOGGLE] удалить с сервера, но не из бд/создать триггер на сервере
+     * @property [ADD] создать новый триггер на сервере и создать нотификации
+     * @property [DELETE] удалить нотификации, триггер с сервера и из бд
+     * @property [TOGGLE] удалить нотификации, с сервера, но не из бд/создать триггер на сервере
      */
     enum class Action { ADD, DELETE, TOGGLE }
 
@@ -50,6 +56,7 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
             when (intent.getSerializableExtra(ACTION_KEY)) {
                 Action.ADD -> addTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.DELETE -> deleteTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
+                Action.TOGGLE -> toggleTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
             }
         }
     }
@@ -121,9 +128,16 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
     private fun deleteTriggers(triggersIds: IntArray) {
         if (triggersIds.isNotEmpty()) {
             val savedTriggers = getSavedTriggers(triggersIds)
-            savedTriggers.forEach { triggersRep.deleteTrigger(it.triggerId).subscribe {  } }
+            deleteServerTriggers(savedTriggers)
             deleteSavedTriggers(savedTriggers)
         }
+    }
+
+    /**
+     * удалить триггеры с сервера
+     */
+    private fun deleteServerTriggers(triggers: List<SavedTrigger>) {
+        triggers.forEach { triggersRep.deleteTrigger(it.triggerId).subscribe {  } }
     }
 
     /**
@@ -136,5 +150,20 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
                     `in`("id", triggers.map { it.id }.toTypedArray()).findAll().deleteAllFromRealm()
         }
         realm.close()
+    }
+
+    private fun toggleTriggers(triggersIds: IntArray) {
+        if (triggersIds.isNotEmpty()) {
+            val savedTriggers = getSavedTriggers(triggersIds)
+            savedTriggers.forEach { toggleTrigger(it) }
+        }
+    }
+
+    private fun toggleTrigger(trigger: SavedTrigger) {
+        if (trigger.enabled) {
+            addTriggers(intArrayOf(trigger.id))
+        } else {
+            deleteServerTriggers(listOf(trigger))
+        }
     }
 }
