@@ -21,6 +21,17 @@ open class NotificationTime(
         }
     }
 
+    constructor(millis: Long): this() {
+        val millisBefore = millis - System.currentTimeMillis()
+        if (millisBefore / 1000 / 60 / 60 > 24) {
+            unit = 0
+            value = (millisBefore / 1000 / 60 / 60 / 24).toInt()
+        } else {
+            unit = 1
+            value = (millisBefore / 1000 / 60 / 60).toInt()
+        }
+    }
+
     fun getNiceString(context: Context): String {
         return "$value ${NotificationTime.Unit.values()[unit].getNiceString(context, value)}"
     }

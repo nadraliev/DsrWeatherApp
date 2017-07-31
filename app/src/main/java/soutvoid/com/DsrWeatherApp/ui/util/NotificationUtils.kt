@@ -11,20 +11,37 @@ import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.domain.sys.Sys
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
 import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
+import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 
 object NotificationUtils {
 
-    fun createTriggerNotification(context: Context, name: String, locationName: String): Notification {
+    fun createTriggerNotification(context: Context,
+                                  location: SavedLocation,
+                                  name: String,
+                                  time: Long): Notification {
+        val notifTimeBefore = NotificationTime(time)
+        val title = "$name ${context.getString(R.string.`in`)} ${location.name} ${context.getString(R.string.in_time)} ${notifTimeBefore.getNiceString(context)}"
+        val contentText = context.getString(R.string.tap_to_see_weather)
+
+        val intent = Intent(context, MainActivityView::class.java)
+        intent.putExtra(MainActivityView.LOCATION_KEY, location)
+        val pendingIntent = PendingIntent.getActivity(
+                context, System.currentTimeMillis().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         val builder = NotificationCompat.Builder(context)
-                .setContentTitle(name)
-                .setContentText(locationName)
+                .setContentTitle(title)
+                .setContentText(contentText)
                 .setAutoCancel(false)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon((ContextCompat.getDrawable(context, R.mipmap.ic_launcher) as BitmapDrawable).bitmap)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setContentIntent(pendingIntent)
         return builder.build()
     }
 
@@ -34,8 +51,9 @@ object NotificationUtils {
             getNotificationTimesMillis(trigger).forEach { time ->
                 val notification = NotificationUtils.createTriggerNotification(
                         context,
+                        trigger.location,
                         trigger.name,
-                        trigger.location.name)
+                        time)
                 alarmManager.set(AlarmManager.RTC_WAKEUP,
                         time,
                         createPendingIntent(context, notification))
