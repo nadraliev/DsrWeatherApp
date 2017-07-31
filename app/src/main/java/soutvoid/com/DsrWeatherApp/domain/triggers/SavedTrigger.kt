@@ -23,4 +23,11 @@ open class SavedTrigger(
     companion object {
         private fun getNextKey() = System.currentTimeMillis().hashCode()
     }
+
+    fun deleteCascade() {
+        conditions.deleteAllFromRealm()
+        alerts.deleteAllFromRealm()
+        notificationTimes.deleteAllFromRealm()
+        deleteFromRealm()
+    }
 }

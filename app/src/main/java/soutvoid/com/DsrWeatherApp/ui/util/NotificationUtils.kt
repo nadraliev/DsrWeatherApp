@@ -96,7 +96,11 @@ object NotificationUtils {
             alarmManager.cancel(
                     PendingIntent.getBroadcast(context, it, Intent(context, NotificationPublisher::class.java), 0)
             )
+            alarmManager.cancel(
+                    PendingIntent.getBroadcast(context, it, Intent(context, TriggerReEnabler::class.java), 0)
+            )
         }
+        deleteAllRequestCodes()
     }
 
     /**

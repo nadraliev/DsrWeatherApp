@@ -11,16 +11,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import io.realm.Realm
-import io.realm.RealmList
-import io.realm.RealmModel
-import io.realm.RealmResults
+import io.realm.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
+import io.realm.RealmObject.deleteFromRealm
+import io.realm.RealmObject
+import io.realm.RealmList
+
 
 fun ViewGroup.inflate(resId: Int): View {
     return LayoutInflater.from(context).inflate(resId, this, false)
@@ -194,3 +195,10 @@ fun getAllRequestCodes(): List<Int> {
     realm.close()
     return results
 }
+
+fun deleteAllRequestCodes() {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction { realm.where(RequestCode::class.java).findAll().deleteAllFromRealm() }
+    realm.close()
+}
+

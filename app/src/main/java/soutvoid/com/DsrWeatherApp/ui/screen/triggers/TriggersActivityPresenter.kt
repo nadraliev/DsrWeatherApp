@@ -76,7 +76,7 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
             it.where(SavedTrigger::class.java)
-                    .equalTo("id", savedTrigger.id).findAll().deleteAllFromRealm()
+                    .equalTo("id", savedTrigger.id).findFirst().deleteCascade()
         }
     }
 
