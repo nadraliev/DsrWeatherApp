@@ -45,7 +45,7 @@ class MapFragmentView : BaseFragmentView(), Step {
     @Inject
     lateinit var presenter: MapFragmentPresenter
 
-    private lateinit var map: GoogleMap
+    private var map: GoogleMap? = null
 
     var locationManager: LocationManager? = null
     var locationListener: LocationListener? = null
@@ -107,7 +107,7 @@ class MapFragmentView : BaseFragmentView(), Step {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync {
             map = it
-            map.setOnMapClickListener { setMarkerPosition(it) }
+            map?.setOnMapClickListener { setMarkerPosition(it) }
         }
     }
 
@@ -161,6 +161,8 @@ class MapFragmentView : BaseFragmentView(), Step {
 
     override fun verifyStep(): VerificationError? {
         marker?.let { presenter.locationChosen(it.position) }
+        if (marker == null)
+            presenter.locationChosen(LatLng(55.45, 37.36))
         return null
     }
 
@@ -183,12 +185,12 @@ class MapFragmentView : BaseFragmentView(), Step {
     }
 
     fun setMapPosition(latLng: LatLng, zoom: Float = 10f) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
+        map?.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom))
     }
 
     fun setMarkerPosition(latLng: LatLng) {
         marker?.remove()
-        marker = map.addMarker(MarkerOptions().position(latLng))
+        marker = map?.addMarker(MarkerOptions().position(latLng))
     }
 
 }
