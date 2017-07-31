@@ -44,20 +44,21 @@ object WeatherIconsHelper {
         return WeatherIcons.Icon.valueOf("wic_owm_$id")
     }
 
+    val windIcons = listOf<WeatherIcons.Icon>(
+            WeatherIcons.Icon.wic_direction_down,
+            WeatherIcons.Icon.wic_direction_down_left,
+            WeatherIcons.Icon.wic_direction_right,
+            WeatherIcons.Icon.wic_direction_up_left,
+            WeatherIcons.Icon.wic_direction_up,
+            WeatherIcons.Icon.wic_direction_up_right,
+            WeatherIcons.Icon.wic_direction_left,
+            WeatherIcons.Icon.wic_direction_down_right)
+
     /**
      * позволяет получить [WeatherIcons.Icon] для ветра в зависимости от направления ветра
      */
     fun getDirectionalIcon(degrees: Double) : WeatherIcons.Icon {
-        when (degrees) {
-            in 27..71 -> return WeatherIcons.Icon.wic_direction_down_right
-            in 72..116 -> return WeatherIcons.Icon.wic_direction_down
-            in 117..162 -> return WeatherIcons.Icon.wic_direction_down_left
-            in 163..208 -> return WeatherIcons.Icon.wic_direction_left
-            in 209..254 -> return WeatherIcons.Icon.wic_direction_up_left
-            in 255..300 -> return WeatherIcons.Icon.wic_direction_up
-            in 301..345 -> return WeatherIcons.Icon.wic_direction_up_right
-        }
-        return WeatherIcons.Icon.wic_direction_right
+        return windIcons[Math.round((degrees + 180) % 360 / 45).toInt() % 8]
     }
 
 }

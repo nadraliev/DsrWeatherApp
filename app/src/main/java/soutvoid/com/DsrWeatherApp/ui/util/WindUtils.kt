@@ -6,11 +6,11 @@ import soutvoid.com.DsrWeatherApp.R
 object WindUtils {
 
     /**
-     * позволяет получить строковое представление направления ветра по градусам (N, S, etc)
+     * позволяет получить строковое представление "исток" ветра по градусам (N, S, etc)
      * @see R.array.directions
      */
-    fun getByDegrees(degrees: Double, context: Context) : String {
-        return context.resources.getStringArray(R.array.directions)[ Math.round(degrees % 360 / 45).toInt() % 8 ]
+    fun getFromByDegrees(degrees: Double, context: Context) : String {
+        return context.resources.getStringArray(R.array.directions)[ Math.round((degrees + 180) % 360 / 45).toInt() % 8 ]
     }
 
 }

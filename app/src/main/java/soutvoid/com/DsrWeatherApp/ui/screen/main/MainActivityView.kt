@@ -17,7 +17,6 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
-import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.*
 import javax.inject.Inject
 
@@ -103,7 +102,7 @@ class MainActivityView : BaseActivityView() {
                     .sizeDp(100))
             main_description_tv.text = weather.first().description
             main_wind_speed_tv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
-            main_wind_direction_tv.text = WindUtils.getByDegrees(wind.degrees, this@MainActivityView)
+            main_wind_direction_tv.text = WindUtils.getFromByDegrees(wind.degrees, this@MainActivityView)
             main_pressure_tv.text = " ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
             main_humidity_tv.text = " ${main.humidity}%"
         }
