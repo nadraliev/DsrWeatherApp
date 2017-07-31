@@ -4,4 +4,5 @@
     android:minWidth="35dip"
     android:minHeight="35dip"
     android:updatePeriodMillis="1800000"
-    android:initialLayout="@layout/small_widget_layout"/>
+    android:initialLayout="@layout/small_widget_layout"
+    android:configure="soutvoid.com.DsrWeatherApp.ui.screen.widgetConfiguration.WidgetConfigurationActivityView"/>

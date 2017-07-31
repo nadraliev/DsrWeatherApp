@@ -38,6 +38,15 @@
 
         <activity android:name=".ui.screen.newTrigger.NewTriggerActivityView"/>
 
+        <receiver android:name=".ui.receivers.TriggerReEnabler"/>
+
+        <activity android:name=".ui.screen.widgetConfiguration.WidgetConfigurationActivityView"
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
         <receiver android:name=".ui.receivers.NotificationPublisher"/>
 
         <receiver android:name=".ui.receivers.BootReceiver" android:enabled="true">
@@ -46,7 +55,14 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".ui.receivers.TriggerReEnabler"/>
+        <receiver android:name=".ui.widget.SmallWidgetProvider" android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="ui.widget.SmallWidgetProvider.ACTION_WIDGET_RECEIVER"/>
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                       android:resource="@xml/small_widget"/>
+        </receiver>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -62,15 +78,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>
-
-        <receiver android:name=".ui.widget.SmallWidgetProvider" android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="ui.widget.SmallWidgetProvider.ACTION_WIDGET_RECEIVER"/>
-            </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
-                       android:resource="@xml/small_widget"/>
-        </receiver>
 
     </application>
 
