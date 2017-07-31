@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.service
+package soutvoid.com.DsrWeatherApp.interactor.triggers.jobs
 
 import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.Params

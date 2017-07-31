@@ -1,19 +1,15 @@
-package soutvoid.com.DsrWeatherApp.ui.service
+package soutvoid.com.DsrWeatherApp.interactor.triggers.jobs
 
-import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
 import io.realm.Realm
-import io.realm.RealmResults
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
 import soutvoid.com.DsrWeatherApp.domain.triggers.RealmLong
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
-import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.ui.util.NotificationUtils
 import soutvoid.com.DsrWeatherApp.ui.util.TriggersUtils
 import soutvoid.com.DsrWeatherApp.ui.util.getSavedTriggers
 import soutvoid.com.DsrWeatherApp.ui.util.realmListOf
-import javax.inject.Inject
 
 class AddTriggersJob(val triggersIds: IntArray) : BaseTriggerJob(Params(1).requireNetwork()) {
 

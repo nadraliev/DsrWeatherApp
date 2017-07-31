@@ -8,8 +8,8 @@ import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
-import soutvoid.com.DsrWeatherApp.ui.service.AddTriggersJob
-import soutvoid.com.DsrWeatherApp.ui.service.DeleteTriggersJob
+import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.AddTriggersJob
+import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.DeleteTriggersJob
 import soutvoid.com.DsrWeatherApp.ui.util.SnackbarDismissedListener
 import javax.inject.Inject
 

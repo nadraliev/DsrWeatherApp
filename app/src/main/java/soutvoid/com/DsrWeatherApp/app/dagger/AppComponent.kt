@@ -1,10 +1,11 @@
 package soutvoid.com.DsrWeatherApp.app.dagger
 
+import android.app.job.JobService
 import android.content.Context
 import com.agna.ferro.mvp.component.scope.PerApplication
 import com.birbit.android.jobqueue.JobManager
 import dagger.Component
-import soutvoid.com.DsrWeatherApp.interactor.common.JobManagerModule
+import soutvoid.com.DsrWeatherApp.interactor.common.jobs.JobManagerModule
 import soutvoid.com.DsrWeatherApp.interactor.common.network.NetworkModule
 import soutvoid.com.DsrWeatherApp.interactor.common.network.OkHttpModule
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.CacheModule
@@ -18,7 +19,7 @@ import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
-import soutvoid.com.DsrWeatherApp.ui.service.BaseTriggerJob
+import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.BaseTriggerJob
 
 @PerApplication
 @Component(modules = arrayOf(
