@@ -70,7 +70,7 @@ class NewLocationActivityView : TranslucentStatusActivityView() {
      */
     @SuppressLint("NewApi")
     fun returnToHome(animationCenter: Point = Point()) {
-        if (SdkUtil.supportsKitkat()) {
+        if (SdkUtil.supportsLollipop()) {
             try {
                 val animator = new_location_reveal_view.createFullScreenCircularReveal(
                         animationCenter.x,

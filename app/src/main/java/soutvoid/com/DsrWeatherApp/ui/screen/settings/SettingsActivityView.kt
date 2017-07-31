@@ -65,7 +65,7 @@ class SettingsActivityView: TranslucentStatusActivityView() {
                 setResult(0, intentData)
 
                 @SuppressLint("NewApi")
-                if (SdkUtil.supportsKitkat()) {
+                if (SdkUtil.supportsLollipop()) {
                     restartWithReveal()
                 } else {
                     restart()

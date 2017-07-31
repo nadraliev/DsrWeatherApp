@@ -100,7 +100,7 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
      */
     @SuppressLint("NewApi")
     fun returnToHome(animationCenter: Point = Point()) {
-        if (SdkUtil.supportsKitkat()) {
+        if (SdkUtil.supportsLollipop()) {
             try {
                 val animator = edit_location_reveal_view.createFullScreenCircularReveal(
                         animationCenter.x,
