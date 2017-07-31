@@ -1,6 +1,7 @@
 package soutvoid.com.DsrWeatherApp.interactor.triggers
 
 import com.agna.ferro.mvp.component.scope.PerApplication
+import com.birbit.android.jobqueue.JobManager
 import rx.Observable
 import soutvoid.com.DsrWeatherApp.interactor.triggers.data.NewTriggerRequest
 import soutvoid.com.DsrWeatherApp.interactor.triggers.data.TriggerResponse

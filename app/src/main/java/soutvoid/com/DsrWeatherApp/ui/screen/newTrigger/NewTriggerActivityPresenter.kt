@@ -1,6 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newTrigger
 
 import com.agna.ferro.mvp.component.scope.PerScreen
+import com.birbit.android.jobqueue.JobManager
 import io.realm.Realm
 import io.realm.RealmList
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
@@ -12,6 +13,7 @@ import soutvoid.com.DsrWeatherApp.domain.triggers.condition.SavedCondition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
+import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.AddTriggersJob
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId
 import javax.inject.Inject
@@ -19,6 +21,9 @@ import javax.inject.Inject
 @PerScreen
 class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
     : BasePresenter<NewTriggerActivityView>(errorHandler) {
+
+    @Inject
+    lateinit var jobManager: JobManager
 
     private var location: SavedLocation? = null
     private val conditions = mutableListOf<Condition>()
@@ -148,7 +153,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
                         notificationTimes = savedNotificationTimes
                 )
                 it.copyToRealmOrUpdate(trigger)
-                view.notifyService(trigger.id)
+                jobManager.addJobInBackground(AddTriggersJob(intArrayOf(trigger.id)))
             }
             realm.close()
             view.finish()

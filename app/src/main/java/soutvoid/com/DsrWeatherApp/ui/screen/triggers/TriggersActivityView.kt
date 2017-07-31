@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_triggers.*
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.NewTriggerActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.triggers.list.TriggersListAdapter
-import soutvoid.com.DsrWeatherApp.ui.service.NotificationSchedulerService
 import soutvoid.com.DsrWeatherApp.ui.util.SimpleItemSwipeCallback
 
 class TriggersActivityView: BaseActivityView() {
@@ -87,14 +86,6 @@ class TriggersActivityView: BaseActivityView() {
     fun addLocationToPosition(savedTrigger: SavedTrigger, position: Int) {
         adapter.triggers.add(position, savedTrigger)
         adapter.notifyItemInserted(position)
-    }
-
-    fun notifyServiceTriggerDeleted(id: String) {
-        NotificationSchedulerService.startActionDelete(this, listOf(id))
-    }
-
-    fun notifyServiceTriggerToggled(id: Int) {
-        NotificationSchedulerService.startActionToggle(this, listOf(id))
     }
 
 }

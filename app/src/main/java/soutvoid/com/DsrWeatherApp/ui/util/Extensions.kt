@@ -11,11 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import io.realm.Realm
 import io.realm.RealmList
 import io.realm.RealmModel
+import io.realm.RealmResults
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
+import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -145,4 +149,48 @@ fun <T> realmListOf(elements: Iterable<T>): RealmList<T> where T: RealmModel{
     val list = RealmList<T>()
     list.addAll(elements)
     return list
+}
+
+/**
+ * получить сохраненные в бд триггеры по списку id
+ */
+fun getSavedTriggers(triggersIds: IntArray = intArrayOf()): List<SavedTrigger> {
+    val realm = Realm.getDefaultInstance()
+    var realmResults: RealmResults<SavedTrigger>?
+    var list = emptyList<SavedTrigger>()
+    if (triggersIds.isEmpty())
+        realmResults = realm.where(SavedTrigger::class.java).findAll()
+    else
+        realmResults = realm.where(SavedTrigger::class.java).`in`("id", triggersIds.toTypedArray()).findAll()
+
+    if (realmResults != null)
+        list = realm.copyFromRealm(realmResults)
+    realm.close()
+    return list
+}
+
+/**
+ * сохранить внесенные изменения в бд
+ */
+private fun updateDbTriggers(triggers: List<SavedTrigger>) {
+    val realm = Realm.getDefaultInstance()
+    realm.executeTransaction { it.copyToRealmOrUpdate(triggers) }
+    realm.close()
+}
+
+fun getNewRequestCode(): Int {
+    val realm = Realm.getDefaultInstance()
+    val requestCode = RequestCode()
+    realm.executeTransaction { it.copyToRealm(requestCode) }
+    realm.close()
+    return requestCode.value
+}
+
+fun getAllRequestCodes(): List<Int> {
+    val realm = Realm.getDefaultInstance()
+    val realmResults = realm.where(RequestCode::class.java).findAll()
+    var results = emptyList<Int>()
+    realmResults?.let { results = realm.copyFromRealm(realmResults).map { it.value } }
+    realm.close()
+    return results
 }
