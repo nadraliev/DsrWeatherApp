@@ -95,7 +95,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
     }
 
     fun showNoLocationsDialog() {
-        DialogUtils.showNoLocationsDialog(this) { NewLocationActivityView.start(this) }
+        DialogUtils.showNoLocationsDialog(this)
     }
 
     fun showLocationsDialog(locationsNames: List<String>) {

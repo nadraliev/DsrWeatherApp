@@ -21,6 +21,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
 import io.realm.RealmObject.deleteFromRealm
 import io.realm.RealmObject
 import io.realm.RealmList
+import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -200,5 +201,14 @@ fun deleteAllRequestCodes() {
     val realm = Realm.getDefaultInstance()
     realm.executeTransaction { realm.where(RequestCode::class.java).findAll().deleteAllFromRealm() }
     realm.close()
+}
+
+fun getAllSavedLocations(): List<SavedLocation> {
+    val realm = Realm.getDefaultInstance()
+    val realmResults = realm.where(SavedLocation::class.java).findAll()
+    var results: List<SavedLocation> = emptyList()
+    realmResults?.let { results = realm.copyFromRealm(realmResults) }
+    realm.close()
+    return results
 }
 

@@ -6,6 +6,7 @@ import android.support.annotation.StringRes
 import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
 import soutvoid.com.DsrWeatherApp.R
+import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 
 object DialogUtils {
 
@@ -31,9 +32,9 @@ object DialogUtils {
         createSimpleListDialog(context, titleId, items, listener).show()
     }
 
-    fun showNoLocationsDialog(context: Context, listener: (position: Int) -> Unit ) {
+    fun showNoLocationsDialog(context: Context) {
         val message = context.getString(R.string.add_location)
-        showSimpleListDialog(context, items = listOf(message), listener = listener)
+        showSimpleListDialog(context, items = listOf(message))  { NewLocationActivityView.start(context) }
     }
 
     fun showLocationsDialog(context: Context,

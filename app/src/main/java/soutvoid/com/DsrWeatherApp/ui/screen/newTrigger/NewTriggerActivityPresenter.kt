@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.AddTriggersJob
+import soutvoid.com.DsrWeatherApp.ui.util.getAllSavedLocations
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId
 import javax.inject.Inject
@@ -49,13 +50,6 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
         realm.close()
     }
 
-    private fun getAllLocations(): List<SavedLocation> {
-        val realm = Realm.getDefaultInstance()
-        val locations = realm.copyFromRealm(realm.where(SavedLocation::class.java).findAll())
-        realm.close()
-        return locations
-    }
-
     private fun showInitCondition() {
         onNewConditionChosen(Condition(ConditionName.temp, ConditionExpression.gt, 303.0))
     }
@@ -65,7 +59,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     fun onLocationClicked() {
-        val allLocations = getAllLocations()
+        val allLocations = getAllSavedLocations()
         if (allLocations.isNotEmpty())
             view.showLocationsDialog(allLocations.map { it.name })
         else
@@ -73,7 +67,7 @@ class NewTriggerActivityPresenter @Inject constructor(errorHandler: ErrorHandler
     }
 
     fun onLocationChosen(position: Int) {
-        location = getAllLocations()[position]
+        location = getAllSavedLocations()[position]
         location?.let { view.setLocationName(it.name) }
     }
 

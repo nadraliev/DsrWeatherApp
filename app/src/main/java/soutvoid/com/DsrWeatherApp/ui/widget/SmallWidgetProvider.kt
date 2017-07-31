@@ -15,12 +15,10 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.app.App
+import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
-import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
-import soutvoid.com.DsrWeatherApp.ui.util.WeatherIconsHelper
-import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
-import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
+import soutvoid.com.DsrWeatherApp.ui.util.*
 import javax.inject.Inject
 
 @PerScreen
@@ -42,12 +40,7 @@ class SmallWidgetProvider : AppWidgetProvider() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe {
-                        remoteViews.setImageViewBitmap(R.id.small_widget_icon,
-                                IconicsDrawable(ctx)
-                                        .icon(WeatherIconsHelper.getWeatherIcon(it.weather.first().id, it.timeOfData))
-                                        .sizeDp(24)
-                                        .color(Color.BLACK).toBitmap())
-                        remoteViews.setTextViewText(R.id.small_widget_temperature, "${Math.round(it.main.temperature)} ${UnitsUtils.getDegreesUnits(ctx)}")
+                        showData(ctx, it, remoteViews)
                         updateWidgets(appWidgetManager, appWidgetIds, remoteViews)
                     }
         }
@@ -60,6 +53,15 @@ class SmallWidgetProvider : AppWidgetProvider() {
     private fun satisfyDependencies(context: Context) {
         val appComponent = (context.applicationContext as? App)?.appComponent
         appComponent?.let { DaggerSmallWidgetComponent.builder().appComponent(it).build().inject(this) }
+    }
+
+    private fun showData(context: Context, currentWeather: CurrentWeather, remoteViews: RemoteViews) {
+        remoteViews.setImageViewBitmap(R.id.small_widget_icon,
+                IconicsDrawable(context)
+                        .icon(WeatherIconsHelper.getWeatherIcon(currentWeather.weather.first().id, currentWeather.timeOfData))
+                        .sizeDp(32)
+                        .color(Color.BLACK).toBitmap())
+        remoteViews.setTextViewText(R.id.small_widget_temperature, "${Math.round(currentWeather.main.temperature)} ${UnitsUtils.getDegreesUnits(context)}")
     }
 
     private fun updateWidgets(appWidgetManager: AppWidgetManager?, appWidgetIds: IntArray?, remoteViews: RemoteViews) {

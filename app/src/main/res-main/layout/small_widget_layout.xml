@@ -9,7 +9,8 @@
         android:id="@+id/small_widget_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:textSize="16sp"/>
 
     <ImageView
         android:id="@+id/small_widget_icon"
@@ -20,6 +21,8 @@
         android:id="@+id/small_widget_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:enabled="true"
+        android:textSize="16sp"/>
 
 </LinearLayout>
