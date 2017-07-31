@@ -20,6 +20,7 @@ import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.BaseTriggerJob
+import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
 
 @PerApplication
 @Component(modules = arrayOf(
@@ -43,4 +44,5 @@ interface AppComponent {
     fun triggersRepository() : TriggersRepository
     fun jobManager(): JobManager
     fun inject(addTriggerJob: BaseTriggerJob)
+    fun triggerReEnabler(triggerReEnabler: TriggerReEnabler)
 }

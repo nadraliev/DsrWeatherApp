@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
+import android.provider.Settings
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import io.realm.Realm
@@ -16,6 +17,7 @@ import soutvoid.com.DsrWeatherApp.domain.sys.Sys
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
 import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
+import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
 import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 
@@ -32,7 +34,7 @@ object NotificationUtils {
         val intent = Intent(context, MainActivityView::class.java)
         intent.putExtra(MainActivityView.LOCATION_KEY, location)
         val pendingIntent = PendingIntent.getActivity(
-                context, System.currentTimeMillis().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                context, System.currentTimeMillis().hashCode(), intent, 0)
 
         val builder = NotificationCompat.Builder(context)
                 .setContentTitle(title)
@@ -48,7 +50,8 @@ object NotificationUtils {
     fun scheduleNotifications(context: Context, triggers: List<SavedTrigger>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         triggers.forEach { trigger ->
-            getNotificationTimesMillis(trigger).forEach { time ->
+            val notificationTimes = getNotificationTimesMillis(trigger)
+            notificationTimes.forEach { time ->
                 val notification = NotificationUtils.createTriggerNotification(
                         context,
                         trigger.location,
@@ -58,6 +61,11 @@ object NotificationUtils {
                         time,
                         createPendingIntent(context, notification))
             }
+            scheduleReEnableTrigger(
+                    context,
+                    trigger,
+                    notificationTimes.max().ifNotNullOr(0),
+                    alarmManager)
         }
     }
 
@@ -89,6 +97,24 @@ object NotificationUtils {
                     PendingIntent.getBroadcast(context, it, Intent(context, NotificationPublisher::class.java), 0)
             )
         }
+    }
+
+    /**
+     * по завершению работы триггера, выключим и включим его, чтобы данные обновились
+     */
+    fun scheduleReEnableTrigger(context: Context,
+                                trigger: SavedTrigger,
+                                lastNotifTime: Long,
+                                alarmManager: AlarmManager) {
+        var reEnableTime = 0L
+        if (lastNotifTime == 0L)
+            reEnableTime = System.currentTimeMillis() + 43200000
+        else
+            reEnableTime = lastNotifTime + 3600000
+        val intent = Intent(context, TriggerReEnabler::class.java)
+        intent.putExtra(TriggerReEnabler.TRIGGER_KEY, trigger)
+        val pendingintent = PendingIntent.getBroadcast(context, getNewRequestCode(), intent, 0)
+        alarmManager.set(AlarmManager.RTC, reEnableTime, pendingintent)
     }
 
 }
