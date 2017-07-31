@@ -19,6 +19,7 @@ import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
+import soutvoid.com.DsrWeatherApp.ui.widget.SmallWidgetProvider
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.BaseTriggerJob
 import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
 
