@@ -1,6 +1,8 @@
 package soutvoid.com.DsrWeatherApp.app
 
 import android.app.Application
+import com.birbit.android.jobqueue.JobManager
+import com.birbit.android.jobqueue.config.Configuration
 import com.crashlytics.android.Crashlytics
 import io.fabric.sdk.android.Fabric
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
@@ -14,6 +16,8 @@ import soutvoid.com.DsrWeatherApp.app.dagger.AppModule
 import soutvoid.com.DsrWeatherApp.app.dagger.DaggerAppComponent
 import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.app.log.RemoteLogger
+import soutvoid.com.DsrWeatherApp.ui.service.AddTriggerJob
+import soutvoid.com.DsrWeatherApp.ui.service.BaseTriggerJob
 
 
 class App : Application() {

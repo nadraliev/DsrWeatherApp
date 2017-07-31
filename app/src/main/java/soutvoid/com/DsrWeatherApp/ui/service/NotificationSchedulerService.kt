@@ -6,8 +6,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import com.agna.ferro.mvp.component.scope.PerScreen
+import com.birbit.android.jobqueue.JobManager
 import io.realm.Realm
 import io.realm.RealmResults
+import soutvoid.com.DsrWeatherApp.app.App
 import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.domain.triggers.RealmLong
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
@@ -57,9 +59,13 @@ class NotificationSchedulerService : BaseIntentService("NotificationSchedulerSer
     @Inject
     lateinit var triggersRep: TriggersRepository
 
+    @Inject
+    lateinit var jobManager: JobManager
+
     override fun onHandleIntent(intent: Intent?) {
         if (intent != null && intent.hasExtra(ACTION_KEY) && intent.hasExtra(TRIGGERS_IDS_LIST_KEY)) {
             satisfyDependencies()
+            jobManager.addJobInBackground(AddTriggerJob())
             when (intent.getSerializableExtra(ACTION_KEY)) {
                 Action.ADD -> addTriggers(intent.getIntArrayExtra(TRIGGERS_IDS_LIST_KEY))
                 Action.DELETE -> deleteTriggers(intent.getStringArrayExtra(TRIGGERS_IDS_LIST_KEY))
