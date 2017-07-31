@@ -8,6 +8,9 @@ import javax.inject.Inject
 
 abstract class BaseTriggerJob(params: Params): Job(params) {
 
+    @Inject
+    lateinit var triggerRep: TriggersRepository
+
     open fun inject(appComponent: AppComponent) {
         appComponent.inject(this)
     }

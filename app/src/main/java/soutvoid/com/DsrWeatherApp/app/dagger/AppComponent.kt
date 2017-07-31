@@ -2,9 +2,7 @@ package soutvoid.com.DsrWeatherApp.app.dagger
 
 import android.content.Context
 import com.agna.ferro.mvp.component.scope.PerApplication
-import com.birbit.android.jobqueue.Job
 import com.birbit.android.jobqueue.JobManager
-import com.birbit.android.jobqueue.di.DependencyInjector
 import dagger.Component
 import soutvoid.com.DsrWeatherApp.interactor.common.JobManagerModule
 import soutvoid.com.DsrWeatherApp.interactor.common.network.NetworkModule
@@ -20,7 +18,7 @@ import soutvoid.com.DsrWeatherApp.interactor.triggers.TriggersRepository
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviModule
 import soutvoid.com.DsrWeatherApp.interactor.uvi.UviRepository
 import soutvoid.com.DsrWeatherApp.ui.base.activity.ActivityModule
-import soutvoid.com.DsrWeatherApp.ui.service.AddTriggerJob
+import soutvoid.com.DsrWeatherApp.ui.service.BaseTriggerJob
 
 @PerApplication
 @Component(modules = arrayOf(
@@ -35,7 +33,7 @@ import soutvoid.com.DsrWeatherApp.ui.service.AddTriggerJob
         TriggersModule::class,
         JobManagerModule::class
 ))
-interface AppComponent: DependencyInjector {
+interface AppComponent {
     fun context() : Context
     fun networkConnectionChecker() : NetworkConnectionChecker
     fun currentWeatherRepository() : CurrentWeatherRepository
@@ -43,5 +41,5 @@ interface AppComponent: DependencyInjector {
     fun uviRepository() : UviRepository
     fun triggersRepository() : TriggersRepository
     fun jobManager(): JobManager
-    fun inject(addTriggerJob: AddTriggerJob)
+    fun inject(addTriggerJob: BaseTriggerJob)
 }
