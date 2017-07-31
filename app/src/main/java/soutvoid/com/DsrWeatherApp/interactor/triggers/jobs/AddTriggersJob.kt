@@ -47,6 +47,7 @@ class AddTriggersJob(val triggersIds: IntArray) : BaseTriggerJob(Params(1).requi
                         .subscribe { trigger.triggerId = it.id }
             }
             updateDbTriggers(savedTriggers)
+            Thread.sleep(1000)  //почему-то если не подождать, самый первый триггер, созданный пользователем, возвращает 0 алертов
             loadAlerts(savedTriggers)
             NotificationUtils.scheduleNotifications(applicationContext, savedTriggers)
         }

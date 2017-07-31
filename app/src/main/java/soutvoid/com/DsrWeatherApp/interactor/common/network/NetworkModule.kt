@@ -9,12 +9,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import soutvoid.com.DsrWeatherApp.BuildConfig
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.RequestCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.cache.ResponseCacheInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestHeadersInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.common.network.request.RequestQueryParamsInterceptor
 import soutvoid.com.DsrWeatherApp.interactor.network.NetworkConnectionChecker
-import timber.log.BuildConfig
 import timber.log.Timber
 
 @Module
