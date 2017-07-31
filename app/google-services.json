@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "413105343811",
+    "firebase_url": "https://wethaer-f4d7b.firebaseio.com",
+    "project_id": "wethaer-f4d7b",
+    "storage_bucket": "wethaer-f4d7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413105343811:android:4d6fc3c4c91d3a0e",
+        "android_client_info": {
+          "package_name": "soutvoid.com.dsrweatherapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413105343811-e2j0820m6ge7hltku9f7pinbprht5frr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "soutvoid.com.dsrweatherapp",
+            "certificate_hash": "fe74c07b00b68e76aabef66ed53f56c5df6fbd79"
+          }
+        },
+        {
+          "client_id": "413105343811-isa0bo8ahdvsh1fqtq71rd3g2ijmnhr0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhk-W4qX2Nc06qBbIWxI9Cu34Li_t5oJ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413105343811-isa0bo8ahdvsh1fqtq71rd3g2ijmnhr0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
