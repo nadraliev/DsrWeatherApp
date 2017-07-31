@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <uses-feature android:name="android.hardware.location.gps"/>
     <uses-feature android:name="android.hardware.location.network"/>
@@ -37,9 +38,13 @@
 
         <activity android:name=".ui.screen.newTrigger.NewTriggerActivityView"/>
 
-        <service android:name=".ui.service.NotificationSchedulerService"/>
-
         <receiver android:name=".ui.receivers.NotificationPublisher"/>
+
+        <receiver android:name=".ui.receivers.BootReceiver" android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="io.fabric.ApiKey"
