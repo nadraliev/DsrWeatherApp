@@ -2,14 +2,22 @@ package soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data
 
 import android.content.Context
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import soutvoid.com.DsrWeatherApp.R
 import java.io.Serializable
 
 open class NotificationTime(
         var value: Int = 0,
-        var unit: Int = 0   //пришлось хранить индекс enum вместо самого enum для хранения в бд
+        var unit: Int = 0,   //пришлось хранить индекс enum вместо самого enum для хранения в бд
+        @PrimaryKey
+        var id: Int = NotificationTime.getNextKey()
 ) : RealmObject(), Serializable
 {
+
+    companion object {
+        private fun getNextKey() = System.currentTimeMillis().hashCode()
+    }
+
     enum class Unit(val millis: Long){
         days(1000*60*60*24), hours(1000*60*60);
 
