@@ -4,6 +4,7 @@ import com.birbit.android.jobqueue.Params
 import com.birbit.android.jobqueue.RetryConstraint
 import io.realm.Realm
 import soutvoid.com.DsrWeatherApp.app.dagger.AppComponent
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.domain.triggers.RealmLong
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.util.NotificationUtils

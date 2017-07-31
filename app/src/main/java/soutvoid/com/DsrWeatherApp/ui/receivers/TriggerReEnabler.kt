@@ -16,7 +16,8 @@ import javax.inject.Inject
 class TriggerReEnabler: BroadcastReceiver() {
 
     companion object {
-        const val TRIGGER_KEY = "trigger"
+        const val ID_KEY = "id"
+        const val TRIGGER_ID_KEY = "trigger_id"
     }
 
     @Inject
@@ -25,11 +26,10 @@ class TriggerReEnabler: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         ifNotNull(context, intent) { context, intent ->
             satisfyDependencies(context)
-            if (intent.hasExtra(TRIGGER_KEY)) {
-                val trigger = intent.getSerializableExtra(TRIGGER_KEY) as SavedTrigger
+            if (intent.hasExtra(TRIGGER_ID_KEY) && intent.hasExtra(ID_KEY)) {
                 jobManager.addJobInBackground(
-                        DeleteTriggersJob(arrayOf(trigger.triggerId))) {
-                    jobManager.addJobInBackground(AddTriggersJob(intArrayOf(trigger.id)))
+                        DeleteTriggersJob(arrayOf(intent.getStringExtra(TRIGGER_ID_KEY)))) {
+                    jobManager.addJobInBackground(AddTriggersJob(intArrayOf(intent.getIntExtra(ID_KEY, 0))))
                 }
             }
         }

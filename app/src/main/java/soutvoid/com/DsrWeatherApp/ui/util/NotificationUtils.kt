@@ -112,7 +112,8 @@ object NotificationUtils {
         else
             reEnableTime = lastNotifTime + 3600000
         val intent = Intent(context, TriggerReEnabler::class.java)
-        intent.putExtra(TriggerReEnabler.TRIGGER_KEY, trigger)
+        intent.putExtra(TriggerReEnabler.ID_KEY, trigger.id)
+        intent.putExtra(TriggerReEnabler.TRIGGER_ID_KEY, trigger.triggerId)
         val pendingintent = PendingIntent.getBroadcast(context, getNewRequestCode(), intent, 0)
         alarmManager.set(AlarmManager.RTC, reEnableTime, pendingintent)
     }
