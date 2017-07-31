@@ -48,7 +48,8 @@ class TimeOfDayWeatherView : FrameLayout {
                     .icon(WeatherIconsHelper.getDirectionalIcon(wind.degrees))
                     .color(context.theme.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(16))
-            view_tod_weather_wind.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(context)}"
+            view_tod_weather_wind.text = wind.speed.toString()
+            view_tod_weather_wind_units.text = UnitsUtils.getVelocityUnits(context)
         }
     }
 

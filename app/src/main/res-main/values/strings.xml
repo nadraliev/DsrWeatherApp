@@ -5,4 +5,7 @@
     <string name="bad_response_error_message">Bad response</string>
     <string name="unexpected_error_error_message">Unexpected error</string>
     <string name="try_again">Try again</string>
+    <string name="in">in</string>
+    <string name="in_time">in</string>
+    <string name="tap_to_see_weather">Tap to see weather</string>
 </resources>

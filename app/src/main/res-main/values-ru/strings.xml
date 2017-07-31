@@ -6,4 +6,7 @@
     <string name="server_error_message">Ошибка сервера</string>
     <string name="unexpected_error_error_message">Неожиданная ошибка</string>
     <string name="try_again">Попробовать еще раз</string>
+    <string name="in">в</string>
+    <string name="in_time">через</string>
+    <string name="tap_to_see_weather">Нажми для просмотра погоды</string>
 </resources>

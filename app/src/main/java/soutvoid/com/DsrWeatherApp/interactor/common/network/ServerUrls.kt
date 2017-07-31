@@ -2,14 +2,16 @@ package soutvoid.com.DsrWeatherApp.interactor.common.network
 
 object ServerUrls {
 
-    const val BASE_URL = "http://api.openweathermap.org/data/2.5/"
+    const val BASE_URL = "http://api.openweathermap.org/data/"
 
-    const val CURRENT_WEATHER_URL = "weather"
+    const val CURRENT_WEATHER_URL = "2.5/weather"
 
-    const val FORECAST_URL = "forecast"
+    const val FORECAST_URL = "2.5/forecast"
 
-    const val UVI_URL = "uvi"
+    const val UVI_URL = "2.5/uvi"
 
-    const val DAILY_FORECAST_URL = "forecast/daily"
+    const val DAILY_FORECAST_URL = "2.5/forecast/daily"
+
+    const val TRIGGERS_URL = "3.0/triggers"
 
 }

@@ -84,6 +84,7 @@ dependencies {
     compile "com.squareup.okhttp3:okhttp:${okhttpVersion}"
     compile "com.squareup.okhttp3:logging-interceptor:${okhttpVersion}"
     compile "com.github.bumptech.glide:glide:${glideVersion}"
+    compile 'com.birbit:android-priority-jobqueue:2.0.1'
 
     //logging
     compile("com.crashlytics.sdk.android:crashlytics:2.6.5@aar") {
@@ -100,6 +101,7 @@ dependencies {
     compile 'com.mikepenz:iconics-core:2.8.9@aar'
     compile 'com.mikepenz:weather-icons-typeface:2.0.10.3@aar'
     compile 'com.stepstone.stepper:material-stepper:3.3.0'
+    compile 'com.google.android:flexbox:0.3.0'
 
 
     //annotation processors

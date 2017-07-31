@@ -46,4 +46,33 @@ object UnitsUtils {
         return Units.values()[str.toInt()]
     }
 
+    fun celsiusToKelvin(value: Double): Double {
+        return value + 273.15
+    }
+
+    fun fahrenheitToKelvin(value: Double): Double {
+        return (value + 459.67) * 5 / 9
+    }
+
+    fun preferredUnitToKelvin(context: Context, value: Double): Double {
+        if (isMetricalPreferred(context))
+            return celsiusToKelvin(value)
+        else
+            return fahrenheitToKelvin(value)
+    }
+
+    fun kelvinToCelsius(value: Double): Double {
+        return value - 273.15
+    }
+
+    fun kelvinToFahrenheit(value: Double): Double {
+        return value * 9 / 5 - 459.67
+    }
+
+    fun kelvinToPreferredUnit(context: Context, value: Double): Double {
+        if (isMetricalPreferred(context))
+            return kelvinToCelsius(value)
+        else
+            return kelvinToFahrenheit(value)
+    }
 }

@@ -18,6 +18,7 @@
         <item name="ico_color">@color/black</item>
         <item name="ms_stepperStyle">@style/DotStepper.Light</item>
         <item name="android:popupMenuStyle">@style/PopupStyleLight</item>
+        <item name="themedDividerColor">@color/divider_color_black</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_grey_900</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_white</item>
@@ -26,9 +27,14 @@
         <item name="themedAddDrawable">@drawable/ic_add_white</item>
         <item name="themedSettingsDrawable">@drawable/ic_settings_grey_900</item>
         <item name="themedCheckDrawable">@drawable/ic_check_white</item>
+        <item name="themedCheckDrawableInverse">@drawable/ic_check_grey_900</item>
         <item name="themedMoreDrawable">@drawable/ic_more_vert_grey_900</item>
         <item name="themedEmptyDrawable">@drawable/ic_empty_grey_900</item>
         <item name="themedNoFavoritesDrawable">@drawable/ic_no_favorites_grey_900</item>
+        <item name="themedLocationOnDrawable">@drawable/ic_location_on_grey_900</item>
+        <item name="themedCloudDrawable">@drawable/ic_cloud_queue_grey_900</item>
+        <item name="themedTimeDrawable">@drawable/ic_access_time_grey_900</item>
+        <item name="themedCrossDrawable">@drawable/ic_clear_grey_900</item>
     </style>
 
     <style name="InputField.Light" parent="Widget.AppCompat.EditText">
@@ -69,6 +75,7 @@
         <item name="ico_color">@color/white</item>
         <item name="ms_stepperStyle">@style/DotStepper.Dark</item>
         <item name="android:popupMenuStyle">@style/PopupStyleDark</item>
+        <item name="themedDividerColor">@color/divider_color_white</item>
         <!-- drawables -->
         <item name="themedBackDrawable">@drawable/ic_arrow_back_white</item>
         <item name="themedMyLocationDrawable">@drawable/ic_my_location_grey_900</item>
@@ -77,9 +84,14 @@
         <item name="themedAddDrawable">@drawable/ic_add_grey_900</item>
         <item name="themedSettingsDrawable">@drawable/ic_settings_white</item>
         <item name="themedCheckDrawable">@drawable/ic_check_grey_900</item>
+        <item name="themedCheckDrawableInverse">@drawable/ic_check_white</item>
         <item name="themedMoreDrawable">@drawable/ic_more_vert_white</item>
         <item name="themedEmptyDrawable">@drawable/ic_empty_white</item>
         <item name="themedNoFavoritesDrawable">@drawable/ic_no_favorites_white</item>
+        <item name="themedLocationOnDrawable">@drawable/ic_location_on_white</item>
+        <item name="themedCloudDrawable">@drawable/ic_cloud_queue_white</item>
+        <item name="themedTimeDrawable">@drawable/ic_access_time_white</item>
+        <item name="themedCrossDrawable">@drawable/ic_clear_white</item>
     </style>
 
     <style name="InputField.Dark" parent="Widget.AppCompat.EditText">

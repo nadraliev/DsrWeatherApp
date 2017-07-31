@@ -9,6 +9,7 @@ import rx.schedulers.Schedulers
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.interactor.currentWeather.CurrentWeatherRepository
 import soutvoid.com.DsrWeatherApp.interactor.util.ObservableUtil
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
@@ -30,6 +31,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     lateinit var currentWeatherRep: CurrentWeatherRepository
 
     private var undoClicked = false
+    private var removeCandidate: SavedLocation? = null
 
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
@@ -102,10 +104,11 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
     private fun removeLocationFromDb(location: SavedLocation) {
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
+            it.where(SavedTrigger::class.java).equalTo("location.id", location.id).findAll().deleteAllFromRealm()
             it.where(SavedLocation::class.java).equalTo("id", location.id).findAll().deleteAllFromRealm()
         }
         realm.close()
-        view.tryNotifyPagerDataSetChanged()
+        view?.tryNotifyPagerDataSetChanged()
     }
 
     private fun onUndoClicked(locationWithWeather: LocationWithWeather, position: Int) {
@@ -139,6 +142,7 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
      * пользователь нажал кнопку "удплить" или свайпнул по месту
      */
     fun onLocationRemoveRequested(locationWithWeather: LocationWithWeather, position: Int) {
+        removeCandidate = locationWithWeather.location
         messagePresenter.showWithAction(R.string.location_removed, R.string.undo,
                 { onUndoClicked(locationWithWeather, position)})  //undo deleting
                 .addCallback(SnackbarDismissedListener { _, _ ->
@@ -157,5 +161,10 @@ class LocationsFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
      */
     fun refresh() {
         loadData()
+    }
+
+    override fun onPause() {
+        removeCandidate?.let { removeLocationFromDb(it) }
+        super.onPause()
     }
 }

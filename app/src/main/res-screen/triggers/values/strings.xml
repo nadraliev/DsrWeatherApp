@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="notifications">Notifications</string>
+    <string name="temperature">Temperature</string>
+    <string name="clouds">Clouds</string>
+    <string name="wind_direction">Wind direction</string>
+    <string name="wind_speed">Wind speed</string>
+    <string name="trigger_removed">Notification removed</string>
+</resources>
