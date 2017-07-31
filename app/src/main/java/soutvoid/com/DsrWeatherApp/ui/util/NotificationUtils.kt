@@ -82,7 +82,7 @@ object NotificationUtils {
 
     private fun getNotificationTimesMillis(trigger: SavedTrigger): List<Long> {
         val result = mutableListOf<Long>()
-        trigger.alerts.forEach { alert ->
+        trigger.alerts.distinctBy { it.id }.forEach { alert ->
             trigger.notificationTimes.forEach { time ->
                 result.add(alert.value - time.getMilliseconds())
             }

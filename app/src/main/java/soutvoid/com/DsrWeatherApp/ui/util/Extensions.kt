@@ -22,6 +22,8 @@ import io.realm.RealmObject.deleteFromRealm
 import io.realm.RealmObject
 import io.realm.RealmList
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
+import java.math.BigInteger
+import java.security.SecureRandom
 
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -210,5 +212,10 @@ fun getAllSavedLocations(): List<SavedLocation> {
     realmResults?.let { results = realm.copyFromRealm(realmResults) }
     realm.close()
     return results
+}
+
+fun getRandomString(): String {
+    val secureRandom = SecureRandom()
+    return BigInteger(130, secureRandom).toString(32)
 }
 
