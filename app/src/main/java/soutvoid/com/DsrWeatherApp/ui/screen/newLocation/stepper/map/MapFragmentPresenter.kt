@@ -98,6 +98,7 @@ class MapFragmentPresenter @Inject constructor(val messagePresenter: MessagePres
                 .putString(LocationSettingsFragmentView.NAME_KEY, locationName)
                 .putFloat(LocationSettingsFragmentView.LATITUDE_KEY, latLng.latitude.toFloat())
                 .putFloat(LocationSettingsFragmentView.LONGITUDE_KEY, latLng.longitude.toFloat())
+                .putBoolean(LocationSettingsFragmentView.FORECAST_KEY, true)
                 .commit()
     }
 
