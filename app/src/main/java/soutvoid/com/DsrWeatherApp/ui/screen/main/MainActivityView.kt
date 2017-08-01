@@ -1,5 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
+import android.app.AlarmManager
+import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,8 +17,10 @@ import soutvoid.com.DsrWeatherApp.domain.Forecast
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
+import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.*
 import javax.inject.Inject
 
@@ -27,6 +31,7 @@ class MainActivityView : BaseActivityView() {
 
     companion object {
         const val LOCATION_KEY = "location"
+        const val LOCATION_ID_KEY = "location_id"
 
         /**
          * метод для старта активити
@@ -35,6 +40,11 @@ class MainActivityView : BaseActivityView() {
         fun start(context: Context, savedLocation: SavedLocation) {
             val intent = Intent(context, MainActivityView::class.java)
             intent.putExtra(LOCATION_KEY, savedLocation)
+            context.startActivity(intent)
+        }
+        fun start(context: Context, locationId: Int) {
+            val intent = Intent(context, MainActivityView::class.java)
+            intent.putExtra(LOCATION_ID_KEY, locationId)
             context.startActivity(intent)
         }
     }
@@ -48,8 +58,6 @@ class MainActivityView : BaseActivityView() {
         super.onCreate(savedInstanceState, viewRecreated)
         initSwipeRefresh()
         initBackButton()
-        fillCityName()
-        maybeInitForecastList()
     }
 
     override fun getPresenter(): BasePresenter<*> = presenter
@@ -73,22 +81,22 @@ class MainActivityView : BaseActivityView() {
         main_back_btn.setOnClickListener { onBackPressed() }
     }
 
-    private fun maybeInitForecastList() {
-        if (getLocationParam().showForecast) {
+    fun maybeInitForecastList(showForecast: Boolean) {
+        if (showForecast) {
             main_forecast_list.adapter = forecastAdapter
             main_forecast_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
             main_forecast_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
         }
     }
 
-    private fun fillCityName() {
-        main_city_tv.text = getLocationParam().name
+    fun fillCityName(name: String) {
+        main_city_tv.text = name
     }
 
-    fun fillAllData(allWeatherData: AllWeatherData) {
+    fun fillAllData(allWeatherData: AllWeatherData, showForecast: Boolean) {
         fillCurrentWeatherData(allWeatherData.currentWeather)
         fillForecastData(allWeatherData.forecast)
-        maybeFillNextDaysForecast(allWeatherData.forecast)
+        maybeFillNextDaysForecast(allWeatherData.forecast, showForecast)
     }
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
@@ -113,8 +121,8 @@ class MainActivityView : BaseActivityView() {
         main_forecast.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
     }
 
-    fun maybeFillNextDaysForecast(forecast: Forecast) {
-        if (getLocationParam().showForecast) {
+    fun maybeFillNextDaysForecast(forecast: Forecast, showForecast: Boolean) {
+        if (showForecast) {
             forecastAdapter.forecasts = forecast.list
             forecastAdapter.notifyDataSetChanged()
         }
@@ -124,7 +132,9 @@ class MainActivityView : BaseActivityView() {
         main_refresh_layout.isRefreshing = enabled
     }
 
-    fun getLocationParam(): SavedLocation {
-        return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as SavedLocation
+    fun getLocationParam(): SavedLocation? {
+        if (intent.hasExtra(LOCATION_KEY))
+            return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as SavedLocation
+        return null
     }
 }

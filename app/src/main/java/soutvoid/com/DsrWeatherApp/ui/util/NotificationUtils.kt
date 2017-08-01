@@ -39,8 +39,10 @@ object NotificationUtils {
     private fun createPendingIntent(context: Context, trigger: SavedTrigger, notifTime: NotificationTime): PendingIntent {
         val intent = Intent(context, NotificationPublisher::class.java)
         intent.putExtra(NotificationPublisher.TRIGGER_NAME_KEY, trigger.name)
-        intent.putExtra(NotificationPublisher.LOCATION_KEY, trigger.location)
-        intent.putExtra(NotificationPublisher.NOTIF_TIME_KEY, notifTime)
+        intent.putExtra(NotificationPublisher.LOCATION_NAME_KEY, trigger.location.name)
+        intent.putExtra(NotificationPublisher.LOCATION_ID_KEY, trigger.location.id)
+        intent.putExtra(NotificationPublisher.NOTIF_TIME_UNIT_KEY, notifTime.unit)
+        intent.putExtra(NotificationPublisher.NOTIF_TIME_VALUE_KEY, notifTime.value)
         return PendingIntent.getBroadcast(context, getNewRequestCode(), intent, 0)
     }
 

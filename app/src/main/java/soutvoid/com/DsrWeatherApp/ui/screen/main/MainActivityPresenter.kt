@@ -1,6 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import com.agna.ferro.mvp.component.scope.PerScreen
+import io.realm.Realm
 import rx.Observable
 import rx.functions.Action1
 import rx.schedulers.Schedulers
@@ -16,6 +17,7 @@ import soutvoid.com.DsrWeatherApp.ui.common.error.StandardWithActionErrorHandler
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
+import soutvoid.com.DsrWeatherApp.ui.util.ifNotNullOr
 import javax.inject.Inject
 
 @PerScreen
@@ -38,7 +40,16 @@ class MainActivityPresenter
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
-        savedLocation = view.getLocationParam()
+
+
+        savedLocation = view.getLocationParam().ifNotNullOr{
+            val realm = Realm.getDefaultInstance()
+            return@ifNotNullOr realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
+        }
+
+        view.maybeInitForecastList(savedLocation.showForecast)
+        view.fillCityName(savedLocation.name)
+
         view.setProgressBarEnabled(true)
         loadData()
     }
@@ -50,7 +61,7 @@ class MainActivityPresenter
         subscribeNetworkQuery(
                 prepareObservable(),
                 Action1 {
-                    view.fillAllData(it)
+                    view.fillAllData(it, savedLocation.showForecast)
                     view.setProgressBarEnabled(false)
                 },
                 Action1 { view.setProgressBarEnabled(false) },
