@@ -115,7 +115,7 @@ class TemperatureGraphView: View {
     }
 
     private fun resizeSelfToTemperature() {
-        val height = maxOf(50, calculateTempGraphHeight())
+        val height = maxOf(70, calculateTempGraphHeight())
         layoutParams.height = dpToPx(height.toDouble()).toInt()
     }
 
@@ -124,7 +124,7 @@ class TemperatureGraphView: View {
      * @return высота в dp
      */
     private fun calculateTempGraphHeight(): Int {
-        return (maxTemp - minTemp).toInt() * 7
+        return (maxTemp - minTemp).toInt() * 5 + 50
     }
 
     /**
