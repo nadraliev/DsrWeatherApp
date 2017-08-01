@@ -1,70 +1,32 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
 import android.app.AlarmManager
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
-import android.media.RingtoneManager
-import android.provider.Settings
-import android.support.v4.app.NotificationCompat
-import android.support.v4.content.ContextCompat
-import io.realm.Realm
-import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
-import soutvoid.com.DsrWeatherApp.domain.sys.Sys
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
-import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
 import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
-import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 
 object NotificationUtils {
 
-    fun createTriggerNotification(context: Context,
-                                  location: SavedLocation,
-                                  name: String,
-                                  time: Long): Notification {
-        val notifTimeBefore = NotificationTime(time)
-        val title = "$name ${context.getString(R.string.`in`)} ${location.name} ${context.getString(R.string.in_time)} ${notifTimeBefore.getNiceString(context)}"
-        val contentText = context.getString(R.string.tap_to_see_weather)
-
-        val intent = Intent(context, MainActivityView::class.java)
-        intent.putExtra(MainActivityView.LOCATION_KEY, location)
-        val pendingIntent = PendingIntent.getActivity(
-                context, System.currentTimeMillis().hashCode(), intent, 0)
-
-        val builder = NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(contentText)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_cloud_queue_white)
-                .setLargeIcon((ContextCompat.getDrawable(context, R.mipmap.ic_launcher) as BitmapDrawable).bitmap)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setContentIntent(pendingIntent)
-        return builder.build()
-    }
-
     fun scheduleNotifications(context: Context, triggers: List<SavedTrigger>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         triggers.forEach { trigger ->
-            val notificationTimes = getNotificationTimesMillis(trigger)
-            notificationTimes.forEach { time ->
-                val notification = NotificationUtils.createTriggerNotification(
-                        context,
-                        trigger.location,
-                        trigger.name,
-                        time)
-                alarmManager.set(AlarmManager.RTC_WAKEUP,
-                        time,
-                        createPendingIntent(context, notification))
+            trigger.alerts.forEach { alert ->
+                trigger.notificationTimes.forEach { notifTime ->
+                    val timeMillis = getNotificationTimeMillis(alert.value, notifTime)
+                    if (timeMillis > System.currentTimeMillis())
+                        alarmManager.set(AlarmManager.RTC_WAKEUP,
+                                timeMillis,
+                                createPendingIntent(context, trigger, notifTime))
+                }
             }
             scheduleReEnableTrigger(
                     context,
                     trigger,
-                    notificationTimes.max().ifNotNullOr(0),
+                    getNotificationTimesMillis(trigger).max().ifNotNullOr(0),
                     alarmManager)
         }
     }
@@ -74,9 +36,11 @@ object NotificationUtils {
         scheduleNotifications(context, triggers)
     }
 
-    private fun createPendingIntent(context: Context, notification: Notification): PendingIntent {
+    private fun createPendingIntent(context: Context, trigger: SavedTrigger, notifTime: NotificationTime): PendingIntent {
         val intent = Intent(context, NotificationPublisher::class.java)
-        intent.putExtra(NotificationPublisher.NOTIFICATION, notification)
+        intent.putExtra(NotificationPublisher.TRIGGER_NAME_KEY, trigger.name)
+        intent.putExtra(NotificationPublisher.LOCATION_KEY, trigger.location)
+        intent.putExtra(NotificationPublisher.NOTIF_TIME_KEY, notifTime)
         return PendingIntent.getBroadcast(context, getNewRequestCode(), intent, 0)
     }
 
@@ -88,6 +52,10 @@ object NotificationUtils {
             }
         }
         return result.toList().filter { it > System.currentTimeMillis() }
+    }
+
+    private fun getNotificationTimeMillis(alert: Long, notifTime: NotificationTime): Long {
+        return alert - notifTime.getMilliseconds()
     }
 
     fun cancelAllNotifications(context: Context) {
