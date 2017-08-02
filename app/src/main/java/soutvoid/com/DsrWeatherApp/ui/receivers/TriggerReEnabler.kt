@@ -27,10 +27,8 @@ class TriggerReEnabler: BroadcastReceiver() {
         ifNotNull(context, intent) { context, intent ->
             satisfyDependencies(context)
             if (intent.hasExtra(TRIGGER_ID_KEY) && intent.hasExtra(ID_KEY)) {
-                jobManager.addJobInBackground(
-                        DeleteTriggersJob(arrayOf(intent.getStringExtra(TRIGGER_ID_KEY)))) {
-                    jobManager.addJobInBackground(AddTriggersJob(intArrayOf(intent.getIntExtra(ID_KEY, 0))))
-                }
+                jobManager.addJobInBackground(DeleteTriggersJob(arrayOf(intent.getStringExtra(TRIGGER_ID_KEY))))
+                jobManager.addJobInBackground(AddTriggersJob(intArrayOf(intent.getIntExtra(ID_KEY, 0))))
             }
         }
     }

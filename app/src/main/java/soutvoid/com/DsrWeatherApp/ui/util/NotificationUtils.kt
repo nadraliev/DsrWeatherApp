@@ -14,8 +14,8 @@ object NotificationUtils {
     fun scheduleNotifications(context: Context, triggers: List<SavedTrigger>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         triggers.forEach { trigger ->
-            trigger.alerts.forEach { alert ->
-                trigger.notificationTimes.forEach { notifTime ->
+            trigger.alerts.distinctBy { it.id }.forEach { alert ->
+                trigger.notificationTimes.distinctBy { it.id }.forEach { notifTime ->
                     val timeMillis = getNotificationTimeMillis(alert.value, notifTime)
                     if (timeMillis > System.currentTimeMillis())
                         alarmManager.set(AlarmManager.RTC_WAKEUP,
