@@ -44,7 +44,9 @@ class MainActivityPresenter
 
         savedLocation = view.getLocationParam().ifNotNullOr{
             val realm = Realm.getDefaultInstance()
-            return@ifNotNullOr realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
+            val result = realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
+            realm.close()
+            return@ifNotNullOr result
         }
 
         view.maybeInitForecastList(savedLocation.showForecast)
