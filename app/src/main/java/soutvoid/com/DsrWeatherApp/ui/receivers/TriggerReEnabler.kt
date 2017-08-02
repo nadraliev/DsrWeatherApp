@@ -6,6 +6,7 @@ import android.content.Intent
 import com.agna.ferro.mvp.component.scope.PerApplication
 import com.birbit.android.jobqueue.JobManager
 import soutvoid.com.DsrWeatherApp.app.App
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.AddTriggersJob
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.DeleteTriggersJob
@@ -24,6 +25,7 @@ class TriggerReEnabler: BroadcastReceiver() {
     lateinit var jobManager: JobManager
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        Logger.i("Trigger reEnabler onReceive: ${System.currentTimeMillis()}")
         ifNotNull(context, intent) { context, intent ->
             satisfyDependencies(context)
             if (intent.hasExtra(TRIGGER_ID_KEY) && intent.hasExtra(ID_KEY)) {

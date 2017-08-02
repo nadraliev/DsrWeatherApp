@@ -27,12 +27,8 @@ class NotificationPublisher : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        Logger.i("notification publisher onReceive: ${System.currentTimeMillis()}")
         ifNotNull(context, intent) { ctx, intent1 ->
-            val extras = intent1.extras
-            extras.keySet().forEach {
-                val obj = extras.get(it)
-                Logger.i(obj.toString())
-            }
             if (intent1.hasExtra(LOCATION_NAME_KEY)
                     && intent1.hasExtra(TRIGGER_NAME_KEY)
                     && intent1.hasExtra(LOCATION_ID_KEY)

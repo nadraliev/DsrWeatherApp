@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
 import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
@@ -11,6 +12,10 @@ import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.N
 
 object NotificationUtils {
 
+    /**
+     * запланировать уведомления для списка триггеров по всем их алертам и желаемым временам нотификации
+     * также запланировать обновление алармов триггеров (через включение/выключение)
+     */
     fun scheduleNotifications(context: Context, triggers: List<SavedTrigger>) {
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         triggers.forEach { trigger ->
@@ -21,6 +26,7 @@ object NotificationUtils {
                         alarmManager.set(AlarmManager.RTC_WAKEUP,
                                 timeMillis,
                                 createPendingIntent(context, trigger, notifTime))
+                    Logger.i("notification scheduled $timeMillis")
                 }
             }
             scheduleReEnableTrigger(
@@ -31,6 +37,9 @@ object NotificationUtils {
         }
     }
 
+    /**
+     * запланировать уведомления для всех сохраненных триггеров
+     */
     fun scheduleAllNotifications(context: Context) {
         val triggers = getSavedTriggers().filter { it.enabled }
         scheduleNotifications(context, triggers)
@@ -46,6 +55,10 @@ object NotificationUtils {
         return PendingIntent.getBroadcast(context, getNewRequestCode(), intent, 0)
     }
 
+    /**
+     * получить все времена уведемолений в миллисекундах
+     * на основе времен алертов и настроек преждевременной нотификации
+     */
     private fun getNotificationTimesMillis(trigger: SavedTrigger): List<Long> {
         val result = mutableListOf<Long>()
         trigger.alerts.distinctBy { it.id }.forEach { alert ->
@@ -56,11 +69,18 @@ object NotificationUtils {
         return result.toList().filter { it > System.currentTimeMillis() }
     }
 
+    /**
+     * то же самое, что [getNotificationTimesMillis], но для одной пары алерт-настройка
+     */
     private fun getNotificationTimeMillis(alert: Long, notifTime: NotificationTime): Long {
         return alert - notifTime.getMilliseconds()
     }
 
+    /**
+     * отменить все запланированные действия
+     */
     fun cancelAllNotifications(context: Context) {
+        Logger.i("All notifications cancel requested")
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         getAllRequestCodes().forEach {
             alarmManager.cancel(
