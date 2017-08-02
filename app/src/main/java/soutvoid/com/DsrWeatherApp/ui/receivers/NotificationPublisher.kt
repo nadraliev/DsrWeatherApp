@@ -6,6 +6,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
@@ -70,6 +71,8 @@ class NotificationPublisher : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_cloud_queue_white)
                 .setLargeIcon((ContextCompat.getDrawable(context, R.mipmap.ic_launcher) as BitmapDrawable).bitmap)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setVibrate(longArrayOf(0, 500, 0, 500))
+                .setLights(0xEF6C00, 3000, 3000)    //orange
                 .setContentIntent(pendingIntent)
         return builder.build()
     }
