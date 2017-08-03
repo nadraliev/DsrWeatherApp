@@ -25,6 +25,7 @@ import soutvoid.com.DsrWeatherApp.util.SdkUtil
 class MainActivityView: TranslucentStatusActivityView() {
 
     companion object {
+        const val THEME_CHANGE_RESTARTED = "theme_change"
         fun start(context: Context) {
             context.startActivity(Intent(context, MainActivityView::class.java))
         }
@@ -106,6 +107,7 @@ class MainActivityView: TranslucentStatusActivityView() {
     private fun initSharedPreferencesListener() {
         sharedPreferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { preferences, s ->
             if (s == SettingsFragment.SHARED_PREFERENCES_THEME || s == SettingsFragment.SHARED_PREFERENCES_DARK_THEME) {
+                setThemeJustChanged(true)
                 @SuppressLint("NewApi")
                 if (SdkUtil.supportsLollipop()) {
                     restartWithReveal()
@@ -157,5 +159,13 @@ class MainActivityView: TranslucentStatusActivityView() {
 
     fun showSettingsFragment() {
         showFragment(SettingsFragment())
+    }
+
+    fun isThemeJustChanged(): Boolean {
+        return getDefaultPreferences().getBoolean(THEME_CHANGE_RESTARTED, false)
+    }
+
+    fun setThemeJustChanged(justChanged: Boolean) {
+        getDefaultPreferences().edit().putBoolean(THEME_CHANGE_RESTARTED, justChanged).apply()
     }
 }

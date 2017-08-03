@@ -68,6 +68,6 @@ class LocationsPagerAdapter(fragmentManager: FragmentManager,
         if (currentPosition == 0)
             otherFragmentPos = 1
         val otherFragment = registeredFragments[otherFragmentPos]
-        otherFragment.get()?.onDataSetChanged()
+        otherFragment?.get()?.onDataSetChanged()
     }
 }

@@ -15,6 +15,8 @@ class SettingsFragment: PreferenceFragmentCompat() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        activity.title = getString(R.string.settings)
+
         preferenceManager.sharedPreferencesName = SHARED_PREFERENCES_NAME
         addPreferencesFromResource(R.xml.preferences)
     }

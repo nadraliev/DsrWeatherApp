@@ -13,5 +13,9 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
         super.onLoad(viewRecreated)
 
         view.showLocationsFragment()
+        if (view.isThemeJustChanged()) {
+            view.showSettingsFragment()
+            view.setThemeJustChanged(false)
+        }
     }
 }
