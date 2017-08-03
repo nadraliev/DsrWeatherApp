@@ -70,7 +70,7 @@ class NotificationPublisher : BroadcastReceiver() {
                 .setSmallIcon(R.drawable.ic_cloud_queue_white)
                 .setLargeIcon((ContextCompat.getDrawable(context, R.mipmap.ic_launcher) as BitmapDrawable).bitmap)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                .setVibrate(longArrayOf(0, 500, 0, 500))
+                .setVibrate(longArrayOf(0, 500, 700, 500))
                 .setLights(0xEF6C00, 3000, 3000)    //orange
                 .setContentIntent(pendingIntent)
         return builder.build()
