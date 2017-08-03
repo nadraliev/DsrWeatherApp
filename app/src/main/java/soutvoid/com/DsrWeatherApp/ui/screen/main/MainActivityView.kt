@@ -2,6 +2,8 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.support.v7.app.ActionBarDrawerToggle
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
@@ -9,6 +11,9 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import javax.inject.Inject
+import kotlinx.android.synthetic.main.activity_main.*
+import soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.TriggersFragmentView
+import soutvoid.com.DsrWeatherApp.ui.util.getRandomString
 
 class MainActivityView: BaseActivityView() {
 
@@ -30,14 +35,51 @@ class MainActivityView: BaseActivityView() {
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
+
+        initToolbar()
+        initDrawer()
+    }
+
+    private fun initToolbar() {
+        setSupportActionBar(main_toolbar)
+        val actionBarToggle = ActionBarDrawerToggle(
+                this,
+                main_drawer,
+                main_toolbar,
+                R.string.open,
+                R.string.close
+        )
+        actionBarToggle.isDrawerIndicatorEnabled = false
+        actionBarToggle.isDrawerIndicatorEnabled = true //если этого не слелеать, сэндвич кнопка не появится
+        main_drawer.addDrawerListener(actionBarToggle)
+    }
+
+    private fun initDrawer() {
+        main_navigation.setNavigationItemSelectedListener {
+            main_drawer.closeDrawers()
+            when(it.itemId) {
+                R.id.drawer_locations -> showLocationsFragment()
+                R.id.drawer_notifications -> showNotificationsFragment()
+                R.id.drawer_settings -> showSettingsFragment()
+            }
+            return@setNavigationItemSelectedListener true
+        }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, fragment)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+                .addToBackStack(getRandomString())
+                .commit()
     }
 
     fun showLocationsFragment() {
-        supportFragmentManager.beginTransaction().replace(R.id.main_container, LocationsFragmentView()).commit()
+        showFragment(LocationsFragmentView())
     }
 
     fun showNotificationsFragment() {
-
+        showFragment(TriggersFragmentView())
     }
 
     fun showSettingsFragment() {

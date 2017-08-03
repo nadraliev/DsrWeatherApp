@@ -16,4 +16,5 @@
     <attr name="themedTimeDrawable" format="reference"/>
     <attr name="themedDividerColor" format="reference"/>
     <attr name="themedCrossDrawable" format="reference"/>
+    <attr name="themedNotificationActiveDrawable" format="reference"/>
 </resources>

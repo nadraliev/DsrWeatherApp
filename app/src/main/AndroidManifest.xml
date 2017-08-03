@@ -35,8 +35,6 @@
 
         <activity android:name=".ui.screen.editLocation.EditLocationActivityView"/>
 
-        <activity android:name="soutvoid.com.DsrWeatherApp.ui.screen.triggers.TriggersActivityView"/>
-
         <activity android:name=".ui.screen.newTrigger.NewTriggerActivityView"/>
 
         <receiver android:name=".ui.receivers.TriggerReEnabler"/>

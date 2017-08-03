@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
+    android:id="@+id/main_drawer"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -24,10 +25,11 @@
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
+        android:id="@+id/main_navigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/locations_item_context_menu"/>
+        app:menu="@menu/main_drawer_menu"/>
 
 
 </android.support.v4.widget.DrawerLayout>

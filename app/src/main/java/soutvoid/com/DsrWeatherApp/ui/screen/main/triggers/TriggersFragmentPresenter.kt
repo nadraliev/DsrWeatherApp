@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.triggers
+package soutvoid.com.DsrWeatherApp.ui.screen.main.triggers
 
 import com.agna.ferro.mvp.component.scope.PerScreen
 import com.birbit.android.jobqueue.JobManager
@@ -14,9 +14,9 @@ import soutvoid.com.DsrWeatherApp.ui.util.SnackbarDismissedListener
 import javax.inject.Inject
 
 @PerScreen
-class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
+class TriggersFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
                                                     val messagePresenter: MessagePresenter)
-    :BasePresenter<TriggersActivityView>(errorHandler) {
+    :BasePresenter<TriggersFragmentView>(errorHandler) {
 
     @Inject
     lateinit var jobManager: JobManager

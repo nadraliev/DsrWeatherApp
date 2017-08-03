@@ -1,4 +1,4 @@
-package soutvoid.com.DsrWeatherApp.ui.screen.triggers.list
+package soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.list
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
