@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_edit_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 import javax.inject.Inject
@@ -119,7 +119,7 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
     }
 
     private fun startLocationsActivity() {
-        val intent = Intent(this, LocationsActivityView::class.java)
+        val intent = Intent(this, LocationsFragmentView::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }

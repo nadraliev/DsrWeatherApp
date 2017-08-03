@@ -1,12 +1,9 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.settings
 
-import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceFragment
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
 
 class SettingsFragment(): PreferenceFragment() {
 

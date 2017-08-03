@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.StepperAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
 import soutvoid.com.DsrWeatherApp.ui.util.createFullScreenCircularReveal
@@ -88,7 +88,7 @@ class NewLocationActivityView : TranslucentStatusActivityView() {
     }
 
     private fun startLocationsActivity() {
-        val intent = Intent(this, LocationsActivityView::class.java)
+        val intent = Intent(this, LocationsFragmentView::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }

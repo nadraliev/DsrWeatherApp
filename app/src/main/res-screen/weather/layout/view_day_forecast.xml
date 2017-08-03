@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.TimeOfDayWeatherView
+        android:id="@+id/view_day_forecast_morning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/view_day_forecast_day"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"/>
+
+    <soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.TimeOfDayWeatherView
+        android:id="@+id/view_day_forecast_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_morning"
+        app:layout_constraintTop_toTopOf="@+id/view_day_forecast_morning"
+        app:layout_constraintRight_toLeftOf="@+id/view_day_forecast_evening"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"/>
+
+    <soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.TimeOfDayWeatherView
+        android:id="@+id/view_day_forecast_evening"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_day"
+        app:layout_constraintTop_toTopOf="@+id/view_day_forecast_day"
+        app:layout_constraintRight_toLeftOf="@+id/view_day_forecast_night"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"/>
+
+    <soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.TimeOfDayWeatherView
+        android:id="@+id/view_day_forecast_night"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/view_day_forecast_evening"
+        app:layout_constraintTop_toTopOf="@+id/view_day_forecast_evening"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"/>
+
+</android.support.constraint.ConstraintLayout>

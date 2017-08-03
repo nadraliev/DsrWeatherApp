@@ -1,7 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
 import com.mikepenz.weather_icons_typeface_library.WeatherIcons
-import soutvoid.com.DsrWeatherApp.ui.screen.main.data.TimeOfDay
+import soutvoid.com.DsrWeatherApp.ui.screen.weather.data.TimeOfDay
 import java.util.*
 
 object WeatherIconsHelper {

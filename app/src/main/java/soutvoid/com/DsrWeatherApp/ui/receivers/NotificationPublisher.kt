@@ -6,14 +6,13 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.app.log.Logger
-import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.weather.WeatherActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
 
@@ -59,8 +58,8 @@ class NotificationPublisher : BroadcastReceiver() {
         val title = "$triggerName ${context.getString(R.string.`in`)} $locationName ${context.getString(R.string.in_time)} ${notificationTime.getNiceString(context)}"
         val contentText = context.getString(R.string.tap_to_see_weather)
 
-        val intent = Intent(context, MainActivityView::class.java)
-        intent.putExtra(MainActivityView.LOCATION_ID_KEY, locationId)
+        val intent = Intent(context, WeatherActivityView::class.java)
+        intent.putExtra(WeatherActivityView.LOCATION_ID_KEY, locationId)
         val pendingIntent = PendingIntent.getActivity(
                 context, System.currentTimeMillis().hashCode(), intent, 0)
 

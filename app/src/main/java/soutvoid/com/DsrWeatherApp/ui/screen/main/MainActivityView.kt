@@ -1,70 +1,25 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
 import com.agna.ferro.mvp.component.ScreenComponent
-import com.mikepenz.iconics.IconicsDrawable
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.layout_current_weather.*
 import soutvoid.com.DsrWeatherApp.R
-import soutvoid.com.DsrWeatherApp.domain.CurrentWeather
-import soutvoid.com.DsrWeatherApp.domain.Forecast
-import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
-import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
-import soutvoid.com.DsrWeatherApp.ui.screen.main.data.AllWeatherData
-import soutvoid.com.DsrWeatherApp.ui.screen.main.widgets.forecastList.ForecastListAdapter
-import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
-import soutvoid.com.DsrWeatherApp.ui.util.*
+import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
+import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import javax.inject.Inject
 
-/**
- * экран для отображения погоды в определенной точке
- */
-class MainActivityView : BaseActivityView() {
-
-    companion object {
-        const val LOCATION_KEY = "location"
-        const val LOCATION_ID_KEY = "location_id"
-
-        /**
-         * метод для старта активити
-         * @param [savedLocation] для какой точки загружать погоду
-         */
-        fun start(context: Context, savedLocation: SavedLocation) {
-            val intent = Intent(context, MainActivityView::class.java)
-            intent.putExtra(LOCATION_KEY, savedLocation)
-            context.startActivity(intent)
-        }
-        fun start(context: Context, locationId: Int) {
-            val intent = Intent(context, MainActivityView::class.java)
-            intent.putExtra(LOCATION_ID_KEY, locationId)
-            context.startActivity(intent)
-        }
-    }
+class MainActivityView: BaseActivityView() {
 
     @Inject
-    lateinit var presenter : MainActivityPresenter
-
-    private val forecastAdapter: ForecastListAdapter = ForecastListAdapter()
-
-    override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
-        super.onCreate(savedInstanceState, viewRecreated)
-        initSwipeRefresh()
-        initBackButton()
-    }
+    lateinit var presenter: MainActivityPresenter
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
-    override fun getName(): String = "MainActivity"
-
     override fun getContentView(): Int = R.layout.activity_main
+
+    override fun getName(): String = "MainActivity"
 
     override fun createScreenComponent(): ScreenComponent<*> {
         return DaggerMainActivityComponent.builder()
@@ -73,68 +28,29 @@ class MainActivityView : BaseActivityView() {
                 .build()
     }
 
-    private fun initSwipeRefresh() {
-        main_refresh_layout.setOnRefreshListener { presenter.refresh() }
+    override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
+        super.onCreate(savedInstanceState, viewRecreated)
     }
 
-    private fun initBackButton() {
-        main_back_btn.setOnClickListener { onBackPressed() }
+    fun showLocationsFragment() {
+        supportFragmentManager.beginTransaction().replace(R.id.main_container, LocationsFragmentView()).commit()
     }
 
-    fun maybeInitForecastList(showForecast: Boolean) {
-        if (showForecast) {
-            main_forecast_list.adapter = forecastAdapter
-            main_forecast_list.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-            main_forecast_list.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.HORIZONTAL))
+    fun showNotificationsFragment() {
+
+    }
+
+    fun showSettingsFragment() {
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        data?.let {
+            if (it.getBooleanExtra(SettingsActivityView.RESTART_REQUIRED, false)) {
+                val intent = Intent(this, LocationsFragmentView::class.java)
+                finish()
+                startActivity(intent)
+            }
         }
-    }
-
-    fun fillCityName(name: String) {
-        main_city_tv.text = name
-    }
-
-    fun fillAllData(allWeatherData: AllWeatherData, showForecast: Boolean) {
-        fillCurrentWeatherData(allWeatherData.currentWeather)
-        fillForecastData(allWeatherData.forecast)
-        maybeFillNextDaysForecast(allWeatherData.forecast, showForecast)
-    }
-
-    fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
-        with(currentWeather) {
-            val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
-            main_date_tv.text = CalendarUtils.getFormattedDate(timeOfData)
-            main_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@MainActivityView)}"
-            main_icon_iv.setImageDrawable(IconicsDrawable(this@MainActivityView)
-                    .icon(WeatherIconsHelper.getWeatherIcon(weather.first().id, timeOfData))
-                    .color(primaryTextColor)
-                    .sizeDp(100))
-            main_description_tv.text = weather.first().description
-            main_wind_speed_tv.text = "${wind.speed} ${UnitsUtils.getVelocityUnits(this@MainActivityView)}"
-            main_wind_direction_tv.text = WindUtils.getFromByDegrees(wind.degrees, this@MainActivityView)
-            main_pressure_tv.text = " ${main.pressure} ${UnitsUtils.getPressureUnits(this@MainActivityView)}"
-            main_humidity_tv.text = " ${main.humidity}%"
-        }
-
-    }
-
-    fun fillForecastData(forecast: Forecast) {
-        main_forecast.setWeather(forecast.list.filterIndexed { index, _ -> index % 2 == 0 }.take(4))
-    }
-
-    fun maybeFillNextDaysForecast(forecast: Forecast, showForecast: Boolean) {
-        if (showForecast) {
-            forecastAdapter.forecasts = forecast.list
-            forecastAdapter.notifyDataSetChanged()
-        }
-    }
-
-    fun setProgressBarEnabled(enabled: Boolean) {
-        main_refresh_layout.isRefreshing = enabled
-    }
-
-    fun getLocationParam(): SavedLocation? {
-        if (intent.hasExtra(LOCATION_KEY))
-            return intent.getSerializableExtra(MainActivityView.LOCATION_KEY) as SavedLocation
-        return null
     }
 }

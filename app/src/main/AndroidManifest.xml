@@ -19,9 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Light">
-        <activity android:name=".ui.screen.main.MainActivityView"/>
+        <activity android:name=".ui.screen.weather.WeatherActivityView"/>
 
-        <activity android:name=".ui.screen.locations.LocationsActivityView">
+        <activity android:name=".ui.screen.main.MainActivityView">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

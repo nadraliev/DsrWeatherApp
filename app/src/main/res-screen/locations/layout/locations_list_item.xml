@@ -39,7 +39,7 @@
         app:layout_constraintLeft_toLeftOf="@+id/locations_item_name"
         app:layout_constraintTop_toBottomOf="@+id/locations_item_name"/>
 
-    <soutvoid.com.DsrWeatherApp.ui.screen.locations.widget.FavoriteButton
+    <soutvoid.com.DsrWeatherApp.ui.screen.main.locations.widget.FavoriteButton
         android:id="@+id/locations_item_favorite_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

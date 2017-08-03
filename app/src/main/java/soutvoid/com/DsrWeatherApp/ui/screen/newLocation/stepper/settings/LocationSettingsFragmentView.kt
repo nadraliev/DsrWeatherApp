@@ -1,8 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings
 
-import android.content.Intent
 import android.graphics.Point
-import android.graphics.PointF
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +15,6 @@ import javax.inject.Inject
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.editLocation.EditLocationActivityView
-import soutvoid.com.DsrWeatherApp.ui.screen.locations.LocationsActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.NewLocationActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
 
