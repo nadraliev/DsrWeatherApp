@@ -14,6 +14,7 @@ import soutvoid.com.DsrWeatherApp.app.dagger.AppModule
 import soutvoid.com.DsrWeatherApp.app.dagger.DaggerAppComponent
 import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.app.log.RemoteLogger
+import soutvoid.com.DsrWeatherApp.ui.util.NotificationUtils
 
 
 class App : Application() {
@@ -30,6 +31,8 @@ class App : Application() {
         initStetho()
         initRealm()
         initIconics()
+
+        rescheduleNotifications()
     }
 
     fun initFabric() {
@@ -65,5 +68,10 @@ class App : Application() {
 
     fun initIconics() {
         Iconics.registerFont(WeatherIcons())
+    }
+
+    fun rescheduleNotifications() {
+        NotificationUtils.cancelAllNotifications(this)
+        NotificationUtils.scheduleAllNotifications(this)
     }
 }

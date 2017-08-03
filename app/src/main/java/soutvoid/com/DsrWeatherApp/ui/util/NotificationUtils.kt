@@ -1,5 +1,6 @@
 package soutvoid.com.DsrWeatherApp.ui.util
 
+import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
@@ -9,6 +10,7 @@ import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.ui.receivers.NotificationPublisher
 import soutvoid.com.DsrWeatherApp.ui.receivers.TriggerReEnabler
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
+import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 object NotificationUtils {
 
@@ -23,9 +25,7 @@ object NotificationUtils {
                 trigger.notificationTimes.distinctBy { it.id }.forEach { notifTime ->
                     val timeMillis = getNotificationTimeMillis(alert.value, notifTime)
                     if (timeMillis > System.currentTimeMillis())
-                        alarmManager.set(AlarmManager.RTC_WAKEUP,
-                                timeMillis,
-                                createPendingIntent(context, trigger, notifTime))
+                        setAlarm(context, alarmManager, timeMillis, trigger, notifTime)
                     Logger.i("notification scheduled $timeMillis")
                 }
             }
@@ -74,6 +74,19 @@ object NotificationUtils {
      */
     private fun getNotificationTimeMillis(alert: Long, notifTime: NotificationTime): Long {
         return alert - notifTime.getMilliseconds()
+    }
+
+    @SuppressLint("NewApi")
+    private fun setAlarm(context: Context, alarmManager: AlarmManager, timeMillis: Long, trigger: SavedTrigger, notifTime: NotificationTime) {
+        if (SdkUtil.supportsM()) {
+            alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP,
+                    timeMillis,
+                    createPendingIntent(context, trigger, notifTime))
+        } else {
+            alarmManager.set(AlarmManager.RTC_WAKEUP,
+                    timeMillis,
+                    createPendingIntent(context, trigger, notifTime))
+        }
     }
 
     /**

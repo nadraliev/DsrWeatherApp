@@ -23,7 +23,6 @@ class JobManagerModule {
         val builder = Configuration.Builder(context)
                 .minConsumerCount(1)
                 .maxConsumerCount(1)
-                .loadFactor(1)
                 .consumerKeepAlive(120)
                 .injector( {
                     (it as BaseTriggerJob).inject((context as App).appComponent)
