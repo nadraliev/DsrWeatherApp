@@ -57,7 +57,7 @@ class TriggersActivityView: BaseActivityView() {
     private fun initList() {
         adapter = TriggersListAdapter(
                 onItemClickListener = { presenter.onTriggerClicked(adapter.triggers[it]) },
-                onSwitchClickListener = { presenter.onSwitchClicked(adapter.triggers[it]) },
+                onSwitchClickListener = { presenter.onSwitchClicked(adapter.triggers[it], it) },
                 onDeleteBtnClickListener = { triggerRemoveRequest(it)}
         )
         triggers_list.adapter = adapter

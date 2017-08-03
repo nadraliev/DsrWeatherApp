@@ -40,19 +40,21 @@ class TriggersActivityPresenter @Inject constructor(errorHandler: ErrorHandler,
 
     }
 
-    fun onSwitchClicked(savedTrigger: SavedTrigger) {
+    fun onSwitchClicked(savedTrigger: SavedTrigger, position: Int) {
         var newState = false
+        var newTrigger = savedTrigger
         val realm = Realm.getDefaultInstance()
         realm.executeTransaction {
             val triggerRealm = it.where(SavedTrigger::class.java).equalTo("id", savedTrigger.id).findFirst()
             triggerRealm.enabled = !triggerRealm.enabled
             newState = triggerRealm.enabled
+            newTrigger = it.copyFromRealm(triggerRealm)
         }
         realm.close()
         if (newState)
-            jobManager.addJobInBackground(AddTriggersJob(intArrayOf(savedTrigger.id)))
+            jobManager.addJobInBackground(AddTriggersJob(intArrayOf(newTrigger.id)))
         else
-            jobManager.addJobInBackground(DeleteTriggersJob(arrayOf(savedTrigger.triggerId)))
+            jobManager.addJobInBackground(DeleteTriggersJob(arrayOf(newTrigger.triggerId)))
     }
 
     fun onTriggerRemoveRequested(savedTrigger: SavedTrigger, position: Int) {
