@@ -109,6 +109,9 @@ class MainActivityView: TranslucentStatusActivityView() {
         transaction.commit()
     }
 
+    /**
+     * начальные данные настроек
+     */
     private fun maybeWriteInitData() {
         val editor = getDefaultPreferences().edit()
         if (!getDefaultPreferences().contains(SettingsFragment.SHARED_PREFERENCES_THEME))
@@ -118,6 +121,9 @@ class MainActivityView: TranslucentStatusActivityView() {
         editor.commit()
     }
 
+    /**
+     * листенер для перезапуска активити при смене темы
+     */
     private fun initSharedPreferencesListener() {
         sharedPreferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { preferences, s ->
             if (s == SettingsFragment.SHARED_PREFERENCES_THEME || s == SettingsFragment.SHARED_PREFERENCES_DARK_THEME) {
@@ -140,6 +146,9 @@ class MainActivityView: TranslucentStatusActivityView() {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 
+    /**
+     * перезапуск активити с circular reveal animation
+     */
     @TargetApi(21)
     private fun restartWithReveal() {
         try {
@@ -175,6 +184,9 @@ class MainActivityView: TranslucentStatusActivityView() {
         settingsFragment.let { showFragment(it) }
     }
 
+    /**
+     * показывает, перезапущена ли активность сразу после смены темы
+     */
     fun isThemeJustChanged(): Boolean {
         return getDefaultPreferences().getBoolean(THEME_CHANGE_RESTARTED, false)
     }
