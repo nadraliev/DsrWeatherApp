@@ -6,8 +6,10 @@ import android.location.LocationListener
 import android.os.Bundle
 import android.support.design.widget.BaseTransientBottomBar
 import android.support.design.widget.Snackbar
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.View
 import android.view.animation.Animation
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.places.Place
@@ -92,4 +94,20 @@ fun AnimationEndedListener(listener: (animator: Animator?) -> Unit)
     override fun onAnimationCancel(p0: Animator?) {}
 
     override fun onAnimationStart(p0: Animator?) {}
+}
+
+fun DrawerClosedListener(listener: (drawerView: View?) -> Unit)
+    :DrawerLayout.DrawerListener = object : DrawerLayout.DrawerListener {
+    override fun onDrawerStateChanged(newState: Int) {
+    }
+
+    override fun onDrawerSlide(drawerView: View?, slideOffset: Float) {
+    }
+
+    override fun onDrawerClosed(drawerView: View?) {
+        listener(drawerView)
+    }
+
+    override fun onDrawerOpened(drawerView: View?) {
+    }
 }

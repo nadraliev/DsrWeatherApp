@@ -21,6 +21,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.TriggersFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.*
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
+import java.lang.ref.WeakReference
 
 class MainActivityView: TranslucentStatusActivityView() {
 
@@ -35,6 +36,12 @@ class MainActivityView: TranslucentStatusActivityView() {
     lateinit var presenter: MainActivityPresenter
 
     lateinit var sharedPreferencesListener: SharedPreferences.OnSharedPreferenceChangeListener
+
+    private var fragmentToSet: Fragment? = null
+
+    private val locationsFragment = LocationsFragmentView()
+    private val notificationsFragment = TriggersFragmentView()
+    private val settingsFragment = SettingsFragment()
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -60,6 +67,9 @@ class MainActivityView: TranslucentStatusActivityView() {
 
     private fun initToolbar() {
         setSupportActionBar(main_toolbar)
+    }
+
+    private fun initDrawer() {
         val actionBarToggle = ActionBarDrawerToggle(
                 this,
                 main_drawer,
@@ -70,18 +80,22 @@ class MainActivityView: TranslucentStatusActivityView() {
         actionBarToggle.isDrawerIndicatorEnabled = false
         actionBarToggle.isDrawerIndicatorEnabled = true //если этого не слелеать, сэндвич кнопка не появится
         main_drawer.addDrawerListener(actionBarToggle)
-    }
-
-    private fun initDrawer() {
         main_navigation.setNavigationItemSelectedListener {
             main_drawer.closeDrawers()
             when(it.itemId) {
-                R.id.drawer_locations -> showLocationsFragment()
-                R.id.drawer_notifications -> showNotificationsFragment()
-                R.id.drawer_settings -> showSettingsFragment()
+                R.id.drawer_locations -> fragmentToSet = locationsFragment
+                R.id.drawer_notifications -> fragmentToSet = notificationsFragment
+                R.id.drawer_settings -> fragmentToSet = settingsFragment
             }
             return@setNavigationItemSelectedListener true
         }
+        main_drawer.addDrawerListener(DrawerClosedListener {
+            fragmentToSet?.let {
+                if (it.javaClass == LocationsFragmentView::class.java)
+                    showFragment(it, false, true)
+                else showFragment(it)
+            }
+        })
     }
 
     private fun showFragment(fragment: Fragment, addToBackStack: Boolean = true, clearBackStack: Boolean = false) {
@@ -150,15 +164,15 @@ class MainActivityView: TranslucentStatusActivityView() {
     }
 
     fun showLocationsFragment() {
-        showFragment(LocationsFragmentView(), false, true)
+        locationsFragment.let { showFragment(it, false, true) }
     }
 
     fun showNotificationsFragment() {
-        showFragment(TriggersFragmentView())
+        notificationsFragment.let { showFragment(it) }
     }
 
     fun showSettingsFragment() {
-        showFragment(SettingsFragment())
+        settingsFragment.let { showFragment(it) }
     }
 
     fun isThemeJustChanged(): Boolean {

@@ -18,4 +18,10 @@ class MainActivityPresenter @Inject constructor(errorHandler: ErrorHandler)
             view.setThemeJustChanged(false)
         }
     }
+
+    override fun attachView(view: MainActivityView?) {
+        super.attachView(view)
+
+
+    }
 }
