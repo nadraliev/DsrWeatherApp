@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="notifications">Уведомления</string>
-    <string name="temperature">Температура</string>
-    <string name="clouds">Облака</string>
-    <string name="wind_direction">Направление ветра</string>
-    <string name="wind_speed">Скорость ветра</string>
-    <string name="trigger_removed">Уведомление удалено</string>
-</resources>

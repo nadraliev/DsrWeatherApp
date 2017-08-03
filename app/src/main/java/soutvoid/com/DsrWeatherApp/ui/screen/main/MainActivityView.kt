@@ -1,9 +1,14 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.ActionBarDrawerToggle
+import android.view.View
 import com.agna.ferro.mvp.component.ScreenComponent
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
@@ -13,14 +18,21 @@ import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
 import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.TriggersFragmentView
-import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
-import soutvoid.com.DsrWeatherApp.ui.util.clearBackStack
-import soutvoid.com.DsrWeatherApp.ui.util.getRandomString
+import soutvoid.com.DsrWeatherApp.ui.util.*
+import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 class MainActivityView: BaseActivityView() {
 
+    companion object {
+        fun start(context: Context) {
+            context.startActivity(Intent(context, MainActivityView::class.java))
+        }
+    }
+
     @Inject
     lateinit var presenter: MainActivityPresenter
+
+    lateinit var sharedPreferencesListener: SharedPreferences.OnSharedPreferenceChangeListener
 
     override fun getPresenter(): BasePresenter<*> = presenter
 
@@ -40,6 +52,8 @@ class MainActivityView: BaseActivityView() {
 
         initToolbar()
         initDrawer()
+        maybeWriteInitData()
+        initSharedPreferencesListener()
     }
 
     private fun initToolbar() {
@@ -79,6 +93,59 @@ class MainActivityView: BaseActivityView() {
         transaction.commit()
     }
 
+    private fun maybeWriteInitData() {
+        val editor = getDefaultPreferences().edit()
+        if (!getDefaultPreferences().contains(SettingsFragment.SHARED_PREFERENCES_THEME))
+            editor.putString(SettingsFragment.SHARED_PREFERENCES_THEME, "0")
+        if (!getDefaultPreferences().contains(SettingsFragment.SHARED_PREFERENCES_DARK_THEME))
+            editor.putBoolean(SettingsFragment.SHARED_PREFERENCES_DARK_THEME, false)
+        editor.commit()
+    }
+
+    private fun initSharedPreferencesListener() {
+        sharedPreferencesListener = SharedPreferences.OnSharedPreferenceChangeListener { preferences, s ->
+            if (s == SettingsFragment.SHARED_PREFERENCES_THEME || s == SettingsFragment.SHARED_PREFERENCES_DARK_THEME) {
+                @SuppressLint("NewApi")
+                if (SdkUtil.supportsLollipop()) {
+                    restartWithReveal()
+                } else {
+                    restart()
+                }
+            }
+        }
+
+        getDefaultPreferences().registerOnSharedPreferenceChangeListener(sharedPreferencesListener)
+    }
+
+    private fun restart() {
+        finish()
+        MainActivityView.start(this)
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+    }
+
+    @TargetApi(21)
+    private fun restartWithReveal() {
+        try {
+            setTheme(getDefaultPreferences().getPreferredThemeId())
+            main_reveal_view.setBackgroundColor(theme.getThemeColor(android.R.attr.colorBackground))
+            val animation = main_reveal_view.createFullScreenCircularReveal(
+                    main_drawer.measuredWidth / 2,
+                    main_drawer.measuredHeight / 2
+            )
+            animation.duration = 300
+            animation.addListener(AnimationEndedListener { restart() })
+            main_reveal_view.visibility = View.VISIBLE
+            animation.start()
+        } catch (e: NoClassDefFoundError) {
+            restart()
+        }
+    }
+
+    override fun onDestroy() {
+        getDefaultPreferences().unregisterOnSharedPreferenceChangeListener(sharedPreferencesListener)
+        super.onDestroy()
+    }
+
     fun showLocationsFragment() {
         showFragment(LocationsFragmentView(), false, true)
     }
@@ -89,15 +156,5 @@ class MainActivityView: BaseActivityView() {
 
     fun showSettingsFragment() {
         showFragment(SettingsFragment())
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        data?.let {
-            if (it.getBooleanExtra(SettingsActivityView.RESTART_REQUIRED, false)) {
-                val intent = Intent(this, LocationsFragmentView::class.java)
-                finish()
-                startActivity(intent)
-            }
-        }
     }
 }

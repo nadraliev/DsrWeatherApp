@@ -2,4 +2,66 @@
 <resources>
     <string name="open">Открыть</string>
     <string name="close">Закрыть</string>
+
+    <string name="favorite">Любимые</string>
+    <string name="locations">Места</string>
+    <string name="all_locations">Все</string>
+    <string name="current_temperature">Текущая температура</string>
+    <string name="location_removed">Место удалено</string>
+    <string name="undo">Отменить</string>
+    <string name="edit">Изменить</string>
+    <string name="remove">Удалить</string>
+    <string name="no_locations_message">У вас пока нет сохраненных мест</string>
+    <string name="no_favorites_message">У вас пока нет любимых мест</string>
+
+    <string name="notifications">Уведомления</string>
+    <string name="temperature">Температура</string>
+    <string name="clouds">Облака</string>
+    <string name="wind_direction">Направление ветра</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="trigger_removed">Уведомление удалено</string>
+
+    <string name="settings">Настройки</string>
+    <string name="units">Единицы измерения</string>
+    <string-array name="units">
+        <item>Метрические</item>
+        <item>Имперские</item>
+    </string-array>
+    <string-array name="unitsValues">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="theme">Тема</string>
+    <string-array name="themes">
+        <item>По-умолчанию</item>
+        <item>Фиолетовая</item>
+        <item>Зеленая</item>
+        <item>Красная</item>
+        <item>Голубая</item>
+        <item>Розовая</item>
+        <item>Темно-фиолетовая</item>
+        <item>Светло-голубая</item>
+        <item>Бирюзовая</item>
+        <item>Желтая</item>
+        <item>Оранжевая</item>
+        <item>Коричневая</item>
+    </string-array>
+    <string-array name="themesValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+    </string-array>
+    <string name="prefer_dark_theme">Предпочитать темную тему</string>
+    <string name="restart_to_apply">Необходим перезапуск</string>
+    <string name="restart_now">Перезапустить сейчас</string>
 </resources>

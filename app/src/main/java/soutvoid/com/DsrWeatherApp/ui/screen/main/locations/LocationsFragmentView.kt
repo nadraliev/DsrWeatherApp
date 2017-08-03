@@ -43,13 +43,4 @@ class LocationsFragmentView : BaseFragmentView() {
         locations_view_pager.adapter = LocationsPagerAdapter(childFragmentManager, activity)
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.locations_toolbar_menu, menu)
-//        return true
-//    }
-
-//    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-//        item?.let { if (it.itemId == R.id.locations_settings) SettingsActivityView.startForResult(this, 0)}
-//        return super.onOptionsItemSelected(item)
-//    }
 }
