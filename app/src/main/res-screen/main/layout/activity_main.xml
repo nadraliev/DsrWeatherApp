@@ -11,6 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        
+        <soutvoid.com.DsrWeatherApp.ui.common.widgets.FakeStatusBarView
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/main_toolbar"

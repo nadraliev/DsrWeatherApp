@@ -16,12 +16,13 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
+import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.TriggersFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.*
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
-class MainActivityView: BaseActivityView() {
+class MainActivityView: TranslucentStatusActivityView() {
 
     companion object {
         fun start(context: Context) {

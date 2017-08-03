@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_new_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.StepperAdapter
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
@@ -76,19 +77,19 @@ class NewLocationActivityView : TranslucentStatusActivityView() {
                         animationCenter.x,
                         new_location_stepper.top + animationCenter.y)
                 animator.addListener(AnimationEndedListener {
-                    startLocationsActivity()
+                    startMainActivity()
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 })
                 new_location_reveal_view.visibility = View.VISIBLE
                 animator.start()
             } catch (e: NoClassDefFoundError) {
-                startLocationsActivity()
+                startMainActivity()
             }
-        } else startLocationsActivity()
+        } else startMainActivity()
     }
 
-    private fun startLocationsActivity() {
-        val intent = Intent(this, LocationsFragmentView::class.java)
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivityView::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
