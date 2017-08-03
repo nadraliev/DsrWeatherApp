@@ -29,8 +29,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.screen.settings.SettingsActivityView"/>
-
         <activity android:name=".ui.screen.newLocation.NewLocationActivityView"/>
 
         <activity android:name=".ui.screen.editLocation.EditLocationActivityView"/>

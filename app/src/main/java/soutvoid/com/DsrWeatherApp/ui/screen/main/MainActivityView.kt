@@ -9,10 +9,12 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BaseActivityView
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
-import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import javax.inject.Inject
 import kotlinx.android.synthetic.main.activity_main.*
+import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import soutvoid.com.DsrWeatherApp.ui.screen.main.triggers.TriggersFragmentView
+import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
+import soutvoid.com.DsrWeatherApp.ui.util.clearBackStack
 import soutvoid.com.DsrWeatherApp.ui.util.getRandomString
 
 class MainActivityView: BaseActivityView() {
@@ -66,16 +68,19 @@ class MainActivityView: BaseActivityView() {
         }
     }
 
-    private fun showFragment(fragment: Fragment) {
-        supportFragmentManager.beginTransaction()
+    private fun showFragment(fragment: Fragment, addToBackStack: Boolean = true, clearBackStack: Boolean = false) {
+        val transaction = supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, fragment)
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .addToBackStack(getRandomString())
-                .commit()
+        if (clearBackStack)
+            supportFragmentManager.clearBackStack()
+        if (addToBackStack)
+            transaction.addToBackStack(getRandomString())
+        transaction.commit()
     }
 
     fun showLocationsFragment() {
-        showFragment(LocationsFragmentView())
+        showFragment(LocationsFragmentView(), false, true)
     }
 
     fun showNotificationsFragment() {
@@ -83,7 +88,7 @@ class MainActivityView: BaseActivityView() {
     }
 
     fun showSettingsFragment() {
-
+        showFragment(SettingsFragment())
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

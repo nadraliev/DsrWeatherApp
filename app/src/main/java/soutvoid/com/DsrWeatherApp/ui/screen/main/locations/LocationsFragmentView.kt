@@ -1,6 +1,5 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.main.locations
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import com.agna.ferro.mvp.component.ScreenComponent
@@ -10,7 +9,6 @@ import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import javax.inject.Inject
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.pager.LocationsPagerAdapter
-import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsActivityView
 import soutvoid.com.DsrWeatherApp.ui.util.inflate
 
 class LocationsFragmentView : BaseFragmentView() {

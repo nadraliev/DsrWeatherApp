@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import soutvoid.com.DsrWeatherApp.ui.util.*
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 import javax.inject.Inject
@@ -95,8 +96,8 @@ class SettingsActivityView: TranslucentStatusActivityView() {
     }
 
     private fun initPreferencesFragment() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.settings_content, SettingsFragment(presenter.messagePresenter))
+        supportFragmentManager.beginTransaction()
+                .replace(R.id.settings_content, SettingsFragment())
                 .commit()
     }
 

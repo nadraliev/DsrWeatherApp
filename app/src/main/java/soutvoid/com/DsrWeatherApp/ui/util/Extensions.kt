@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.support.annotation.StringRes
+import android.support.v4.app.FragmentManager
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import soutvoid.com.DsrWeatherApp.domain.triggers.SavedTrigger
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionExpression
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.ui.receivers.RequestCode
-import soutvoid.com.DsrWeatherApp.ui.screen.settings.SettingsFragment
+import soutvoid.com.DsrWeatherApp.ui.screen.main.settings.SettingsFragment
 import io.realm.RealmObject.deleteFromRealm
 import io.realm.RealmObject
 import io.realm.RealmList
@@ -224,5 +225,9 @@ fun getAllSavedLocations(): List<SavedLocation> {
 fun getRandomString(): String {
     val secureRandom = SecureRandom()
     return BigInteger(130, secureRandom).toString(32)
+}
+
+fun FragmentManager.clearBackStack() {
+    kotlin.repeat(backStackEntryCount) {popBackStack()}
 }
 
