@@ -51,6 +51,10 @@ android {
                     .each { res.srcDirs += it.path }
         }
     }
+
+    dexOptions {
+        jumboMode = true
+    }
 }
 
 dependencies {
