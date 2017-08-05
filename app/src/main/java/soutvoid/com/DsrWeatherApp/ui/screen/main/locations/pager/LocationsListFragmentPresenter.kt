@@ -53,21 +53,21 @@ class LocationsListFragmentPresenter @Inject constructor(errorHandler: ErrorHand
                         subscribeNetworkQuery(
                                 prepareObservable(locations),
                                 Action1 {
-                                    view.hidePlaceholder()
-                                    view.showData(locations.zip(it)
+                                    view?.hidePlaceholder()
+                                    view?.showData(locations.zip(it)
                                     {a: SavedLocation, b: CurrentWeather -> LocationWithWeather(a, b) })
-                                    view.setRefreshEnable(false)
+                                    view?.setRefreshEnable(false)
                                 },
-                                Action1 { view.setRefreshEnable(false) },
+                                Action1 { view?.setRefreshEnable(false) },
                                 StandardWithActionErrorHandler(
                                         messagePresenter,
                                         view.getString(R.string.try_again))
                                 { loadData() }
                         )
                     } else {
-                        view.setRefreshEnable(false)
-                        view.showData(emptyList())
-                        view.showMessageEmpty()
+                        view?.setRefreshEnable(false)
+                        view?.showData(emptyList())
+                        view?.showMessageEmpty()
                     }
                 }
     }
