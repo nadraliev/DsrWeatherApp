@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_edit_location.*
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.activity.TranslucentStatusActivityView
+import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.main.locations.LocationsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.getDefaultPreferences
@@ -84,6 +85,8 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
                 .putString(NAME_KEY, intent.getStringExtra(NAME_KEY))
                 .putBoolean(FAVORITE_KEY, intent.getBooleanExtra(FAVORITE_KEY, false))
                 .putBoolean(FORECAST_KEY, intent.getBooleanExtra(FORECAST_KEY, false))
+                .putFloat(LATITUDE_KEY, intent.getFloatExtra(LATITUDE_KEY, 0f))
+                .putFloat(LONGITUDE_KEY, intent.getFloatExtra(LONGITUDE_KEY, 0f))
                 .putInt(ID_KEY, intent.getIntExtra(ID_KEY, 0))
                 .commit()
     }
@@ -107,19 +110,19 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
                         edit_location_container.top + animationCenter.y
                 )
                 animator.addListener(AnimationEndedListener {
-                    startLocationsActivity()
+                    startMainActivity()
                     overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 })
                 edit_location_reveal_view.visibility = View.VISIBLE
                 animator.start()
             } catch (e: NoClassDefFoundError) {
-                startLocationsActivity()
+                startMainActivity()
             }
-        } else startLocationsActivity()
+        } else startMainActivity()
     }
 
-    private fun startLocationsActivity() {
-        val intent = Intent(this, LocationsFragmentView::class.java)
+    private fun startMainActivity() {
+        val intent = Intent(this, MainActivityView::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(intent)
     }
