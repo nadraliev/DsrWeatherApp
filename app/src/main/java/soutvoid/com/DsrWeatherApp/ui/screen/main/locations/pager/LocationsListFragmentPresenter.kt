@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.main.locations.pager
 import com.agna.ferro.mvp.component.scope.PerScreen
 import io.realm.Realm
 import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
 import rx.functions.Action1
 import rx.functions.FuncN
 import rx.schedulers.Schedulers
@@ -46,6 +47,7 @@ class LocationsListFragmentPresenter @Inject constructor(errorHandler: ErrorHand
     private fun loadData() {
         Observable.just(getSavedFromDB())
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe { locations ->
                     if (locations.isNotEmpty()) {
                         subscribeNetworkQuery(
