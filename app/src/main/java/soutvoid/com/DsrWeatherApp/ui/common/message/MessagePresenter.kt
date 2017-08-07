@@ -95,6 +95,24 @@ constructor(private val activityProvider: ActivityProvider) {
         return snackbar
     }
 
+    fun showIndefinite(@StringRes stringId: Int): Snackbar {
+        val v = view
+        val snackbar = Snackbar.make(v, stringId, Snackbar.LENGTH_INDEFINITE)
+        setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
+        snackbar.show()
+        return snackbar
+    }
+
+    fun showIndefinite(string: String): Snackbar {
+        val v = view
+        val snackbar = Snackbar.make(v, string, Snackbar.LENGTH_INDEFINITE)
+        setMultilineSnackbar(snackbar)
+        setSnackbarColor(snackbar)
+        snackbar.show()
+        return snackbar
+    }
+
     /**
      * Для того, чтобы срабатывал Behavior на появление Snackbar,
      * нужно чтобы корневым контейнером экрана был CoordinatorLayout

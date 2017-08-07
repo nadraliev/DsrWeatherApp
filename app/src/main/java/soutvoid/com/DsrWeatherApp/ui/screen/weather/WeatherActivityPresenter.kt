@@ -18,6 +18,7 @@ import soutvoid.com.DsrWeatherApp.ui.common.message.MessagePresenter
 import soutvoid.com.DsrWeatherApp.ui.screen.weather.data.AllWeatherData
 import soutvoid.com.DsrWeatherApp.ui.util.UnitsUtils
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNullOr
+import soutvoid.com.DsrWeatherApp.ui.util.secondsToHours
 import javax.inject.Inject
 
 @PerScreen
@@ -26,13 +27,13 @@ class WeatherActivityPresenter
     : BasePresenter<WeatherActivityView>(errorHandler) {
 
     @Inject
-    lateinit var currentWeatherRep : CurrentWeatherRepository
+    lateinit var currentWeatherRep: CurrentWeatherRepository
 
     @Inject
-    lateinit var forecastRep : ForecastRepository
+    lateinit var forecastRep: ForecastRepository
 
     @Inject
-    lateinit var uviRep : UviRepository
+    lateinit var uviRep: UviRepository
 
     lateinit var savedLocation: SavedLocation
 
@@ -40,9 +41,7 @@ class WeatherActivityPresenter
     override fun onLoad(viewRecreated: Boolean) {
         super.onLoad(viewRecreated)
 
-
-
-        savedLocation = view.getLocationParam().ifNotNullOr{
+        savedLocation = view.getLocationParam().ifNotNullOr {
             val realm = Realm.getDefaultInstance()
             val result = realm.copyFromRealm(realm.where(SavedLocation::class.java).findFirst())
             realm.close()
@@ -65,19 +64,34 @@ class WeatherActivityPresenter
                 Action1 {
                     view.fillAllData(it, savedLocation.showForecast)
                     view.setProgressBarEnabled(false)
+                    maybeNotifyDataCached(it.currentWeather.timeOfData)
                 },
                 Action1 { view.setProgressBarEnabled(false) },
                 StandardWithActionErrorHandler(messagePresenter,
                         view.getString(R.string.try_again))
-                        { loadData() }
+                { loadData() }
         )
+    }
+
+    private fun maybeNotifyDataCached(dataTime: Long) {
+        val diffHours = secondsToHours(Math.abs(dataTime - System.currentTimeMillis() / 1000))
+        if (diffHours >= 24)
+            view.showIndefiniteMessage(
+                    messagePresenter.showIndefinite(
+                            view.getCachedDataMessage((diffHours / 24).toInt(), true)))
+        else if (diffHours > 0)
+            view.showIndefiniteMessage(
+                    messagePresenter.showIndefinite(
+                            view.getCachedDataMessage(diffHours.toInt(), false)))
+        else
+            view.hideIndefiniteMessage()
     }
 
     /**
      * подготовить observable для всех загружаемых данных и объединить в один
      * @return observable для загрузки всех данных
      */
-    private fun prepareObservable() : Observable<AllWeatherData> {
+    private fun prepareObservable(): Observable<AllWeatherData> {
         val units = UnitsUtils.getPreferredUnits(view.baseContext)
         return ObservableUtil.combineLatestDelayError(
                 Schedulers.io(),
