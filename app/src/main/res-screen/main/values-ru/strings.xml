@@ -20,6 +20,7 @@
     <string name="wind_direction">Направление ветра</string>
     <string name="wind_speed">Скорость ветра</string>
     <string name="trigger_removed">Уведомление удалено</string>
+    <string name="no_notifications_message">У вас пока не настроено ни одного уведомления</string>
 
     <string name="settings">Настройки</string>
     <string name="units">Единицы измерения</string>

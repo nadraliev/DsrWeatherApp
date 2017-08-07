@@ -22,6 +22,11 @@
         app:layout_constraintTop_toBottomOf="@+id/triggers_toolbar"
         app:layout_constraintVertical_bias="1.0"/>
 
+    <soutvoid.com.DsrWeatherApp.ui.common.widgets.PlaceholderView
+        android:id="@+id/triggers_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/triggers_add"
         android:layout_width="wrap_content"

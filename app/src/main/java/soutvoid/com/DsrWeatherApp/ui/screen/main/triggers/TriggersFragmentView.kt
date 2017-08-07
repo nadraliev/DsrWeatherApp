@@ -90,4 +90,20 @@ class TriggersFragmentView : BaseFragmentView() {
         adapter.notifyItemInserted(position)
     }
 
+    fun showNoNotificationsMessage() {
+        triggers_placeholder.show(
+                getString(R.string.no_notifications_message),
+                getEmptyImageId())
+    }
+
+    fun hidePlaceholder() {
+        triggers_placeholder.hide()
+    }
+
+    fun getEmptyImageId(): Int {
+        val typedValue = TypedValue()
+        context.theme.resolveAttribute(R.attr.themedEmptyDrawable, typedValue, true)
+        return typedValue.resourceId
+    }
+
 }
