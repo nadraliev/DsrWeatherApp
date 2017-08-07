@@ -79,7 +79,7 @@ class WeatherActivityPresenter
             view.showIndefiniteMessage(
                     messagePresenter.showIndefinite(
                             view.getCachedDataMessage((diffHours / 24).toInt(), true)))
-        else if (diffHours >= 0)
+        else if (diffHours > 0)
             view.showIndefiniteMessage(
                     messagePresenter.showIndefinite(
                             view.getCachedDataMessage(diffHours.toInt(), false)))
