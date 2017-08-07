@@ -32,7 +32,13 @@ class TriggersFragmentPresenter @Inject constructor(errorHandler: ErrorHandler,
 
     private fun loadData() {
         val realm = Realm.getDefaultInstance()
-        view.showData(realm.copyFromRealm(realm.where(SavedTrigger::class.java).findAll()))
+        val results = realm.copyFromRealm(realm.where(SavedTrigger::class.java).findAll())
+        if (results.isNotEmpty()) {
+            view?.hidePlaceholder()
+            view?.showData(results)
+        }
+        else
+            view?.showNoNotificationsMessage()
         realm.close()
     }
 

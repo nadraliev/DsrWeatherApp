@@ -20,6 +20,7 @@
     <string name="wind_direction">Wind direction</string>
     <string name="wind_speed">Wind speed</string>
     <string name="trigger_removed">Notification removed</string>
+    <string name="no_notifications_message">You don\'t have any notifications yet</string>
 
     <string name="settings">Settings</string>
     <string name="units">Units</string>
