@@ -12,8 +12,8 @@ import soutvoid.com.DsrWeatherApp.domain.triggers.condition.ConditionName
 import soutvoid.com.DsrWeatherApp.domain.triggers.condition.SavedCondition
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.common.error.ErrorHandler
-import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.interactor.triggers.jobs.AddTriggersJob
+import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.getAllSavedLocations
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceNameStringId
 import soutvoid.com.DsrWeatherApp.ui.util.getNiceStringId

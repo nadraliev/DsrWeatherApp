@@ -27,4 +27,7 @@
     </string-array>
     <string name="today">today</string>
     <string name="tomorrow">tomorrow</string>
+    <string name="move_upward_behavior" translatable="false">soutvoid.com.DsrWeatherApp.ui.screen.weather.behaviors.MoveUpwardBehavior</string>
+    <string name="last_update">Last update</string>
+    <string name="ago">ago</string>
 </resources>

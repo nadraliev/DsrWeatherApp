@@ -111,3 +111,12 @@ fun DrawerClosedListener(listener: (drawerView: View?) -> Unit)
     override fun onDrawerOpened(drawerView: View?) {
     }
 }
+
+fun ViewDetachedListener(listener: (View) -> Unit): View.OnAttachStateChangeListener =
+        object : View.OnAttachStateChangeListener {
+            override fun onViewDetachedFromWindow(p0: View?) {
+                p0?.let { listener(it) }
+            }
+
+            override fun onViewAttachedToWindow(p0: View?) {}
+        }

@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.weather
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.DividerItemDecoration
 import android.support.v7.widget.LinearLayoutManager
 import com.agna.ferro.mvp.component.ScreenComponent
@@ -49,6 +50,8 @@ class WeatherActivityView : BaseActivityView() {
     lateinit var presenter : WeatherActivityPresenter
 
     private val forecastAdapter: ForecastListAdapter = ForecastListAdapter()
+
+    private var messageSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?, viewRecreated: Boolean) {
         super.onCreate(savedInstanceState, viewRecreated)
@@ -132,5 +135,25 @@ class WeatherActivityView : BaseActivityView() {
         if (intent.hasExtra(LOCATION_KEY))
             return intent.getSerializableExtra(WeatherActivityView.LOCATION_KEY) as SavedLocation
         return null
+    }
+
+    fun getCachedDataMessage(value: Int, isDays: Boolean): String {
+        val noConnection = getString(R.string.no_internet_connection_error_message)
+        val lastUpdate = getString(R.string.last_update)
+        var time = ""
+        if (isDays)
+            time = "$value ${resources.getQuantityString(R.plurals.days, value)}"
+        else
+            time = "$value ${resources.getQuantityString(R.plurals.hours, value)}"
+        val ago = getString(R.string.ago)
+        return "$noConnection \n$lastUpdate $time $ago"
+    }
+
+    fun showIndefiniteMessage(snackbar: Snackbar) {
+        messageSnackbar = snackbar
+    }
+
+    fun hideIndefiniteMessage() {
+        messageSnackbar?.dismiss()
     }
 }

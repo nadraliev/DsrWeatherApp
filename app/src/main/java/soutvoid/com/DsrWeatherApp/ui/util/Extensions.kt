@@ -231,3 +231,9 @@ fun FragmentManager.clearBackStack() {
     kotlin.repeat(backStackEntryCount) {popBackStack()}
 }
 
+fun secondsToHours(seconds: Long): Long =
+        seconds / 60 / 60
+
+fun secondsToDays(seconds: Long): Long =
+        secondsToHours(seconds) / 24
+

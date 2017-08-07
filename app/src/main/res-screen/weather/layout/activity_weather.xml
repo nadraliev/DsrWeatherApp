@@ -13,7 +13,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/weather_refresh_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/move_upward_behavior">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -24,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="10dp">
+                android:paddingBottom="10dp"
+                android:descendantFocusability="blocksDescendants">
 
                 <include
                     android:id="@+id/include"
