@@ -9,6 +9,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ScrollView
+import soutvoid.com.DsrWeatherApp.ui.util.SnackbarDismissedListener
+import soutvoid.com.DsrWeatherApp.ui.util.ViewDetachedListener
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
 
 class MoveUpwardBehavior: CoordinatorLayout.Behavior<View> {
@@ -23,12 +25,27 @@ class MoveUpwardBehavior: CoordinatorLayout.Behavior<View> {
 
     override fun onDependentViewChanged(parent: CoordinatorLayout?, child: View?, dependency: View?): Boolean {
         ifNotNull(child, dependency) {child, dependency ->
-            val translationY = minOf(0f, -dependency.translationY)
-            val lp = CoordinatorLayout.LayoutParams(child.layoutParams)
-            lp.bottomMargin = -translationY.toInt()
-            child.layoutParams = lp
+            val translationY = minOf(0, -dependency.height)
+            setBottomMargin(-translationY, child)
+            (dependency as? Snackbar.SnackbarLayout)?.let { setSnackbarListener(it, child, dependency) }
             return true
         }
         return false
+    }
+
+    private fun setBottomMargin(value: Int, view: View) {
+        val lp = CoordinatorLayout.LayoutParams(view.layoutParams)
+        lp.bottomMargin = value
+        view.layoutParams = lp
+    }
+
+    private fun setSnackbarListener(snackbar: Snackbar.SnackbarLayout,
+                                    child: View?,
+                                    dependency: View?) {
+        snackbar.addOnAttachStateChangeListener(ViewDetachedListener {
+            ifNotNull(child, dependency) {child, dependency ->
+                setBottomMargin(0, child)
+            }
+        })
     }
 }
