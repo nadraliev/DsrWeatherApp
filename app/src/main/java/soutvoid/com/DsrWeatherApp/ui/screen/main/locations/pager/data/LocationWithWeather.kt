@@ -5,5 +5,5 @@ import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 
 data class LocationWithWeather(
         val location: SavedLocation,
-        val currentWeather: CurrentWeather
+        val currentWeather: CurrentWeather?
 )

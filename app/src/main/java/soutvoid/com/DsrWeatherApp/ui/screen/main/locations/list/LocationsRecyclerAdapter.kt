@@ -58,6 +58,8 @@ class LocationsRecyclerAdapter(var locations: MutableList<LocationWithWeather> =
         lateinit var name: TextView
         @BindView(R.id.locations_item_current_temp)
         lateinit var currentTemp: TextView
+        @BindView(R.id.locations_item_current_temp_hint)
+        lateinit var currentTempHint: TextView
         @BindView(R.id.locations_item_favorite_btn)
         lateinit var favoriteBtn: FavoriteButton
         @BindView(R.id.locations_item_more_btn)
@@ -77,10 +79,20 @@ class LocationsRecyclerAdapter(var locations: MutableList<LocationWithWeather> =
             moreBtn.setOnClickListener { showPopup() }
         }
 
-        fun bind(savedLocation: SavedLocation, currentWeather: CurrentWeather) {
+        fun bind(savedLocation: SavedLocation, currentWeather: CurrentWeather?) {
             name.text = savedLocation.name
-            currentTemp.text = "${Math.round(currentWeather.main.temperature)}${UnitsUtils.getDegreesUnits(itemView.context)}"
+            maybeBindCurrentTemp(currentWeather)
             favoriteBtn.isChecked = savedLocation.isFavorite
+        }
+
+        private fun maybeBindCurrentTemp(currentWeather: CurrentWeather?) {
+            if (currentWeather != null) {
+                val diffHours = Math.abs(currentWeather.timeOfData - System.currentTimeMillis() / 1000) / 60 / 60
+                if (diffHours == 0L) {
+                    currentTemp.text = "${Math.round(currentWeather.main.temperature)}${UnitsUtils.getDegreesUnits(itemView.context)}"
+                    currentTempHint.visibility = View.VISIBLE
+                } else currentTempHint.visibility = View.GONE
+            } else currentTempHint.visibility = View.GONE
         }
 
         private fun showPopup() {

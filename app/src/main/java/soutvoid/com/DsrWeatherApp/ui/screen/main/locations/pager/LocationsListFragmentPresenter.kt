@@ -58,7 +58,11 @@ class LocationsListFragmentPresenter @Inject constructor(errorHandler: ErrorHand
                                     {a: SavedLocation, b: CurrentWeather -> LocationWithWeather(a, b) })
                                     view?.setRefreshEnable(false)
                                 },
-                                Action1 { view?.setRefreshEnable(false) },
+                                Action1 {
+                                    view?.setRefreshEnable(false)
+                                    view?.hidePlaceholder()
+                                    view?.showData(locations.map { LocationWithWeather(it, null) })
+                                },
                                 StandardWithActionErrorHandler(
                                         messagePresenter,
                                         view.getString(R.string.try_again))
