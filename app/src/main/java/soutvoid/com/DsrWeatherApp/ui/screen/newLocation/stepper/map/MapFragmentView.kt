@@ -1,7 +1,9 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.map
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationListener
 import android.location.LocationManager
@@ -11,6 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.agna.ferro.mvp.component.ScreenComponent
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException
+import com.google.android.gms.common.GooglePlayServicesRepairableException
+import com.google.android.gms.location.places.ui.PlaceAutocomplete
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -25,7 +30,6 @@ import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.ui.base.activity.BasePresenter
 import soutvoid.com.DsrWeatherApp.ui.base.fragment.BaseFragmentView
 import soutvoid.com.DsrWeatherApp.ui.util.LocationListener
-import soutvoid.com.DsrWeatherApp.ui.util.PlaceSelectionListener
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 import java.lang.IllegalArgumentException
 import javax.inject.Inject
@@ -80,7 +84,7 @@ class MapFragmentView : BaseFragmentView(), Step {
         else locationPermissionGranted(true)
 
         initMap()
-        initAutocompleteFragment()
+        initAutocompleteSearchField()
     }
 
     override fun onPause() {
@@ -111,12 +115,31 @@ class MapFragmentView : BaseFragmentView(), Step {
         }
     }
 
-    private fun initAutocompleteFragment() {
-        val autoCompleteFragment = childFragmentManager.findFragmentById(R.id.map_autocomplete_fragment) as SupportPlaceAutocompleteFragment
-        autoCompleteFragment.setOnPlaceSelectedListener(PlaceSelectionListener { presenter.locationSelectedInSearchField(it) })
+    private fun initAutocompleteSearchField() {
+        val view = LayoutInflater.from(activity)
+                .inflate(R.layout.search_field_layout, map_autocomplete_background, true)
+        view.setOnClickListener {
+            try {
+                val intent =
+                        PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                                .build(activity)
+                startActivityForResult(intent, 0)
+                map_autocomplete_background.visibility = View.INVISIBLE
+            } catch (e: GooglePlayServicesRepairableException) { }
+            catch (e: GooglePlayServicesNotAvailableException) { }
+        }
     }
 
-    private fun isLocationPermissionGranted() : Boolean {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0) {
+            map_autocomplete_background.visibility = View.VISIBLE
+            if (resultCode == Activity.RESULT_OK) {
+                presenter.locationSelectedInSearchField(PlaceAutocomplete.getPlace(activity, data))
+            }
+        }
+    }
+
+    private fun isLocationPermissionGranted(): Boolean {
         val checkPermission = ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)
         return checkPermission == PackageManager.PERMISSION_GRANTED
     }
@@ -192,5 +215,4 @@ class MapFragmentView : BaseFragmentView(), Step {
         marker?.remove()
         marker = map?.addMarker(MarkerOptions().position(latLng))
     }
-
 }
