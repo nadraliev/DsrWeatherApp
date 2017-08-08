@@ -23,4 +23,3 @@ jobs:
           command: ./gradlew
           environment:
             TERM: dumb
-            ANDROID_HOME: /home/ubuntu/android
