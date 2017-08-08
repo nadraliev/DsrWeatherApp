@@ -9,9 +9,11 @@ import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.media.RingtoneManager
 import android.support.v4.app.NotificationCompat
+import android.support.v4.app.TaskStackBuilder
 import android.support.v4.content.ContextCompat
 import soutvoid.com.DsrWeatherApp.R
 import soutvoid.com.DsrWeatherApp.app.log.Logger
+import soutvoid.com.DsrWeatherApp.ui.screen.main.MainActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.weather.WeatherActivityView
 import soutvoid.com.DsrWeatherApp.ui.screen.newTrigger.widgets.timeDialog.data.NotificationTime
 import soutvoid.com.DsrWeatherApp.ui.util.ifNotNull
@@ -60,8 +62,14 @@ class NotificationPublisher : BroadcastReceiver() {
 
         val intent = Intent(context, WeatherActivityView::class.java)
         intent.putExtra(WeatherActivityView.LOCATION_ID_KEY, locationId)
-        val pendingIntent = PendingIntent.getActivity(
-                context, System.currentTimeMillis().hashCode(), intent, 0)
+
+        val stackBuilder = TaskStackBuilder.create(context)
+        stackBuilder.addParentStack(WeatherActivityView::class.java)
+        stackBuilder.addNextIntent(intent)
+
+        val pendingIntent = stackBuilder.getPendingIntent(
+                System.currentTimeMillis().hashCode(),
+                PendingIntent.FLAG_UPDATE_CURRENT)
 
         val builder = NotificationCompat.Builder(context)
                 .setContentTitle(title)

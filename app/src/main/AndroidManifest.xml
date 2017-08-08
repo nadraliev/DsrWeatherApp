@@ -19,7 +19,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.Light">
-        <activity android:name=".ui.screen.weather.WeatherActivityView"/>
 
         <activity android:name=".ui.screen.main.MainActivityView">
             <intent-filter>
@@ -27,6 +26,14 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.screen.weather.WeatherActivityView"
+            android:parentActivityName=".ui.screen.main.MainActivityView">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.screen.main.MainActivityView"/>
         </activity>
 
         <activity android:name=".ui.screen.newLocation.NewLocationActivityView"/>
