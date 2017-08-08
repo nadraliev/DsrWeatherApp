@@ -18,7 +18,7 @@ jobs:
           command: sdkmanager "system-images;android-26;google_apis_playstore;x86" --verbose
           environment:
             TERM: dumb
-      -run:
+      - run:
           name: Gradle build
           command: ./gradlew
           environment:
