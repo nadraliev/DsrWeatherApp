@@ -10,7 +10,7 @@ jobs:
     working_directory: ~/workspace
 
     steps:
-      -checkout
+      - checkout
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -22,4 +22,5 @@ jobs:
           name: Gradle build
           command: ./gradlew
           environment:
+            TERM: dumb
             ANDROID_HOME: /usr/local/android-sdk-linux
