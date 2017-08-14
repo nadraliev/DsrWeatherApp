@@ -3,6 +3,7 @@ package soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.forecastList.widget
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
 import soutvoid.com.DsrWeatherApp.ui.util.*
@@ -22,6 +23,14 @@ class TemperatureGraphView: View {
     private var dotPaint: Paint
     private var linePaint: Paint
     private var textPaint: Paint
+
+    var isBold: Boolean = false
+    set(value) {
+        field = value
+        if (isBold)
+            textPaint.typeface = Typeface.DEFAULT_BOLD
+        else textPaint.typeface = Typeface.DEFAULT
+    }
 
     init {
         dotPaint = initDotPaint()

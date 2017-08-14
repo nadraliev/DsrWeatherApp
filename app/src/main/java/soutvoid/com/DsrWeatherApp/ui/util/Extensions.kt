@@ -25,6 +25,7 @@ import io.realm.RealmList
 import soutvoid.com.DsrWeatherApp.domain.location.SavedLocation
 import java.math.BigInteger
 import java.security.SecureRandom
+import java.util.*
 
 
 fun ViewGroup.inflate(resId: Int): View {
@@ -236,4 +237,10 @@ fun secondsToHours(seconds: Long): Long =
 
 fun secondsToDays(seconds: Long): Long =
         secondsToHours(seconds) / 24
+
+fun getHourOfDay(seconds: Long): Int {
+    val calendar = Calendar.getInstance()
+    calendar.timeInMillis = seconds * 1000
+    return calendar.get(Calendar.HOUR_OF_DAY)
+}
 

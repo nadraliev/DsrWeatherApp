@@ -1,5 +1,7 @@
 package soutvoid.com.DsrWeatherApp.ui.screen.weather.widgets.forecastList
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -64,7 +66,18 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
         }
 
         fun bind(prevForecast: ThreeHoursForecast? = null, currentForecast: ThreeHoursForecast, nextForecast: ThreeHoursForecast? = null) {
+            graph.isBold = getHourOfDay(currentForecast.timeOfData) in 11..13
+            graph.prevTemp = prevForecast?.main?.temperature
+            graph.currentTemp = currentForecast.main.temperature
+            graph.nextTemp = nextForecast?.main?.temperature
+
             dayOfWeek.text = CalendarUtils.getShortDayOfWeek(currentForecast.timeOfData)
+            if (graph.isBold)
+                dayOfWeek.typeface = Typeface.DEFAULT_BOLD
+            else dayOfWeek.typeface = Typeface.DEFAULT
+            if (graph.isBold)
+                itemView.setBackgroundColor(itemView.context.theme.getThemeColor(R.attr.themedDividerColor))
+            else itemView.setBackgroundColor(Color.TRANSPARENT)
 
             date.text = CalendarUtils.getNumericDate(currentForecast.timeOfData)
 
@@ -74,10 +87,6 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
                     .icon(WeatherIconsHelper.getWeatherIcon(currentForecast.weather.first().id, currentForecast.timeOfData))
                     .color(itemView.context.theme.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(38))
-
-            graph.prevTemp = prevForecast?.main?.temperature
-            graph.currentTemp = currentForecast.main.temperature
-            graph.nextTemp = nextForecast?.main?.temperature
 
             windIcon.setImageDrawable(IconicsDrawable(itemView.context)
                     .icon(WeatherIconsHelper.getDirectionalIcon(currentForecast.wind.degrees))
