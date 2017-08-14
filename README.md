@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/nadraliev/DsrWeatherApp.svg?style=svg)](https://circleci.com/gh/nadraliev/DsrWeatherApp)
 
-<h2>An app to display current weather. Data provided by openweathermap.org</h2>
+<h2>An app to display current weather and forecast. Data provided by openweathermap.org</h2>
 
 Main features:
 <ul>
