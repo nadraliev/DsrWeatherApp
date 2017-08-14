@@ -14,11 +14,6 @@ jobs:
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
-          name: Install Missing v26 Emulator
-          command: sdkmanager "system-images;android-26;google_apis_playstore;x86" --verbose
-          environment:
-            TERM: dumb
-      - run:
           name: Gradle build
           command: ./gradlew
           environment:
