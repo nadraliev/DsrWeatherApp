@@ -76,7 +76,7 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
                 dayOfWeek.typeface = Typeface.DEFAULT_BOLD
             else dayOfWeek.typeface = Typeface.DEFAULT
             if (graph.isBold)
-                itemView.setBackgroundColor(itemView.context.theme.getThemeColor(R.attr.themedDividerColor))
+                itemView.setBackgroundColor(itemView.context.getThemeColor(R.attr.themedDividerColor))
             else itemView.setBackgroundColor(Color.TRANSPARENT)
 
             date.text = CalendarUtils.getNumericDate(currentForecast.timeOfData)
@@ -85,12 +85,12 @@ class ForecastListAdapter(var forecasts: List<ThreeHoursForecast> = emptyList())
 
             icon.setImageDrawable(IconicsDrawable(itemView.context)
                     .icon(WeatherIconsHelper.getWeatherIcon(currentForecast.weather.first().id, currentForecast.timeOfData))
-                    .color(itemView.context.theme.getThemeColor(android.R.attr.textColorPrimary))
+                    .color(itemView.context.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(38))
 
             windIcon.setImageDrawable(IconicsDrawable(itemView.context)
                     .icon(WeatherIconsHelper.getDirectionalIcon(currentForecast.wind.degrees))
-                    .color(itemView.context.theme.getThemeColor(android.R.attr.textColorPrimary))
+                    .color(itemView.context.getThemeColor(android.R.attr.textColorPrimary))
                     .sizeDp(16))
             windTv.text = "${currentForecast.wind.speed} ${UnitsUtils.getVelocityUnits(itemView.context)}"
         }

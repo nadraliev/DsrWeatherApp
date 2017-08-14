@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.AttributeSet
 import android.view.View
+import soutvoid.com.DsrWeatherApp.app.log.Logger
 import soutvoid.com.DsrWeatherApp.ui.util.*
 
 /**
@@ -23,6 +24,11 @@ class TemperatureGraphView: View {
     private var dotPaint: Paint
     private var linePaint: Paint
     private var textPaint: Paint
+
+    private val themedColor by lazy {
+        Logger.d("shit")
+        context.getThemeColor(android.R.attr.textColorPrimary)
+    }
 
     var isBold: Boolean = false
     set(value) {
@@ -56,14 +62,14 @@ class TemperatureGraphView: View {
 
     private fun initDotPaint(): Paint {
         val dotPaint = Paint()
-        dotPaint.color = getThemedColor()
+        dotPaint.color = themedColor
         dotPaint.flags = Paint.ANTI_ALIAS_FLAG
         return dotPaint
     }
 
     private fun initLinePaint() : Paint {
         val linePaint = Paint()
-        linePaint.color = getThemedColor()
+        linePaint.color = themedColor
         linePaint.flags = Paint.ANTI_ALIAS_FLAG
         linePaint.style = Paint.Style.FILL_AND_STROKE
         linePaint.strokeWidth = dpToPx(2.7).toFloat()
@@ -72,7 +78,7 @@ class TemperatureGraphView: View {
 
     private fun initTextPaint(): Paint {
         val textPaint = Paint()
-        textPaint.color = getThemedColor()
+        textPaint.color = themedColor
         textPaint.flags = Paint.ANTI_ALIAS_FLAG
         textPaint.textSize = spToPx(14f).toFloat()
         return textPaint
@@ -117,10 +123,6 @@ class TemperatureGraphView: View {
      */
     private fun calculateY(temperature: Double): Double {
         return (maxTemp - temperature) * 5 + 30
-    }
-
-    private fun getThemedColor(): Int {
-        return context.theme.getThemeColor(android.R.attr.textColorPrimary)
     }
 
     private fun resizeSelfToTemperature() {

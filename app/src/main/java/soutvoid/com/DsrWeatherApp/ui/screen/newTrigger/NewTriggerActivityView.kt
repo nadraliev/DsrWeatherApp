@@ -67,7 +67,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         new_trigger_conditions_container.addLineToTop(
                 strId = R.string.add_condition,
                 textSize = 18f,
-                textColor = theme.getThemeColor(android.R.attr.textColorSecondary))
+                textColor = getThemeColor(android.R.attr.textColorSecondary))
         { presenter.onAddConditionClicked() }
     }
     
@@ -75,7 +75,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
         new_trigger_time_container.addLineToTop(
                 strId = R.string.add_time,
                 textSize = 18f,
-                textColor = theme.getThemeColor(android.R.attr.textColorSecondary)
+                textColor = getThemeColor(android.R.attr.textColorSecondary)
         )
         { presenter.onAddTimeClicked() }
     }
@@ -90,7 +90,7 @@ class NewTriggerActivityView: TranslucentStatusActivityView() {
     }
     
     fun setLocationNameChoosable() {
-        new_trigger_location.setTextColor(this.theme.getThemeColor(android.R.attr.textColorSecondary))
+        new_trigger_location.setTextColor(getThemeColor(android.R.attr.textColorSecondary))
         new_trigger_location.text = getString(R.string.choose_location)
     }
 

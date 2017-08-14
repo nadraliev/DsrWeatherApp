@@ -26,6 +26,7 @@ import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.Locatio
 import soutvoid.com.DsrWeatherApp.ui.screen.newLocation.stepper.settings.LocationSettingsFragmentView.Companion.LONGITUDE_KEY
 import soutvoid.com.DsrWeatherApp.ui.util.AnimationEndedListener
 import soutvoid.com.DsrWeatherApp.ui.util.createFullScreenCircularReveal
+import soutvoid.com.DsrWeatherApp.ui.util.getThemedDrawable
 import soutvoid.com.DsrWeatherApp.util.SdkUtil
 
 class EditLocationActivityView: TranslucentStatusActivityView() {
@@ -71,9 +72,7 @@ class EditLocationActivityView: TranslucentStatusActivityView() {
     private fun initToolbar() {
         setSupportActionBar(edit_location_toolbar)
         title = getString(R.string.edit_location)
-        val typedValue = TypedValue()
-        theme.resolveAttribute(R.attr.themedBackDrawable, typedValue, true)
-        edit_location_toolbar.navigationIcon = ContextCompat.getDrawable(this, typedValue.resourceId)
+        edit_location_toolbar.navigationIcon = getThemedDrawable(R.attr.themedBackDrawable)
         edit_location_toolbar.setNavigationOnClickListener { onBackPressed() }
     }
 

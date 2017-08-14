@@ -153,7 +153,7 @@ class MainActivityView: TranslucentStatusActivityView() {
     private fun restartWithReveal() {
         try {
             setTheme(getDefaultPreferences().getPreferredThemeId())
-            main_reveal_view.setBackgroundColor(theme.getThemeColor(android.R.attr.colorBackground))
+            main_reveal_view.setBackgroundColor(getThemeColor(android.R.attr.colorBackground))
             val animation = main_reveal_view.createFullScreenCircularReveal(
                     main_drawer.measuredWidth / 2,
                     main_drawer.measuredHeight / 2

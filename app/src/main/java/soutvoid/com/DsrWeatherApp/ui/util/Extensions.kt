@@ -5,8 +5,10 @@ import android.annotation.TargetApi
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.support.annotation.StringRes
 import android.support.v4.app.FragmentManager
+import android.support.v4.content.ContextCompat
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -37,10 +39,16 @@ fun ViewGroup.inflate(resId: Int): View {
  * @param [attr] имя аттрибута из темы
  * @return цвет, полученный из темы
  */
-fun Resources.Theme.getThemeColor(attr: Int): Int {
+fun Context.getThemeColor(attr: Int): Int {
     val typedValue: TypedValue = TypedValue()
-    this.resolveAttribute(attr, typedValue, true)
+    this.theme.resolveAttribute(attr, typedValue, true)
     return typedValue.data
+}
+
+fun Context.getThemedDrawable(attr: Int): Drawable {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(attr, typedValue, true)
+    return ContextCompat.getDrawable(this, typedValue.data)
 }
 
 /**

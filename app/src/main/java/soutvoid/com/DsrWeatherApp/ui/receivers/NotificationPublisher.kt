@@ -31,11 +31,7 @@ class NotificationPublisher : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         Logger.i("notification publisher onReceive: ${System.currentTimeMillis()}")
         ifNotNull(context, intent) { ctx, intent1 ->
-            if (intent1.hasExtra(LOCATION_NAME_KEY)
-                    && intent1.hasExtra(TRIGGER_NAME_KEY)
-                    && intent1.hasExtra(LOCATION_ID_KEY)
-                    && intent1.hasExtra(NOTIF_TIME_UNIT_KEY)
-                    && intent1.hasExtra(NOTIF_TIME_VALUE_KEY)) {
+            if (checkExtras(intent1)) {
                 val notificationManager = ctx.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                 val notification = createTriggerNotification(
                         ctx,
@@ -44,11 +40,19 @@ class NotificationPublisher : BroadcastReceiver() {
                         intent1.getStringExtra(TRIGGER_NAME_KEY),
                         intent1.getIntExtra(NOTIF_TIME_UNIT_KEY, 0),
                         intent1.getIntExtra(NOTIF_TIME_VALUE_KEY, 1)
-                        )
+                )
                 notificationManager.notify(System.currentTimeMillis().hashCode(), notification)
             }
         }
     }
+
+    fun checkExtras(intent: Intent): Boolean =
+            intent.hasExtra(LOCATION_NAME_KEY)
+                    && intent.hasExtra(TRIGGER_NAME_KEY)
+                    && intent.hasExtra(LOCATION_ID_KEY)
+                    && intent.hasExtra(NOTIF_TIME_UNIT_KEY)
+                    && intent.hasExtra(NOTIF_TIME_VALUE_KEY)
+
 
     fun createTriggerNotification(context: Context,
                                   locationName: String,

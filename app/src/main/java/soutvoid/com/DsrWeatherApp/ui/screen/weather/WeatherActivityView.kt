@@ -100,7 +100,7 @@ class WeatherActivityView : BaseActivityView() {
 
     fun fillCurrentWeatherData(currentWeather: CurrentWeather) {
         with(currentWeather) {
-            val primaryTextColor = theme.getThemeColor(android.R.attr.textColorPrimary)
+            val primaryTextColor = getThemeColor(android.R.attr.textColorPrimary)
             weather_date_tv.text = CalendarUtils.getFormattedDate(timeOfData)
             weather_temp_tv.text = "${Math.round(main.temperature)} ${UnitsUtils.getDegreesUnits(this@WeatherActivityView)}"
             weather_icon_iv.setImageDrawable(IconicsDrawable(this@WeatherActivityView)
